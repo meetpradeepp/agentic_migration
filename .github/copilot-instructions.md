@@ -7,13 +7,15 @@ This is an experimental project to test GitHub Copilot's capabilities in agentic
 
 For specialized instructions, see the `.github/instructions/` directory:
 - **Planner Agent**: `.github/instructions/planner.instructions.md`
+- **Roadmap Discovery Agent**: `.github/instructions/roadmap-discovery.instructions.md`
+- **Roadmap Features Agent**: `.github/instructions/roadmap-features.instructions.md`
 - **README Generation**: `.github/instructions/README.instructions.md`
 - **Agent Skills**: `.github/instructions/agent-skills.instructions.md`
 
 For agent definitions, prompts, and skills, see:
-- **Agents**: `.github/agents/` directory (planner, roadmap-discovery)
-- **Skills**: `.github/skills/` directory (subtask-planning, project-discovery)
-- **Prompts**: `.github/prompts/` directory (planner, roadmap_discovery)
+- **Agents**: `.github/agents/` directory (planner, roadmap-discovery, roadmap-features)
+- **Skills**: `.github/skills/` directory (subtask-planning, project-discovery, feature-planning)
+- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md)
 
 Also check the root-level `.instructions.md` for a complete index.
 

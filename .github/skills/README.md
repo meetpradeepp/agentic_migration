@@ -16,6 +16,7 @@ Based on the [Agent Skills specification](https://agentskills.io/specification),
 |------|-------------|-----------|
 | [subtask-planning](./subtask-planning/SKILL.md) | Generates detailed implementation plans with subtasks, dependencies, and verification steps. Use when breaking down features, refactors, or complex changes into actionable tasks. | `LICENSE.txt`<br>`references/`<br>`examples/` |
 | [project-discovery](./project-discovery/SKILL.md) | Autonomous project analysis to understand purpose, target audience, competitive positioning, and constraints. Use for roadmap generation, strategic planning, and project profiling. | `LICENSE.txt`<br>`references/` |
+| [feature-planning](./feature-planning/SKILL.md) | Generates strategic product roadmaps with prioritized features, phases, and milestones using MoSCoW framework. Use for feature prioritization, roadmap creation, and phase organization. | `LICENSE.txt`<br>`references/` |
 
 ## How Skills Work
 

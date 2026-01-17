@@ -23,25 +23,31 @@ agentic_migration/
 ├── .github/
 │   ├── agents/
 │   │   ├── planner.agent.md           # Planner agent definition
-│   │   └── roadmap-discovery.agent.md # Roadmap discovery agent definition
+│   │   ├── roadmap-discovery.agent.md # Roadmap discovery agent definition
+│   │   └── roadmap-features.agent.md  # Roadmap features agent definition
 │   ├── skills/
 │   │   ├── subtask-planning/          # Subtask planning skill
 │   │   │   ├── SKILL.md               # Skill instructions
 │   │   │   ├── LICENSE.txt            # License
 │   │   │   ├── references/            # Detailed documentation
 │   │   │   └── examples/              # Example outputs
-│   │   └── project-discovery/         # Project discovery skill
+│   │   ├── project-discovery/         # Project discovery skill
+│   │   │   ├── SKILL.md               # Skill instructions
+│   │   │   ├── LICENSE.txt            # License
+│   │   │   └── references/            # Maturity levels, inference patterns
+│   │   └── feature-planning/          # Feature planning skill
 │   │       ├── SKILL.md               # Skill instructions
 │   │       ├── LICENSE.txt            # License
-│   │       └── references/            # Maturity levels, inference patterns
+│   │       └── references/            # MoSCoW, priority matrix, schemas
 │   ├── copilot-instructions.md        # Project-wide Copilot customization
 │   ├── instructions/
 │   │   ├── planner.instructions.md         # Planner agent guidelines
 │   │   ├── README.instructions.md          # README generation guidelines
 │   │   └── agent-skills.instructions.md    # Skills framework guidelines
 │   └── prompts/
-│       ├── planner.prompt.md          # Planner agent prompt template
-│       └── roadmap_discovery.md       # Roadmap discovery prompt template
+│       ├── planner.prompt.md               # Planner agent prompt template
+│       ├── roadmap_discovery.prompt.md     # Roadmap discovery prompt template
+│       └── roadmap_features.prompt.md      # Roadmap features prompt template
 ├── docs/
 │   ├── planning/                      # Planning artifacts (committed)
 │   │   ├── features/                  # Feature development plans
@@ -63,12 +69,17 @@ agentic_migration/
 #### Agent System
 - **[.github/agents/planner.agent.md](.github/agents/planner.agent.md)**: Planner agent definition and capabilities
 - **[.github/agents/roadmap-discovery.agent.md](.github/agents/roadmap-discovery.agent.md)**: Roadmap discovery agent for autonomous project analysis
+- **[.github/agents/roadmap-features.agent.md](.github/agents/roadmap-features.agent.md)**: Roadmap features agent for strategic planning
 - **[.github/prompts/planner.prompt.md](.github/prompts/planner.prompt.md)**: Planner agent prompt template
-- **[.github/prompts/roadmap_discovery.md](.github/prompts/roadmap_discovery.md)**: Roadmap discovery agent prompt template
+- **[.github/prompts/roadmap_discovery.prompt.md](.github/prompts/roadmap_discovery.prompt.md)**: Roadmap discovery agent prompt template
+- **[.github/prompts/roadmap_features.prompt.md](.github/prompts/roadmap_features.prompt.md)**: Roadmap features agent prompt template
 - **[.github/instructions/planner.instructions.md](.github/instructions/planner.instructions.md)**: Detailed planner agent guidelines
+- **[.github/instructions/roadmap-discovery.instructions.md](.github/instructions/roadmap-discovery.instructions.md)**: Discovery agent guidelines
+- **[.github/instructions/roadmap-features.instructions.md](.github/instructions/roadmap-features.instructions.md)**: Features agent guidelines
 
 #### Skills Framework
 - **[.github/skills/README.md](.github/skills/README.md)**: Skills framework overview and available skills
+- **[.github/skills/feature-planning/SKILL.md](.github/skills/feature-planning/SKILL.md)**: Feature planning skill for roadmap generation
 - **[.github/skills/subtask-planning/SKILL.md](.github/skills/subtask-planning/SKILL.md)**: Subtask planning skill for implementation plans
 - **[.github/skills/project-discovery/SKILL.md](.github/skills/project-discovery/SKILL.md)**: Project discovery skill for autonomous analysis
 - **[.github/instructions/agent-skills.instructions.md](.github/instructions/agent-skills.instructions.md)**: Guidelines for creating skills
@@ -157,6 +168,24 @@ The **Roadmap Discovery Agent** performs autonomous project analysis for strateg
   - **Competitive Context**: Alternatives, differentiators, market position
   - **Constraint Identification**: Technical, resource, dependency limits
 
+### Roadmap Features Agent
+
+The **Roadmap Features Agent** generates strategic product roadmaps from discovery data:
+
+- **Role**: Creates prioritized features organized into execution phases
+- **Input**:
+  - `roadmap_discovery.json` (project understanding)
+  - `project_index.json` (codebase structure)
+  - `competitor_analysis.json` (optional - competitor insights)
+- **Output**: `roadmap.json` - Complete roadmap with features, phases, milestones
+- **Key Features**:
+  - **MoSCoW Prioritization**: Must/Should/Could/Won't framework
+  - **Priority Matrix**: Impact vs Complexity assessment (Quick Wins, Big Bets, Fill-ins, Time Sinks)
+  - **Phase Organization**: Foundation → Enhancement → Scale → Future
+  - **Dependency Mapping**: Feature relationships and execution order
+  - **Milestone Creation**: Demonstrable, testable, valuable checkpoints
+  - **Competitor Integration**: Links features to competitor pain points
+
 ### Workflow Types
 
 | Type | Use Case | Phase Structure |
@@ -178,6 +207,11 @@ The **Roadmap Discovery Agent** performs autonomous project analysis for strateg
 - **Agent Definition** ([roadmap-discovery.agent.md](.github/agents/roadmap-discovery.agent.md)): Discovery capabilities
 - **Prompt Template** ([roadmap_discovery.md](.github/prompts/roadmap_discovery.md)): Autonomous analysis prompt
 - **Skill** ([project-discovery](.github/skills/project-discovery/SKILL.md)): Reusable discovery workflows
+
+**Roadmap Features Agent**:
+- **Agent Definition** ([roadmap-features.agent.md](.github/agents/roadmap-features.agent.md)): Feature planning capabilities
+- **Prompt Template** ([roadmap_features.md](.github/prompts/roadmap_features.md)): Strategic roadmap generation
+- **Skill** ([feature-planning](.github/skills/feature-planning/SKILL.md)): MoSCoW prioritization and phase organization
 
 ## Getting Started
 
