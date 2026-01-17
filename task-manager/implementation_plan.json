@@ -320,7 +320,7 @@
             "command": "cd task-manager && grep -E '(addList|deleteList|NavLink)' src/components/Sidebar.tsx | wc -l",
             "expected": "At least 3 matches for list operations and navigation"
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-5-2",
