@@ -2,9 +2,36 @@
 
 An experimental project to explore and test GitHub Copilot's capabilities in agentic workflows and migration tasks.
 
+## 🚀 Quick Start for New Team Members
+
+**New to this project?** Start here:
+- **[Onboarding Guide](docs/onboarding/README.md)** - Comprehensive introduction to the agentic workflow system
+- **[Quick Reference](docs/onboarding/quick-reference.md)** - Command cheat sheet and common patterns
+
+**Want to understand how it works in 5 minutes?**
+1. Read the [Core Concepts](docs/onboarding/README.md#core-concepts-5-minute-understanding) section
+2. Try: `@orchestrator "analyze this project"`
+3. Review the output and observe how agents coordinate
+
 ## Overview
 
-This repository serves as a testing ground for understanding how GitHub Copilot can assist with complex, multi-step workflows that involve autonomous decision-making, code migrations, and iterative development processes. The goal is to explore Copilot's potential as an "agent" that can understand context, make informed decisions, and execute tasks with minimal human intervention.
+This repository implements an **agentic workflow system** that breaks down complex software development tasks into manageable phases using specialized AI agents. Each agent has a specific role (discovery, planning, research, specification, coding, validation) and communicates through structured JSON files.
+
+**Key Innovation**: Architectural decisions are documented and approved BEFORE implementation begins, preventing costly rewrites through the ADR (Architecture Decision Record) approval gate pattern.
+
+### How It Works
+
+```
+User Request → Discovery → Planning → Research → 
+ADR Generation → ⏸️ APPROVAL GATE ⏸️ → Specification → 
+Implementation → Validation → Done
+```
+
+**What makes this different?**
+- Agents coordinate autonomously (orchestrator manages workflow)
+- Architectural decisions require explicit approval (ADR gates)
+- Quality is validated automatically (QA agent runs tests)
+- Context is preserved (JSON handoffs between agents)
 
 ## Purpose
 
