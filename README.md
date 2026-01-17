@@ -2,9 +2,16 @@
 
 An experimental project to explore and test GitHub Copilot's capabilities in agentic workflows and migration tasks.
 
+## � Important: Before You Start Coding
+
+**If Copilot tries to implement code directly for new features, it's bypassing the workflow!**
+
+📖 **[READ THIS FIRST](docs/STOP-READ-THIS-FIRST.md)** - Critical workflow rules to prevent wasted work
+
 ## 🚀 Quick Start for New Team Members
 
 **New to this project?** Start here:
+- **[⚠️ STOP - Read This First!](docs/STOP-READ-THIS-FIRST.md)** - Critical workflow decision tree
 - **[Onboarding Guide](docs/onboarding/README.md)** - Comprehensive introduction to the agentic workflow system
 - **[Quick Reference](docs/onboarding/quick-reference.md)** - Command cheat sheet and common patterns
 

@@ -3,6 +3,50 @@
 ## Project Overview
 This is an experimental project to test GitHub Copilot's capabilities in agentic workflows and migration tasks.
 
+## ⚠️ CRITICAL WORKFLOW RULE
+
+**STOP: Before implementing any new features or significant changes, you MUST use the agentic workflow system.**
+
+### When to Use the Agentic Workflow
+
+✅ **MUST use orchestrator/agents for**:
+- New feature development
+- Adding new components, services, or modules
+- Architectural changes or decisions
+- Complex refactoring or migrations
+- Integration with external systems
+- Database schema changes
+
+❌ **Can implement directly**:
+- Simple typo fixes
+- Documentation updates
+- Code formatting changes
+- Updating existing code to follow patterns
+
+### How to Start Properly
+
+**When user requests a new feature/component:**
+1. **STOP** - Do not start implementing
+2. **ASK**: "This looks like a new feature. Should we use the agentic workflow system?"
+3. **INVOKE**: Use orchestrator or spec-gatherer agent
+4. **FOLLOW**: The workflow will guide you through requirements → spec → plan → implementation
+
+**Example Flow**:
+```
+User: "Add user authentication"
+❌ WRONG: Create TaskContext.tsx directly
+✅ RIGHT: "@orchestrator I need to plan user authentication feature"
+```
+
+**Example Flow**:
+```
+User: "Create global state management"  
+❌ WRONG: Start implementing context files
+✅ RIGHT: "@spec-gatherer gather requirements for state management"
+```
+
+**If you find yourself creating new files/components without a spec.md or implementation_plan.json, STOP immediately.**
+
 ## Additional Instructions
 
 For specialized instructions, see the `.github/instructions/` directory:
