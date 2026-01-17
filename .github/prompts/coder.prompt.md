@@ -88,7 +88,50 @@ Mark in progress:
 # Update subtask status to "in_progress"
 ```
 
-Write code following:
+**Write Human-Readable, Maintainable Code:**
+
+**Quality Standards:**
+1. **Functions <50 lines, complexity <10** - Extract helpers if needed
+2. **Descriptive names** - `getUserById()` not `get()`, `isEmailValid` not `flag`
+3. **JSDoc for public APIs** - Include @param, @returns, @example
+4. **Early returns** - Handle errors first, reduce nesting
+5. **Input validation** - Validate at function entry, fail fast
+6. **Single responsibility** - Each function does ONE thing
+
+**Example Pattern:**
+```typescript
+/**
+ * Creates new user account with email verification
+ * 
+ * @param email - User's email address
+ * @param password - Plain text password (will be hashed)
+ * @returns Created user object with verification token
+ * @throws ValidationError if email invalid or password too weak
+ * 
+ * @example
+ * const user = await createUser('user@example.com', 'SecureP@ss123');
+ * await sendVerificationEmail(user.email, user.verificationToken);
+ */
+async function createUser(email: string, password: string): Promise<User> {
+  // Input validation - fail fast
+  if (!isValidEmail(email)) {
+    throw new ValidationError('Invalid email format');
+  }
+  if (password.length < 8) {
+    throw new ValidationError('Password must be at least 8 characters');
+  }
+
+  // Main logic
+  const hashedPassword = await hashPassword(password);
+  const verificationToken = generateToken();
+  
+  return await db.users.create({
+    data: { email, password: hashedPassword, verificationToken }
+  });
+}
+```
+
+Follow:
 - Patterns from `patterns_from` files
 - Conventions from `context.json`
 - Requirements from subtask description
@@ -101,6 +144,14 @@ Check:
 - [ ] Requirements met (subtask fully implemented)
 - [ ] Code quality (no console.log, no secrets, types)
 - [ ] Integration (no breaking changes)
+- [ ] **Function names descriptive** (`getUserById` not `get`)
+- [ ] **Complexity <10** (use early returns, extract helpers)
+- [ ] **JSDoc added** (public APIs with @param, @returns, @example)
+- [ ] **Input validation** (at function entry with clear errors)
+- [ ] **No magic numbers** (use named constants)
+- [ ] **Tests written** (success + error + edge cases)
+- [ ] **Test coverage ≥80%** for new code
+- [ ] **All tests passing** (run `npm test`)
 
 ### Step 7: Verify
 
@@ -181,7 +232,52 @@ cd apps/frontend
 git add src/file.ts  # Relative to pwd
 ```
 
-## Code Quality Rules
+## Code Quality Standards
+
+**Readability First:**
+- Code is read 10x more than written
+- Clarity over cleverness
+- Self-documenting code with meaningful names
+
+**Complexity Management:**
+- Keep functions under 50 lines
+- Cyclomatic complexity <10
+- Use early returns to reduce nesting
+- Extract complex logic into named helpers
+
+**Naming Conventions:**
+```typescript
+// ✅ GOOD: Descriptive, intention-revealing
+const activeUserCount = await getActiveUserCount();
+const isEmailVerified = user.emailVerifiedAt !== null;
+const shouldSendReminder = daysSinceLastLogin > REMINDER_THRESHOLD;
+
+// ❌ BAD: Cryptic, meaningless
+const cnt = await getUC();
+const flag = user.ev !== null;
+const x = d > 7;
+```
+
+**Documentation:**
+```typescript
+/**
+ * Brief one-line description
+ * 
+ * @param userId - User identifier (UUID)
+ * @returns User object or null if not found
+ * @throws DatabaseError if connection fails
+ * 
+ * @example
+ * const user = await getUser('123e4567-...');
+ */
+```
+
+**Function Design:**
+- Single responsibility (does ONE thing)
+- Input validation at entry (fail fast)
+- Early returns for errors/edge cases
+- Clear return types (TypeScript/types)
+- Meaningful error messages
 
 **Follow Patterns:**
 ```typescript
@@ -204,6 +300,13 @@ const apiKey = process.env.API_KEY;
 - Only modify `files_to_modify`
 - Only create `files_to_create`
 - Don't refactor beyond subtask
+
+**Testing:**
+- Write tests for all new code (required)
+- Cover success, error, and edge cases
+- Use AAA pattern (Arrange-Act-Assert)
+- Ensure ≥80% coverage
+- All tests must pass before commit
 
 **Verification:**
 - Must pass before marking complete

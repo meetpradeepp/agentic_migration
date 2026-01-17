@@ -85,6 +85,111 @@ git add ./apps/frontend/src/file.ts  # Works from project root
 
 ---
 
+## Code Quality Standards
+
+Before implementing any code, understand these non-negotiable quality principles:
+
+### Readability Principles
+
+1. **Code is Communication** - Write for humans first, computers second
+2. **Clarity over Cleverness** - Obvious code > clever code
+3. **Consistency** - Follow project patterns religiously
+4. **Meaningful Names** - Names should reveal intent
+
+### Complexity Management
+
+**Maximum Cyclomatic Complexity: 10 per function**
+
+Techniques to reduce complexity:
+- **Guard clauses** - Early returns for invalid states
+- **Extract functions** - Break complex logic into named helpers
+- **Polymorphism** - Replace conditionals with strategy patterns
+- **Table-driven** - Use lookup tables vs long if-else chains
+
+### Documentation Requirements
+
+**When to document:**
+
+| Code Type | Documentation Level | Example |
+|-----------|-------------------|---------|
+| Public API | Full JSDoc (params, returns, throws, example) | Exported functions, classes |
+| Internal helpers | Inline comments for complex logic only | Private utility functions |
+| Business logic | Why comments (not what) | Algorithm choices, edge cases |
+| Tests | Descriptive test names (no comments needed) | `it('should retry 3 times on network error')` |
+
+**JSDoc Template:**
+
+```typescript
+/**
+ * Brief description of what function does (one line)
+ * 
+ * Longer explanation if needed (optional)
+ * Describe edge cases, performance notes, etc.
+ * 
+ * @param paramName - Description including type expectations
+ * @param optionalParam - Mark optional params clearly
+ * @returns Description of return value and type
+ * @throws ErrorType - When and why this error occurs
+ * 
+ * @example
+ * // Include realistic usage example
+ * const result = await myFunction('valid-input');
+ * console.log(result); // Expected output
+ */
+```
+
+### Function Design Checklist
+
+Every function you write must satisfy:
+
+- [ ] **Single Responsibility** - Does exactly ONE thing
+- [ ] **Descriptive Name** - Name reveals intent (`getUserById`, not `getData`)
+- [ ] **Input Validation** - Validates parameters at entry point
+- [ ] **Early Returns** - Handles errors/edge cases first
+- [ ] **Clear Return Type** - Typed return value (TypeScript/Python types)
+- [ ] **Documented** - JSDoc for public APIs, comments for complex logic
+- [ ] **Testable** - Pure functions preferred, dependencies injectable
+- [ ] **Error Handling** - Explicit error cases with meaningful messages
+- [ ] **Performance Aware** - Complexity documented if O(n²) or worse
+
+### Naming Conventions
+
+```typescript
+// ✅ GOOD: Self-explanatory names
+const activeSubscriptionCount = await getActiveSubscriptionCount();
+const isUserEmailVerified = user.emailVerifiedAt !== null;
+const shouldSendPasswordResetEmail = timeSinceLastReset > COOLDOWN_PERIOD;
+const maxRetryAttempts = 3;
+
+// ❌ BAD: Cryptic, meaningless names
+const cnt = await getASC();
+const flag = user.ev !== null;
+const x = t > cd;
+const MAX = 3;
+```
+
+**Naming patterns by type:**
+
+- **Functions**: Verb + noun (`createUser`, `validateEmail`, `calculateTotal`)
+- **Booleans**: is/has/should prefix (`isValid`, `hasPermission`, `shouldRetry`)
+- **Collections**: Plural nouns (`users`, `activeOrders`, `errorMessages`)
+- **Constants**: UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`, `API_BASE_URL`)
+- **Classes**: PascalCase nouns (`UserService`, `OrderProcessor`)
+
+### Code Smells to Avoid
+
+| Smell | Problem | Solution |
+|-------|---------|----------|
+| Long functions | >50 lines | Extract smaller functions |
+| Deep nesting | >3 levels | Use early returns, extract methods |
+| Magic numbers | `if (count > 5)` | Named constants: `if (count > MAX_RETRIES)` |
+| God objects | Class doing too much | Split into focused classes |
+| Duplicate code | Copy-paste | Extract reusable function |
+| Comments explaining code | Code unclear | Refactor code to be self-documenting |
+| Large parameter lists | >4 params | Use options object |
+
+---
+
 ## Step 1: Get Your Bearings (MANDATORY)
 
 **Every session starts fresh** - you have no memory of previous work.
@@ -290,17 +395,165 @@ EOF
 
 ### 5.2: Implement Code Changes
 
-**Follow these principles:**
+**CRITICAL: Write Human-Readable, Maintainable Code**
 
-**Match Existing Patterns:**
+**Code Quality Principles:**
+
+1. **Readability First** - Code is read 10x more than written
+2. **Low Complexity** - Keep cyclomatic complexity under 10
+3. **Self-Documenting** - Code should explain itself with clear names
+4. **Fail Fast** - Use early returns for error conditions
+5. **Single Responsibility** - Each function does ONE thing well
+
+**Function Quality Standards:**
+
 ```typescript
-// If patterns_from shows this style:
-export const getUserById = async (id: string): Promise<User> => {
-  // Use the same pattern for your new function
-  export const updateUser = async (id: string, data: UpdateData): Promise<User> => {
+/**
+ * Retrieves user by ID with associated preferences
+ * 
+ * @param userId - Unique user identifier (UUID v4)
+ * @returns User object with preferences, or null if not found
+ * @throws DatabaseError if connection fails
+ * 
+ * @example
+ * const user = await getUserWithPreferences('123e4567-e89b-12d3-a456-426614174000');
+ * if (user) {
+ *   console.log(user.preferences.theme);
+ * }
+ */
+export const getUserWithPreferences = async (
+  userId: string
+): Promise<UserWithPreferences | null> => {
+  // Input validation - fail fast
+  if (!userId?.trim()) {
+    throw new ValidationError('userId is required');
+  }
+  
+  if (!isValidUUID(userId)) {
+    throw new ValidationError('userId must be a valid UUID');
+  }
+
+  // Early return for common case
+  const cachedUser = await cache.get(`user:${userId}`);
+  if (cachedUser) {
+    return cachedUser;
+  }
+
+  // Main logic
+  try {
+    const user = await db.users.findUnique({
+      where: { id: userId },
+      include: { preferences: true }
+    });
+    
+    if (!user) {
+      return null;
+    }
+
+    // Cache for future requests
+    await cache.set(`user:${userId}`, user, CACHE_TTL);
+    
+    return user;
+  } catch (error) {
+    logger.error('Failed to fetch user with preferences', { userId, error });
+    throw new DatabaseError('Unable to retrieve user data');
+  }
+};
 ```
 
-**Error Handling:**
+**Complexity Reduction Techniques:**
+
+```typescript
+// ❌ BAD: High complexity (complexity = 8)
+function processOrder(order) {
+  if (order.items.length > 0) {
+    for (let item of order.items) {
+      if (item.quantity > 0) {
+        if (item.price > 0) {
+          if (item.inStock) {
+            // process item
+          } else {
+            throw new Error('Out of stock');
+          }
+        }
+      }
+    }
+  }
+}
+
+// ✅ GOOD: Low complexity (complexity = 3)
+function processOrder(order: Order): void {
+  // Early return pattern
+  if (order.items.length === 0) {
+    return;
+  }
+
+  order.items.forEach(item => {
+    validateAndProcessItem(item);
+  });
+}
+
+function validateAndProcessItem(item: OrderItem): void {
+  // Guard clauses
+  if (item.quantity <= 0) return;
+  if (item.price <= 0) return;
+  if (!item.inStock) {
+    throw new OutOfStockError(item.id);
+  }
+
+  // Single responsibility: just process
+  processItem(item);
+}
+```
+
+**Naming Standards:**
+
+```typescript
+// ✅ GOOD: Descriptive, intention-revealing names
+const activeUserCount = await getActiveUserCount();
+const isEmailVerified = user.emailVerifiedAt !== null;
+const shouldSendReminder = daysSinceLastLogin > 7;
+
+// ❌ BAD: Cryptic, ambiguous names
+const cnt = await getUC();
+const flag = user.ev !== null;
+const x = d > 7;
+```
+
+**Documentation Standards:**
+
+```typescript
+// For public APIs and complex functions - include JSDoc
+/**
+ * Calculates total price with tax and discounts applied
+ * 
+ * @param items - Array of cart items with quantities
+ * @param discountCode - Optional promotion code
+ * @returns Object containing subtotal, tax, discount, and total
+ * 
+ * @example
+ * const pricing = calculateTotal([
+ *   { id: '1', price: 29.99, quantity: 2 },
+ *   { id: '2', price: 15.50, quantity: 1 }
+ * ], 'SAVE10');
+ * // Returns: { subtotal: 75.48, tax: 7.55, discount: 7.55, total: 75.48 }
+ */
+export function calculateTotal(
+  items: CartItem[],
+  discountCode?: string
+): PricingBreakdown {
+  // Implementation...
+}
+
+// For internal helpers - concise comments for complex logic only
+function applyTaxRate(amount: number, rate: number): number {
+  // Tax rate is percentage, convert to decimal
+  return amount * (1 + rate / 100);
+}
+```
+
+**Error Handling Patterns:**
+
 ```typescript
 // Follow existing error handling patterns
 try {
@@ -312,34 +565,335 @@ try {
 }
 ```
 
-**Validation:**
+**Input Validation:**
+
 ```typescript
 // If project uses Zod, use Zod
 import { z } from 'zod';
 
 const UserSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8)
+  password: z.string().min(8),
+  age: z.number().int().positive().max(120)
 });
 
 // Validate before using
 const validatedData = UserSchema.parse(requestBody);
+
+// Or for function parameters
+function createUser(data: unknown): User {
+  const validated = UserSchema.parse(data);
+  // Now TypeScript knows validated has correct types
+  return saveUser(validated);
+}
 ```
 
-**Testing:**
-```typescript
-// If files_to_create includes test files, create them
-// Match existing test patterns
-describe('Feature', () => {
-  it('should handle success case', async () => {
-    const result = await myFunction(validInput);
-    expect(result).toEqual(expectedOutput);
-  });
+**Testing Standards:**
 
-  it('should handle error case', async () => {
-    await expect(myFunction(invalidInput)).rejects.toThrow('Error message');
+**CRITICAL: Tests Are Not Optional**
+
+Every implementation must include tests. Tests are first-class code that:
+- Document expected behavior
+- Prevent regressions
+- Enable safe refactoring
+- Serve as usage examples
+
+**Test Coverage Requirements:**
+
+| Code Type | Minimum Coverage | Test Types Required |
+|-----------|-----------------|---------------------|
+| Public APIs | 100% | Unit + Integration |
+| Business Logic | ≥90% | Unit + Edge Cases |
+| Utility Functions | ≥80% | Unit |
+| UI Components | ≥70% | Unit + Integration |
+| E2E Flows | Critical paths only | E2E |
+
+**Testing Pyramid:**
+
+```
+        /\
+       /E2E\     (5-10% of tests)
+      /------\
+     /  Integ \   (20-30% of tests)
+    /----------\
+   /    Unit    \ (60-75% of tests)
+  /--------------\
+```
+
+**Test Quality Principles:**
+
+1. **Arrange-Act-Assert (AAA)** - Clear test structure
+2. **One Assertion Focus** - Test one thing at a time
+3. **Independent Tests** - No shared state between tests
+4. **Descriptive Names** - Test name explains what/why
+5. **Minimal Setup** - Only setup what's needed
+6. **Fast Execution** - Unit tests <100ms each
+
+**Unit Test Pattern:**
+
+```typescript
+describe('UserService', () => {
+  describe('createUser', () => {
+    // Success case
+    it('should create user with hashed password and verification token', async () => {
+      // Arrange
+      const email = 'test@example.com';
+      const password = 'SecurePass123';
+      const mockDb = createMockDatabase();
+      const service = new UserService(mockDb);
+      
+      // Act
+      const result = await service.createUser(email, password);
+      
+      // Assert
+      expect(result).toMatchObject({
+        email: 'test@example.com',
+        passwordHash: expect.stringMatching(/^\$2[aby]\$/), // bcrypt format
+        verificationToken: expect.any(String)
+      });
+      expect(result.password).toBeUndefined(); // Never return plain password
+    });
+
+    // Error cases - REQUIRED
+    it('should throw ValidationError for invalid email', async () => {
+      const service = new UserService(mockDb);
+      
+      await expect(
+        service.createUser('invalid-email', 'password')
+      ).rejects.toThrow(ValidationError);
+    });
+
+    it('should throw ValidationError for weak password', async () => {
+      const service = new UserService(mockDb);
+      
+      await expect(
+        service.createUser('test@example.com', '123')
+      ).rejects.toThrow('Password must be at least 8 characters');
+    });
+
+    // Edge cases - REQUIRED
+    it('should handle duplicate email gracefully', async () => {
+      const mockDb = createMockDatabase({ 
+        userExists: true 
+      });
+      const service = new UserService(mockDb);
+      
+      await expect(
+        service.createUser('existing@example.com', 'password')
+      ).rejects.toThrow(DuplicateEmailError);
+    });
+
+    it('should trim whitespace from email', async () => {
+      const service = new UserService(mockDb);
+      const result = await service.createUser('  test@example.com  ', 'password');
+      
+      expect(result.email).toBe('test@example.com');
+    });
+
+    // Database failure - REQUIRED for I/O operations
+    it('should throw DatabaseError when connection fails', async () => {
+      const mockDb = createMockDatabase({ shouldFail: true });
+      const service = new UserService(mockDb);
+      
+      await expect(
+        service.createUser('test@example.com', 'password')
+      ).rejects.toThrow(DatabaseError);
+    });
   });
 });
+```
+
+**Integration Test Pattern:**
+
+```typescript
+describe('User Registration Flow (Integration)', () => {
+  let app: Express;
+  let testDb: Database;
+  
+  beforeAll(async () => {
+    testDb = await createTestDatabase();
+    app = createApp({ database: testDb });
+  });
+  
+  afterAll(async () => {
+    await testDb.close();
+  });
+  
+  beforeEach(async () => {
+    await testDb.clearAll(); // Clean slate for each test
+  });
+
+  it('should register user and send verification email', async () => {
+    // Arrange
+    const userData = {
+      email: 'newuser@example.com',
+      password: 'SecurePass123'
+    };
+    
+    // Act
+    const response = await request(app)
+      .post('/api/auth/register')
+      .send(userData)
+      .expect(201);
+    
+    // Assert
+    expect(response.body).toMatchObject({
+      id: expect.any(String),
+      email: 'newuser@example.com',
+      verified: false
+    });
+    
+    // Verify side effects
+    const user = await testDb.users.findByEmail('newuser@example.com');
+    expect(user).toBeDefined();
+    expect(user.passwordHash).not.toBe(userData.password); // Hashed
+    
+    // Verify email sent (mock check)
+    expect(mockEmailService.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: 'newuser@example.com',
+        subject: expect.stringContaining('Verify')
+      })
+    );
+  });
+
+  it('should reject duplicate registration', async () => {
+    // Arrange - create existing user
+    await testDb.users.create({
+      email: 'existing@example.com',
+      password: 'hashed'
+    });
+    
+    // Act & Assert
+    await request(app)
+      .post('/api/auth/register')
+      .send({
+        email: 'existing@example.com',
+        password: 'password'
+      })
+      .expect(409) // Conflict
+      .expect((res) => {
+        expect(res.body.error).toContain('already exists');
+      });
+  });
+});
+```
+
+**E2E Test Pattern:**
+
+```typescript
+describe('User Registration E2E', () => {
+  it('should complete full registration workflow', async () => {
+    // 1. Navigate to registration
+    await page.goto('http://localhost:3000/register');
+    
+    // 2. Fill form
+    await page.fill('[name="email"]', 'e2e@example.com');
+    await page.fill('[name="password"]', 'SecurePass123');
+    await page.fill('[name="confirmPassword"]', 'SecurePass123');
+    
+    // 3. Submit
+    await page.click('button[type="submit"]');
+    
+    // 4. Verify success message
+    await expect(page.locator('.success-message')).toContainText(
+      'Check your email for verification link'
+    );
+    
+    // 5. Verify redirect
+    await expect(page).toHaveURL('http://localhost:3000/verify-email');
+    
+    // 6. Verify email sent (check test inbox)
+    const emails = await getTestEmails('e2e@example.com');
+    expect(emails).toHaveLength(1);
+    expect(emails[0].subject).toContain('Verify your email');
+  });
+});
+```
+
+**Test Naming Convention:**
+
+```typescript
+// ✅ GOOD: Descriptive, explains what and why
+it('should return null when user not found')
+it('should throw ValidationError for empty email')
+it('should cache user data after successful fetch')
+it('should retry 3 times before failing on network error')
+it('should sanitize HTML in user bio to prevent XSS')
+
+// ❌ BAD: Vague, unclear expectations
+it('works correctly')
+it('handles errors')
+it('test user function')
+it('should pass')
+```
+
+**Mocking Best Practices:**
+
+```typescript
+// ✅ GOOD: Mock external dependencies
+const mockEmailService = {
+  send: jest.fn().mockResolvedValue({ messageId: 'abc123' })
+};
+
+const mockDatabase = {
+  users: {
+    create: jest.fn().mockResolvedValue({ id: '1', email: 'test@example.com' }),
+    findByEmail: jest.fn().mockResolvedValue(null)
+  }
+};
+
+// Test with mocks
+const service = new UserService(mockDatabase, mockEmailService);
+
+// ❌ BAD: Testing implementation details
+expect(mockDatabase.users.create).toHaveBeenCalledTimes(1); // Fragile
+
+// ✅ GOOD: Testing behavior
+const user = await service.createUser('test@example.com', 'password');
+expect(user.email).toBe('test@example.com'); // What matters
+```
+
+**Test Organization:**
+
+```typescript
+// Match source file structure
+src/
+  services/
+    userService.ts
+test/
+  services/
+    userService.test.ts  (or .spec.ts)
+
+// Or co-located
+src/
+  services/
+    userService.ts
+    userService.test.ts
+```
+
+**When to Write Tests:**
+
+1. **Before implementation (TDD)** - For complex logic
+2. **During implementation** - For standard features  
+3. **After implementation** - For bug fixes (regression tests)
+
+**Test Coverage Tools:**
+
+```bash
+# Run with coverage
+npm test -- --coverage
+
+# Check coverage thresholds
+# jest.config.js:
+coverageThreshold: {
+  global: {
+    branches: 80,
+    functions: 80,
+    lines: 80,
+    statements: 80
+  }
+}
 ```
 
 ### 5.3: Create New Files (if specified)
@@ -392,8 +946,32 @@ EOF
 - [ ] Proper TypeScript types (if TypeScript)
 - [ ] Comments for complex logic
 - [ ] No dead code
+- [ ] **Function complexity under 10** (use early returns, extract helpers)
+- [ ] **Descriptive variable/function names** (no `x`, `temp`, `data`)
+- [ ] **JSDoc comments for public APIs** (with @param, @returns, @example)
+- [ ] **Input validation at function entry** (fail fast pattern)
+- [ ] **Early returns for error conditions** (reduce nesting)
+- [ ] **Each function has single responsibility** (does ONE thing)
+- [ ] **Meaningful test coverage** (success + error cases + edge cases)
 
-### 6.4: Integration
+### 6.4: Test Quality
+
+**If test files were created/modified:**
+
+- [ ] **Tests actually run** (not commented out or skipped)
+- [ ] **All test cases pass** (green before commit)
+- [ ] **Success case covered** (happy path tested)
+- [ ] **Error cases covered** (all error branches tested)
+- [ ] **Edge cases covered** (null, empty, boundary values)
+- [ ] **Descriptive test names** (explains what/why, not just "test 1")
+- [ ] **AAA structure** (Arrange-Act-Assert clearly separated)
+- [ ] **No test interdependencies** (tests can run in any order)
+- [ ] **Mocks used appropriately** (external deps mocked, not internal logic)
+- [ ] **Assertions meaningful** (testing behavior, not implementation)
+- [ ] **Coverage ≥80%** for new code (check with coverage tool)
+- [ ] **Fast execution** (unit tests <100ms each)
+
+### 6.5: Integration
 
 - [ ] API contracts maintained
 - [ ] Dependencies imported correctly
@@ -716,6 +1294,10 @@ Work through services in dependency order:
 - Verification must pass
 - Clean, working state
 - Secret scan must pass
+- **Tests written for all new code** (not optional)
+- **Test coverage ≥80%** for new functionality
+- **All tests passing** before commit
+- **Tests follow AAA pattern** (Arrange-Act-Assert)
 
 ### Git Configuration - NEVER MODIFY
 
@@ -742,6 +1324,15 @@ The repository inherits user's git identity. Don't create fake identities.
 ✅ Commit after each successful subtask
 ✅ Leave app in working state
 ✅ Fix bugs immediately
+✅ **Write descriptive variable/function names**
+✅ **Add JSDoc for public APIs with examples**
+✅ **Use early returns for error conditions**
+✅ **Keep functions under 50 lines**
+✅ **Validate inputs at function entry**
+✅ **Include meaningful test cases**
+✅ **Write tests for success + error + edge cases**
+✅ **Ensure test coverage ≥80% for new code**
+✅ **Run tests before committing**
 
 ## DON'T
 
@@ -753,6 +1344,16 @@ The repository inherits user's git identity. Don't create fake identities.
 ❌ Change git configuration
 ❌ Leave broken code for next session
 ❌ Batch multiple subtasks in one commit
+❌ **Write cryptic variable names (x, temp, data)**
+❌ **Create functions with complexity >10**
+❌ **Use magic numbers without named constants**
+❌ **Write deeply nested if statements (>3 levels)**
+❌ **Skip input validation**
+❌ **Leave console.log() in production code**
+❌ **Skip writing tests** (tests are required, not optional)
+❌ **Commit code with failing tests**
+❌ **Write vague test names** ("test 1", "works")
+❌ **Test implementation details** (test behavior, not internals)
 
 ---
 

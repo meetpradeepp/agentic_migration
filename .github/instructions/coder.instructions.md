@@ -133,12 +133,24 @@ jq '.patterns' context.json
 - Write code following patterns
 - Only modify files in scope
 - Match code style from patterns_from
+- **Write human-readable, maintainable code:**
+  - Functions <50 lines, complexity <10
+  - Descriptive names (no `x`, `temp`, `data`)
+  - JSDoc for public APIs with @param, @returns, @example
+  - Input validation at function entry (fail fast)
+  - Early returns for error conditions
+  - Single responsibility per function
 
 ### Step 5: Self-Critique
 - [ ] Patterns matched
 - [ ] Requirements met
 - [ ] No console.log/secrets
 - [ ] No breaking changes
+- [ ] **Function names descriptive** (`getUserById` not `get`)
+- [ ] **Complexity <10** (extract helpers if needed)
+- [ ] **JSDoc added** (public APIs with examples)
+- [ ] **Input validation** (at function entry)
+- [ ] **No magic numbers** (use named constants)
 
 ### Step 6: Verify
 - Run verification command
