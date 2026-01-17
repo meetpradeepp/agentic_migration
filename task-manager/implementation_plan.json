@@ -61,7 +61,7 @@
             "command": "cd task-manager && grep ':root' src/index.css && grep 'data-theme=\"dark\"' src/index.css",
             "expected": "CSS variables defined for both light and dark themes"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-1-4",
@@ -79,7 +79,7 @@
             "command": "cd task-manager && grep -i 'QuotaExceededError' src/utils/storage.ts",
             "expected": "QuotaExceededError handling present in catch blocks"
           },
-          "status": "pending"
+          "status": "in_progress"
         }
       ]
     },

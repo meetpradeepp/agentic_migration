@@ -39,7 +39,13 @@ export class TaskStorage {
     try {
       localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
     } catch (error) {
-      console.error('Error saving tasks:', error);
+      if (error instanceof Error && error.name === 'QuotaExceededError') {
+        console.error('localStorage quota exceeded. Consider deleting old completed tasks.');
+        alert('Storage limit reached. Please delete some completed tasks to free up space.');
+      } else {
+        console.error('Error saving tasks:', error);
+      }
+      throw error;
     }
   }
 
@@ -105,7 +111,13 @@ export class ListStorage {
     try {
       localStorage.setItem(STORAGE_KEYS.LISTS, JSON.stringify(lists));
     } catch (error) {
-      console.error('Error saving lists:', error);
+      if (error instanceof Error && error.name === 'QuotaExceededError') {
+        console.error('localStorage quota exceeded. Unable to save lists.');
+        alert('Storage limit reached. Please delete some data to free up space.');
+      } else {
+        console.error('Error saving lists:', error);
+      }
+      throw error;
     }
   }
 
@@ -154,6 +166,14 @@ export class ThemeStorage {
   }
 
   static setTheme(theme: 'light' | 'dark'): void {
-    localStorage.setItem(STORAGE_KEYS.THEME, theme);
+    try {
+      localStorage.setItem(STORAGE_KEYS.THEME, theme);
+    } catch (error) {
+      if (error instanceof Error && error.name === 'QuotaExceededError') {
+        console.error('localStorage quota exceeded. Unable to save theme preference.');
+      } else {
+        console.error('Error saving theme:', error);
+      }
+    }
   }
 }
