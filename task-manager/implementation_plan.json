@@ -432,7 +432,7 @@
             "command": "cd task-manager && grep -E '(TaskList|FilterBar)' src/views/AllTasks.tsx | wc -l",
             "expected": "AllTasks uses TaskList and FilterBar components"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-6-4",
@@ -452,7 +452,7 @@
             "command": "cd task-manager && grep 'useParams' src/views/UserListView.tsx",
             "expected": "UserListView uses useParams to get listId from route"
           },
-          "status": "pending"
+          "status": "in_progress"
         }
       ]
     },
