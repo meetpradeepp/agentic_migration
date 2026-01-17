@@ -1,0 +1,130 @@
+{
+  "project_name": "Agentic Migration",
+  "project_type": "other",
+  "tech_stack": {
+    "primary_language": "Markdown",
+    "frameworks": [],
+    "key_dependencies": [
+      "GitHub Copilot",
+      "Git",
+      "Markdown documentation system"
+    ]
+  },
+  "target_audience": {
+    "primary_persona": "AI researchers and developers experimenting with GitHub Copilot's agentic capabilities to understand how AI assistants can autonomously handle complex, multi-step software development workflows",
+    "secondary_personas": [
+      "Engineering teams exploring AI-assisted development patterns and best practices",
+      "GitHub Copilot power users seeking advanced prompting strategies and instruction patterns",
+      "Developers interested in code migration and refactoring automation techniques"
+    ],
+    "pain_points": [
+      "Difficulty understanding how to effectively delegate complex, multi-step tasks to AI coding assistants",
+      "Lack of established patterns for structuring instructions that enable autonomous AI agent workflows",
+      "Unclear how to maintain context across multiple AI-driven development sessions",
+      "Need for reusable frameworks to guide AI assistants in planning, discovery, and implementation tasks",
+      "Uncertainty about best practices for capturing and documenting AI-assisted development processes"
+    ],
+    "goals": [
+      "Discover effective patterns for agentic AI workflows in software development",
+      "Establish reusable instruction frameworks that enable autonomous task execution",
+      "Document learnings and best practices for working with AI coding assistants",
+      "Build portable agent skills that can be reused across projects",
+      "Create comprehensive planning artifacts that serve as living documentation"
+    ],
+    "usage_context": "Developers and researchers use this project as an experimental testbed when exploring how GitHub Copilot can handle autonomous planning, roadmap generation, feature implementation, and code migration tasks with structured instruction files and agent-based workflows"
+  },
+  "product_vision": {
+    "one_liner": "An experimental framework for testing and documenting GitHub Copilot's agentic capabilities through structured multi-agent workflows and reusable instruction patterns",
+    "problem_statement": "AI coding assistants like GitHub Copilot have powerful capabilities, but there's limited understanding of how to structure instructions and workflows to enable autonomous, multi-step task execution. Developers need patterns and frameworks to effectively delegate complex planning, analysis, and implementation tasks to AI agents.",
+    "value_proposition": "Provides a structured, documented approach to building agentic AI workflows with reusable agent definitions, skills, and instruction patterns that enable autonomous task execution while maintaining quality and capturing institutional knowledge through planning artifacts",
+    "success_metrics": [
+      "Number of reusable agent skills successfully created and documented",
+      "Effectiveness of autonomous workflows (measured by task completion without human intervention)",
+      "Quality and comprehensiveness of generated planning artifacts",
+      "Community adoption and contribution to agent patterns and skills",
+      "Documentation completeness covering learnings, patterns, and best practices"
+    ]
+  },
+  "current_state": {
+    "maturity": "prototype",
+    "existing_features": [
+      "Orchestrator Agent for multi-agent workflow coordination",
+      "Planner Agent for autonomous implementation planning with subtask decomposition",
+      "Roadmap Discovery Agent for autonomous project analysis and understanding",
+      "Roadmap Features Agent for strategic feature generation and prioritization",
+      "Agent Skills Framework with progressive loading and bundled resources",
+      "Subtask Planning Skill with workflow classification (feature, refactor, investigation, migration, simple)",
+      "Project Discovery Skill for non-interactive codebase analysis",
+      "Feature Planning Skill with MoSCoW prioritization and priority matrix",
+      "Structured instruction files for each agent (planner, discovery, features, orchestrator)",
+      "Documentation-first approach with planning artifacts as first-class documentation",
+      "Comprehensive agent definitions with capabilities, I/O specs, and integration points",
+      "Multi-phase workflows for roadmap generation (discovery → features → implementation)"
+    ],
+    "known_gaps": [
+      "No actual code implementation agents - framework is currently documentation and planning only",
+      "Missing competitor analysis integration (referenced but not fully implemented)",
+      "No automated testing or validation of agent outputs",
+      "Limited examples of completed multi-agent workflows from start to finish",
+      "No metrics collection or analysis of agent effectiveness",
+      "Missing templates for common project types (web apps, CLIs, libraries)",
+      "No integration with external tools or APIs for enhanced analysis",
+      "Limited guidance on customizing agents for domain-specific needs"
+    ],
+    "technical_debt": [
+      "Agent definitions reference features not yet implemented (e.g., competitor_analysis.json generation)",
+      "Some documentation inconsistencies between agent definitions and prompt templates",
+      "No validation scripts to ensure agent outputs conform to schemas",
+      "Missing error handling and retry logic in workflow orchestration",
+      "No centralized configuration for agent behavior customization"
+    ]
+  },
+  "competitive_context": {
+    "alternatives": [
+      "Auto-Claude - Autonomous Claude-based development framework (direct inspiration)",
+      "LangChain Agents - Framework for building autonomous AI agent applications",
+      "AutoGPT - Autonomous GPT-4 agent for task completion",
+      "GitHub Copilot Workspace - GitHub's official multi-file editing and planning workspace",
+      "Cursor IDE - AI-first code editor with multi-file context and agent capabilities",
+      "Devin - Autonomous AI software engineer",
+      "MetaGPT - Multi-agent framework for software development",
+      "Manual prompting strategies - Ad-hoc instruction crafting without structured frameworks"
+    ],
+    "differentiators": [
+      "Specifically designed for GitHub Copilot rather than general LLM agents",
+      "Documentation-first approach treats planning artifacts as first-class deliverables",
+      "Progressive loading architecture prevents context bloat while enabling unlimited skills",
+      "Non-interactive autonomous execution mode for discovery and analysis agents",
+      "Modular agent skill system inspired by agentskills.io specification",
+      "Comprehensive instruction templates with phase-by-phase execution guides",
+      "Focus on experimentation and learning documentation rather than production tooling",
+      "Multi-agent orchestration with explicit user approval gates between phases"
+    ],
+    "market_position": "Experimental research project and learning framework rather than production-ready tool, focused on documenting patterns and best practices for agentic AI development workflows within the GitHub Copilot ecosystem",
+    "competitor_pain_points": [],
+    "competitor_analysis_available": false
+  },
+  "constraints": {
+    "technical": [
+      "Dependent on GitHub Copilot's capabilities and limitations",
+      "Markdown and JSON-based system limits automation possibilities",
+      "No code execution environment - relies on documentation and instructions",
+      "Context window limitations require progressive loading and modular design",
+      "Limited to file-based workflows without external API integrations"
+    ],
+    "resources": [
+      "Single primary maintainer (Pradeep Patil) with Copilot assistance",
+      "Experimental project with no dedicated budget or timeline",
+      "Community contributions welcome but not actively solicited",
+      "Documentation-heavy workload requires ongoing maintenance"
+    ],
+    "dependencies": [
+      "GitHub Copilot availability and API access",
+      "Git for version control and collaboration",
+      "Markdown rendering for documentation",
+      "JSON schema validation tools (not yet integrated)",
+      "GitHub repository hosting for version control and sharing"
+    ]
+  },
+  "created_at": "2026-01-17T12:58:22Z"
+}

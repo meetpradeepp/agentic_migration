@@ -1,0 +1,755 @@
+{
+  "id": "roadmap-1737120196",
+  "project_name": "Migration Factory with Joern",
+  "version": "1.0",
+  "vision": "Automated legacy code migration factory using Joern to analyze C/C++/Pro*C codebases and generate modern, documented, and maintainable code",
+  "target_audience": {
+    "primary": "Software architects and engineering teams responsible for migrating legacy C/C++/Pro*C applications to modern technology stacks",
+    "secondary": [
+      "Technical leads managing large-scale legacy system modernization projects",
+      "Development teams working with Pro*C database code requiring migration to ORM or modern database APIs",
+      "Consultants specializing in legacy system assessment and migration planning"
+    ]
+  },
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Foundation - Joern Integration & Core Analysis",
+      "description": "Establish Joern-based code analysis infrastructure with C/C++/Pro*C parsing, CPG generation, and basic knowledge extraction capabilities",
+      "order": 1,
+      "status": "planned",
+      "features": [
+        "feature-1",
+        "feature-2",
+        "feature-3",
+        "feature-4",
+        "feature-5",
+        "feature-6"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-1-1",
+          "title": "Joern Successfully Analyzes C/C++ Codebase",
+          "description": "Joern environment configured, sample C/C++ project analyzed, and Code Property Graph generated successfully",
+          "features": [
+            "feature-1",
+            "feature-2"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-1-2",
+          "title": "Basic Migration Report Generated",
+          "description": "System can scan legacy codebase, extract basic metadata, and generate human-readable migration assessment report",
+          "features": [
+            "feature-3",
+            "feature-4",
+            "feature-5",
+            "feature-6"
+          ],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Enhancement - Advanced Analysis & Transformations",
+      "description": "Add SQL extraction, dependency analysis, call graph visualization, and template-based code transformation capabilities",
+      "order": 2,
+      "status": "planned",
+      "features": [
+        "feature-7",
+        "feature-8",
+        "feature-9",
+        "feature-10",
+        "feature-11",
+        "feature-12",
+        "feature-13"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-2-1",
+          "title": "SQL Queries Extracted from Pro*C",
+          "description": "System can parse Pro*C files and extract embedded SQL queries with context for transformation",
+          "features": [
+            "feature-7",
+            "feature-8"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-2-2",
+          "title": "First Successful Code Transformation",
+          "description": "Template-based transformation converts legacy C code to target modern language with passing validation",
+          "features": [
+            "feature-10",
+            "feature-11",
+            "feature-12"
+          ],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Scale - Multi-Project & Advanced Transformations",
+      "description": "Scale migration factory to handle multiple projects, custom transformation rules, and complex migration scenarios",
+      "order": 3,
+      "status": "planned",
+      "features": [
+        "feature-14",
+        "feature-15",
+        "feature-16",
+        "feature-17",
+        "feature-18"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-3-1",
+          "title": "Batch Migration of Multiple Projects",
+          "description": "Factory can process multiple legacy projects in parallel with consolidated reporting",
+          "features": [
+            "feature-14",
+            "feature-15"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-3-2",
+          "title": "Custom Transformation Pipeline Live",
+          "description": "Users can define and apply custom transformation rules for domain-specific migration patterns",
+          "features": [
+            "feature-16",
+            "feature-17",
+            "feature-18"
+          ],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Future - AI Assistance & Ecosystem Integration",
+      "description": "Long-term vision features including AI-powered suggestions, IDE integration, and migration quality optimization",
+      "order": 4,
+      "status": "planned",
+      "features": [
+        "feature-19",
+        "feature-20",
+        "feature-21",
+        "feature-22"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-4-1",
+          "title": "AI-Assisted Migration Suggestions",
+          "description": "System provides intelligent recommendations for complex migration decisions using ML models",
+          "features": [
+            "feature-19",
+            "feature-20"
+          ],
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feature-1",
+      "title": "Joern Installation and Environment Setup",
+      "description": "Automated installation and configuration of Joern with support for C/C++/Pro*C analysis. Includes dependency management, version verification, and environment validation to ensure Joern is ready for code analysis.",
+      "rationale": "Critical foundation for the entire migration factory. Without Joern properly configured, no code analysis or migration can occur. Software architects need a reliable, repeatable setup process to get started quickly.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Joern installs successfully on Linux, macOS, and Windows environments",
+        "Setup script validates Joern version compatibility with C/C++/Pro*C frontends",
+        "Environment verification passes with clear error messages if dependencies missing",
+        "Documentation includes troubleshooting guide for common installation issues"
+      ],
+      "user_stories": [
+        "As a software architect, I want to install Joern with one command so that I can start analyzing legacy code within minutes",
+        "As a team lead, I want automated environment validation so that I know the migration factory is properly configured before starting work"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-2",
+      "title": "C/C++/Pro*C File Parsing and CPG Generation",
+      "description": "Core parsing engine that ingests C, C++, and Pro*C source files and generates Code Property Graphs using Joern. Handles preprocessor directives, include files, and Pro*C embedded SQL syntax.",
+      "rationale": "The fundamental capability of the migration factory. Code Property Graphs enable all downstream analysis, transformation, and knowledge extraction. This directly addresses the pain point of understanding complex legacy codebases.",
+      "priority": "must",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [
+        "feature-1"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Successfully parses C files with complex preprocessor directives and macros",
+        "Generates valid CPG from C++ files including templates and namespaces",
+        "Handles Pro*C embedded SQL statements without syntax errors",
+        "CPG can be queried using Joern query language",
+        "Parsing errors are clearly reported with file/line context"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want to parse our 500K-line Pro*C codebase so that I can analyze its structure and dependencies",
+        "As a technical lead, I want to see parsing errors clearly so that I can address code that needs preprocessing before analysis"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-3",
+      "title": "Function Signature and Metadata Extraction",
+      "description": "Extract comprehensive function metadata including signatures, parameters, return types, visibility, and location. Creates searchable catalog of all functions in the codebase with their characteristics.",
+      "rationale": "Understanding function inventory is the first step in migration planning. Software architects need to know what functions exist, their interfaces, and where they're defined to plan migration strategy and identify reusable components.",
+      "priority": "must",
+      "complexity": "low",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [
+        "feature-2"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "All function signatures extracted with accurate parameter types and return types",
+        "Function metadata includes file location, line numbers, and visibility (static/extern)",
+        "Catalog exported to JSON and CSV formats",
+        "Search functionality allows finding functions by name, file, or signature pattern"
+      ],
+      "user_stories": [
+        "As a software architect, I want a complete function inventory so that I can understand the scope of code to migrate",
+        "As a consultant, I want to search functions by pattern so that I can identify similar functions that can share migration templates"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-4",
+      "title": "Call Graph Generation and Visualization",
+      "description": "Generate complete call graph showing function invocation relationships. Provides interactive visualization for exploring how functions interact, identifying critical paths, and understanding code flow.",
+      "rationale": "Call graphs reveal hidden dependencies and system architecture. This addresses the pain point of understanding complex codebase structure and helps migration teams identify high-risk areas and migration sequencing.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [
+        "feature-2",
+        "feature-3"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Call graph accurately represents all function invocations including indirect calls",
+        "Visualization displays call relationships with zoom and filter capabilities",
+        "Graph can be exported to GraphViz DOT format and interactive HTML",
+        "Supports filtering by module, file, or function name pattern",
+        "Identifies orphaned functions (never called) and entry points"
+      ],
+      "user_stories": [
+        "As a technical lead, I want to visualize call relationships so that I can understand system architecture without reading thousands of lines of code",
+        "As a migration engineer, I want to identify orphaned functions so that I can exclude dead code from migration"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-5",
+      "title": "Migration Progress Tracking Dashboard",
+      "description": "Web-based dashboard displaying migration status including files analyzed, functions extracted, transformations completed, and validation results. Provides real-time visibility into migration workflow progress.",
+      "rationale": "Migration projects are complex and long-running. Teams need visibility into progress to plan work, communicate status to stakeholders, and identify bottlenecks. This addresses the pain point of manual progress tracking.",
+      "priority": "must",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Dashboard displays real-time metrics: files scanned, functions analyzed, errors encountered",
+        "Progress bars show completion percentage for each migration phase",
+        "Filterable list of all files with their migration status (pending/in-progress/complete/error)",
+        "Export functionality for progress reports in PDF and JSON formats",
+        "Dashboard accessible via localhost web server"
+      ],
+      "user_stories": [
+        "As a project manager, I want to see migration progress in real-time so that I can report status to stakeholders",
+        "As a migration engineer, I want to identify files with errors so that I can prioritize troubleshooting work"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-6",
+      "title": "Auto-Generated Migration Assessment Report",
+      "description": "Comprehensive report documenting codebase structure, complexity metrics, dependency analysis, and migration recommendations. Serves as the foundation for migration planning and effort estimation.",
+      "rationale": "Before migrating, teams need to understand what they're working with. This report addresses the pain point of legacy code lacking documentation by auto-generating comprehensive analysis that would take weeks to produce manually.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [
+        "feature-2",
+        "feature-3",
+        "feature-4"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Report includes codebase statistics: lines of code, function count, file count, language breakdown",
+        "Complexity metrics calculated per function and aggregated per module",
+        "Dependency analysis identifies tightly coupled components and isolated modules",
+        "Migration recommendations section suggests sequencing and risk assessment",
+        "Report generated in HTML, PDF, and Markdown formats"
+      ],
+      "user_stories": [
+        "As a software architect, I want an assessment report so that I can understand migration scope and create a realistic project plan",
+        "As a consultant, I want complexity metrics so that I can estimate migration effort and cost for my client"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-7",
+      "title": "SQL Query Extraction from Pro*C Code",
+      "description": "Parse Pro*C files and extract all embedded SQL queries with context including EXEC SQL blocks, host variables, cursors, and dynamic SQL. Creates catalog of SQL statements for migration planning.",
+      "rationale": "Pro*C database code migration requires understanding all SQL interactions. This feature addresses the critical pain point of identifying what database operations need migration, enabling teams to plan ORM mapping or API conversion strategies.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-2"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "All EXEC SQL blocks extracted with surrounding C code context",
+        "Host variables identified and linked to SQL statement usage",
+        "Cursor operations (DECLARE, OPEN, FETCH, CLOSE) captured with relationships",
+        "Dynamic SQL constructed at runtime flagged for manual review",
+        "SQL catalog exported with file location, line numbers, and operation type (SELECT/INSERT/UPDATE/DELETE)"
+      ],
+      "user_stories": [
+        "As a database migration specialist, I want to see all SQL queries so that I can design ORM models and mapping strategy",
+        "As a technical lead, I want to identify complex SQL patterns so that I can assess which queries need custom migration logic"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-8",
+      "title": "Data Flow Analysis for Migration Impact",
+      "description": "Trace data flow through functions to understand how data moves from inputs through transformations to outputs. Identifies variables, parameters, and return values used across function boundaries.",
+      "rationale": "Understanding data flow is critical for correct code transformation. This helps migration engineers ensure that migrated code maintains the same data transformations and side effects as the original, reducing migration bugs.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-2",
+        "feature-3"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Data flow graph shows variable assignments and uses across functions",
+        "Identifies global variables and their access patterns (read/write/both)",
+        "Tracks pointer dereferencing and memory access patterns",
+        "Detects potential data races and shared state issues",
+        "Visualization highlights data flow paths from entry points to outputs"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want to trace data flow so that I can ensure my transformed code maintains correct behavior",
+        "As a quality engineer, I want to identify shared state so that I can design proper state management in the migrated system"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-9",
+      "title": "Dependency Graph with Module Boundaries",
+      "description": "Advanced dependency analysis that maps file-to-file, module-to-module, and function-to-function dependencies. Identifies architectural layers and suggests module boundaries for migration organization.",
+      "rationale": "Large legacy systems have evolved complex dependencies. This feature helps teams understand coupling, identify independent modules for parallel migration, and plan migration sequencing to minimize integration risks.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-2",
+        "feature-4"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Dependency graph shows all include relationships and symbol dependencies",
+        "Circular dependencies identified and highlighted for review",
+        "Module clustering algorithm suggests logical component boundaries",
+        "Metrics calculated: coupling, cohesion, depth of dependency tree",
+        "Graph filterable by dependency type: include, call, data access"
+      ],
+      "user_stories": [
+        "As a software architect, I want to see module boundaries so that I can organize migration work into independent packages",
+        "As a technical lead, I want to identify circular dependencies so that I can refactor them before migration"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-10",
+      "title": "Template-Based Code Generation Framework",
+      "description": "Flexible template engine for generating target language code from legacy code patterns. Supports Jinja2-style templates with access to CPG data, allowing custom transformation logic for different target technologies.",
+      "rationale": "Every migration has unique patterns and target technologies. A template framework allows teams to define how legacy code maps to modern equivalents, enabling customization while automating repetitive transformation work.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-2",
+        "feature-3"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Template engine can access CPG nodes, edges, and properties",
+        "Templates support conditionals, loops, and custom filter functions",
+        "Pre-built templates included for common patterns: C to Java, C to Python, Pro*C to JPA",
+        "Template validation catches syntax errors before generation",
+        "Generated code includes source location comments for traceability"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want to define transformation templates so that I can automate conversion of common code patterns",
+        "As a team lead, I want pre-built templates so that I can start migrating immediately without writing transformation logic"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-11",
+      "title": "Pattern-Based Transformation Rules Engine",
+      "description": "Rule-based transformation system that matches code patterns in CPG and applies transformations. Supports regex-style pattern matching and AST-based transformations with before/after pattern definitions.",
+      "rationale": "Many legacy patterns have direct modern equivalents (e.g., malloc/free → smart pointers, EXEC SQL → ORM calls). A rule engine automates these transformations consistently across the codebase, dramatically reducing manual migration effort.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-2",
+        "feature-10"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Rules defined in YAML or JSON with pattern matching criteria and transformation logic",
+        "Supports matching on AST patterns, function calls, variable usage, and SQL patterns",
+        "Rule precedence and conflict resolution when multiple rules match",
+        "Dry-run mode shows what would be transformed without making changes",
+        "Transformation results logged with matched pattern and applied rule for audit"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want to define transformation rules so that common patterns are migrated consistently",
+        "As a quality engineer, I want to audit transformations so that I can verify correctness and identify edge cases"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-12",
+      "title": "Migration Validation Framework",
+      "description": "Automated validation that compares legacy code behavior with migrated code. Includes static checks, data flow comparison, and hooks for unit test integration to verify transformation correctness.",
+      "rationale": "Migration introduces risk of behavioral changes. Automated validation gives teams confidence that migrated code maintains original functionality, addresses the pain point of error-prone migration, and reduces post-migration bug discovery.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-10",
+        "feature-11"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Static validation checks: function signature parity, data flow equivalence",
+        "Integration with unit test frameworks to run tests against migrated code",
+        "Comparison reports highlight discrepancies between legacy and migrated behavior",
+        "Validation results tracked in progress dashboard",
+        "Failed validations generate detailed diagnostic reports for debugging"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want automated validation so that I can catch transformation bugs before deployment",
+        "As a quality engineer, I want validation reports so that I can focus testing on high-risk areas"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-13",
+      "title": "Risk Assessment and Complexity Scoring",
+      "description": "Analyze each file and function to calculate migration risk and complexity scores based on cyclomatic complexity, dependency count, SQL usage, pointer operations, and other risk factors. Helps prioritize migration work.",
+      "rationale": "Not all legacy code is equally difficult to migrate. Risk scoring helps teams identify high-risk components that need extra attention, plan migration sequencing to tackle easy wins first, and estimate effort accurately.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-2",
+      "dependencies": [
+        "feature-2",
+        "feature-3",
+        "feature-7",
+        "feature-8"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Risk score calculated per function based on: complexity, dependencies, SQL usage, pointer arithmetic, global state",
+        "Files ranked by aggregate risk score for prioritization",
+        "Risk categories defined: Low (automated migration likely), Medium (may need review), High (manual migration required)",
+        "Risk report includes specific risk factors and recommendations",
+        "Risk scores visualized in dashboard with color coding"
+      ],
+      "user_stories": [
+        "As a project manager, I want risk scores so that I can allocate experienced engineers to high-risk components",
+        "As a technical lead, I want to prioritize low-risk files so that I can build team confidence with early wins"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-14",
+      "title": "Multi-Project Batch Processing",
+      "description": "Process multiple legacy codebases in parallel or sequence with consolidated reporting. Supports project configuration files defining source locations, target technologies, and migration settings.",
+      "rationale": "Organizations often have many legacy systems to migrate. Batch processing enables teams to analyze entire portfolios, compare projects, and prioritize migration efforts across the organization, scaling the migration factory beyond single projects.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-2",
+        "feature-6"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Project configuration files define: source directories, language, target technology, custom rules",
+        "Batch mode processes multiple projects with parallel execution support",
+        "Consolidated report compares projects: size, complexity, risk, estimated effort",
+        "Progress tracking shows status across all projects in batch",
+        "Failed projects don't block processing of other projects in batch"
+      ],
+      "user_stories": [
+        "As an enterprise architect, I want to analyze all legacy systems so that I can create a portfolio-level migration roadmap",
+        "As a consultant, I want to batch process client codebases so that I can deliver comparative analysis reports"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-15",
+      "title": "Incremental Migration with Interop Support",
+      "description": "Enable incremental migration where legacy and migrated code coexist. Generate interoperability layer allowing migrated modules to call legacy code and vice versa, supporting phased migration approach.",
+      "rationale": "Big-bang migrations are high-risk. Incremental migration allows teams to migrate module-by-module while maintaining a working system, reducing risk and enabling continuous delivery throughout the migration project.",
+      "priority": "could",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-9",
+        "feature-10",
+        "feature-11"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Identifies module boundaries suitable for incremental migration",
+        "Generates FFI or JNI adapter code for legacy-to-modern calls",
+        "Generates wrapper code for modern-to-legacy calls",
+        "Build system integration allows compiling mixed legacy/migrated codebase",
+        "Documentation explains interop layer usage and migration sequencing"
+      ],
+      "user_stories": [
+        "As a technical lead, I want incremental migration so that I can deliver value continuously rather than waiting for complete migration",
+        "As a DevOps engineer, I want to build mixed codebases so that I can deploy partially migrated systems to production"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-16",
+      "title": "Custom Transformation Rule Editor",
+      "description": "Web-based IDE for creating, testing, and debugging custom transformation rules. Includes pattern testing against sample code, rule visualization, and library of community-contributed rules.",
+      "rationale": "Different organizations have unique legacy patterns. An editor empowers migration engineers to create and share custom rules without deep Joern expertise, democratizing transformation development and building a knowledge base.",
+      "priority": "could",
+      "complexity": "high",
+      "impact": "medium",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-11"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Web IDE with syntax highlighting for rule definition files",
+        "Test panel allows applying rules to sample code snippets",
+        "Step debugger shows rule matching process and transformation steps",
+        "Rule library browser with community-contributed rules by language and pattern type",
+        "Import/export functionality for sharing rules across teams"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want to test rules interactively so that I can debug transformation logic quickly",
+        "As a team lead, I want to share rules so that my team can reuse proven transformations"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-17",
+      "title": "Multi-Target Technology Support",
+      "description": "Extend migration factory to support multiple target technologies (Java, Python, C#, Go, Rust) with target-specific templates and best practices. Configuration-driven selection of target language and framework.",
+      "rationale": "Different legacy systems may be best migrated to different modern technologies. Multi-target support allows organizations to choose the right target per project, making the migration factory a versatile tool for diverse modernization needs.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-10",
+        "feature-11"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Template libraries available for: Java, Python, C#, Go, Rust",
+        "Target selection configurable per project with technology-specific options",
+        "Generated code follows target language conventions and idioms",
+        "Documentation includes migration guides for each target technology",
+        "Example projects demonstrate C/C++/Pro*C migration to each target"
+      ],
+      "user_stories": [
+        "As an enterprise architect, I want to choose different targets for different systems so that I can optimize each migration for its use case",
+        "As a migration engineer, I want target-specific templates so that generated code follows modern best practices"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-18",
+      "title": "Code Quality Metrics and Optimization Suggestions",
+      "description": "Analyze migrated code for quality issues including code smells, anti-patterns, performance concerns, and security vulnerabilities. Provide suggestions for improving generated code beyond basic translation.",
+      "rationale": "Migration is an opportunity to improve code quality, not just translate. This feature helps teams produce better code than the legacy original, justifying migration investment and creating long-term value beyond just technology updates.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "low",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-10",
+        "feature-11",
+        "feature-12"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Quality analysis runs on generated code detecting: long methods, high complexity, code duplication",
+        "Security scanning identifies potential vulnerabilities: SQL injection, buffer overflows, insecure crypto",
+        "Performance suggestions highlight: inefficient algorithms, excessive allocations, blocking I/O",
+        "Suggestions include code examples showing recommended improvements",
+        "Quality metrics tracked over time to measure migration code quality improvements"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want quality suggestions so that I can improve code during migration rather than just translating",
+        "As a security engineer, I want vulnerability detection so that I can fix legacy security issues during migration"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-19",
+      "title": "AI-Powered Migration Pattern Recognition",
+      "description": "Machine learning model trained on successful migrations to identify similar code patterns and suggest transformation strategies. Learns from migration history to improve recommendations over time.",
+      "rationale": "Long-term vision for intelligent automation. As teams migrate more code, the system learns patterns and suggests strategies, reducing manual effort and capturing institutional knowledge that would otherwise be lost.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "medium",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-11",
+        "feature-12",
+        "feature-14"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "ML model trained on corpus of before/after migration code pairs",
+        "Pattern recognition identifies similar code in new projects and suggests transformations",
+        "Confidence scores indicate likelihood of correct transformation",
+        "Model improves over time as more migrations are validated",
+        "Explainability shows why a pattern was recognized and what similar patterns were used for training"
+      ],
+      "user_stories": [
+        "As a migration engineer, I want AI suggestions so that I can leverage knowledge from previous migrations",
+        "As a CTO, I want the system to learn so that migration efficiency improves over time"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-20",
+      "title": "Interactive Migration Decision Wizard",
+      "description": "Guided wizard that walks through migration decisions for complex code patterns. Presents options, trade-offs, and examples, then generates custom transformation rules based on user selections.",
+      "rationale": "Complex patterns require human judgment. A wizard captures migration decisions in reusable rules, enabling teams to handle complexity while automating similar patterns in the future. Reduces learning curve for new migration engineers.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "low",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-11",
+        "feature-16"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Wizard detects complex patterns requiring decisions: error handling, memory management, concurrency",
+        "For each pattern, presents multiple migration approaches with pros/cons",
+        "Shows code examples of each approach in target technology",
+        "User selections generate custom transformation rule automatically",
+        "Wizard remembers decisions for similar patterns in same project"
+      ],
+      "user_stories": [
+        "As a junior migration engineer, I want guided decisions so that I can handle complex patterns correctly",
+        "As a senior engineer, I want to capture decisions as rules so that juniors can apply my expertise to similar patterns"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-21",
+      "title": "IDE Integration Plugin (VSCode/IntelliJ)",
+      "description": "Plugin for popular IDEs providing in-editor migration insights, transformation previews, and navigation between legacy and migrated code. Enables developers to work within familiar environments.",
+      "rationale": "Future enhancement for developer experience. IDE integration makes migration insights accessible during normal development, but is not critical for core migration factory functionality. Deferred to reduce scope.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "low",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-2",
+        "feature-10",
+        "feature-11"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "VSCode and IntelliJ plugins installable from marketplace",
+        "Inline annotations show migration suggestions and risk scores",
+        "Quick actions trigger transformation on selected code",
+        "Side-by-side preview of legacy and migrated code",
+        "Jump-to-definition works across legacy and migrated codebases"
+      ],
+      "user_stories": [
+        "As a developer, I want IDE integration so that I can see migration insights without leaving my editor",
+        "As a code reviewer, I want to navigate between legacy and migrated code so that I can verify transformations"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-22",
+      "title": "Real-Time Collaboration and Review Platform",
+      "description": "Web-based platform for team collaboration on migration projects. Supports assigning files to team members, reviewing transformations, discussing complex patterns, and tracking collective progress.",
+      "rationale": "Future vision for enterprise-scale migration with large teams. Real-time collaboration is valuable but not essential for core migration factory capabilities. Deferred to focus on analysis and transformation fundamentals.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "low",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-5",
+        "feature-14"
+      ],
+      "status": "idea",
+      "acceptance_criteria": [
+        "Web platform supports user authentication and team management",
+        "File assignment workflow allows distributing migration work across team",
+        "Code review interface for approving/rejecting transformations with comments",
+        "Discussion threads for complex patterns with code snippet sharing",
+        "Activity feed shows team progress and recent activities",
+        "Notifications for assigned work, review requests, and mentions"
+      ],
+      "user_stories": [
+        "As a team lead, I want to assign files so that I can distribute work based on team member expertise",
+        "As a migration engineer, I want to discuss patterns so that I can get guidance on complex transformations"
+      ],
+      "competitor_insight_ids": []
+    }
+  ],
+  "metadata": {
+    "created_at": "2026-01-17T13:03:16Z",
+    "updated_at": "2026-01-17T13:03:16Z",
+    "generated_by": "roadmap_features agent",
+    "prioritization_framework": "MoSCoW",
+    "competitor_analysis_used": false
+  }
+}
