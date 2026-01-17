@@ -30,20 +30,26 @@ This file provides detailed guidelines for GitHub Copilot when working with the 
 ✅ **DO**: After each agent completes, automatically invoke the next agent
 ✅ **DO**: Continue until the entire workflow is complete
 ✅ **DO**: Only pause for user review when explicitly required (ADR approval, requirement clarification)
+✅ **DO**: Automatically select the recommended/optimal workflow option
 
 ❌ **DON'T**: Just recommend what to do and wait
 ❌ **DON'T**: Stop after explaining the workflow
 ❌ **DON'T**: Ask user to manually invoke each agent
+❌ **DON'T**: Present multiple options and wait for selection (auto-select the best option)
 
-**Example - WRONG**:
+**Example - WRONG (Presenting Options)**:
 ```
-Orchestrator: "I recommend Workflow 8. Start with spec-gatherer."
-[STOPS - waiting for user to type "Call to subagent spec-gatherer"]
+Orchestrator: "I recommend Workflow 8. Would you like me to:
+Option A (Recommended): Start Workflow 8
+Option B: Continue ad-hoc implementation
+Option C: Hybrid approach"
+[STOPS - waiting for user to select]
 ```
 
-**Example - CORRECT**:
+**Example - CORRECT (Auto-Execute)**:
 ```
-Orchestrator: "Starting Workflow 8: Complexity-Driven Specification"
+Orchestrator: "Analyzing request... Selecting Workflow 8 (Complexity-Driven Specification)
+Starting execution...
 
 Call to subagent spec-gatherer
 [spec-gatherer executes...]
@@ -63,10 +69,17 @@ Call to subagent planner
 Workflow 8 Complete! ✅
 ```
 
-**When to Pause**:
+**Decision Making**:
+- **Analyze context** (existing files, user request clarity, project state)
+- **Select optimal workflow** automatically based on analysis
+- **Execute immediately** - don't ask permission
+- **Explain choice briefly** but proceed without confirmation
+
+**When to Pause** (ONLY):
 - User confirmation needed (ADR approval, ambiguous requirements)
 - Error occurred requiring user decision
 - Workflow explicitly defines pause point (Workflow 5.5 ADR Gate)
+- Unclear which feature to implement from roadmap (need user to specify)
 
 ---
 
@@ -123,20 +136,24 @@ These phrases should **always** invoke the orchestrator:
 
 **Complete Workflows**:
 - "complete roadmap"
-- "end-to-end planning"
-- "from discovery to implementation"
-- "comprehensive plan"
-- "full planning workflow"
+- "end-to-end planning"auto-select workflow):
 
-**Multi-Step Coordination**:
-- "run discovery and features"
-- "generate roadmap and plans"
-- "coordinate agents"
-- "orchestrate planning"
+**Ambiguous Planning Requests**:
+- "plan this project"
+- "create a roadmap"
+- "help me with planning"
 
-### Medium-Confidence Triggers
+**Strategy**: Analyze context and auto-select:
+```
+"Analyzing project... No existing planning artifacts found.
+Selecting Workflow 1 (Complete Roadmap Generation) as optimal approach.
 
-These phrases **likely** need orchestrator (confirm workflow with user):
+Starting discovery phase...
+
+Call to subagent roadmap-discovery
+```
+
+**Only ask if**: Truly ambiguous with no clear best option (rare)se phrases **likely** need orchestrator (confirm workflow with user):
 
 **Ambiguous Planning Requests**:
 - "plan this project"
@@ -600,21 +617,22 @@ runSubagent(
 - All subtasks have verification steps
 - Dependencies mapped
 
-**Review Focus**:
-- Are subtasks actionable and specific?
-- Is workflow type correct?
-- Are verification steps testable?
-
----
-
-## Error Handling
-
-### Missing Prerequisites
-
-**Scenario**: Required input file doesn't exist
-
-**Response**:
+**Review F - AUTOMATIC**:
 ```markdown
+## 🔄 Missing Prerequisite - Auto-Resolving
+
+**Missing**: `[filename]`
+**Needed For**: [Agent Name]
+
+**Action**: Automatically running [Previous Agent] to generate it...
+
+Call to subagent [previous-agent]
+```
+
+**Only ask user if**:
+- The missing prerequisite requires user input (e.g., spec.md with design decisions)
+- Multiple valid approaches exist (can't determine best option)
+- Error is unrecoverable without user interventionmarkdown
 ## ❌ Missing Prerequisite
 
 **Missing**: `[filename]`
