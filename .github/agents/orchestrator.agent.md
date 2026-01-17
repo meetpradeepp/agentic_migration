@@ -116,8 +116,8 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 
 ### Workflow 9: Implementation Validation Loop
 **Trigger**: Implementation complete, validate quality  
-**Sequence**: Validate spec + plan → QA Validator → Decision (APPROVED/CONDITIONAL/REJECTED)  
-**If REJECTED**: Validation Fixer → Re-run QA Validator → Repeat until APPROVED
+**Sequence**: Validate spec + plan → QA Validator → **[Conditional: UI Validator]** → Decision (APPROVED/CONDITIONAL/REJECTED)  
+**If REJECTED**: Validation Fixer → Re-run validation → Repeat until APPROVED
 
 **Quality Gates**:
 | Status | Pass Rate | Critical Issues | Action |
@@ -126,15 +126,57 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 | CONDITIONAL | 80-95% | 0 | Review warnings, deploy |
 | REJECTED | <80% | >0 | Must fix |
 
+**UI Validation Trigger**: Invoke UI Validator if:
+- Frontend service modified (React, Vue, Angular, etc.)
+- UI components created or changed
+- CSS/styling updated
+- spec.md contains UI/UX requirements
+
 **Validation**:
 - [ ] spec.md with QA Acceptance Criteria exists
 - [ ] implementation_plan.json all subtasks "completed"
 - [ ] Test commands executable
 - [ ] validation_results.json has clear decision
+- [ ] ui_validation_results.json exists (if UI changes)
+
+### Workflow 9.5: UI Validation Gate
+**Trigger**: QA Validator passes AND frontend code changed  
+**Purpose**: Validate visual quality, responsive design, accessibility
+
+**Sequence**:
+
+**Phase 1**: Detect if UI validation needed
+- Check if frontend files modified (src/components/, src/views/, *.css, *.tsx, *.vue)
+- Check if spec.md has UI/UX requirements section
+- If YES → Proceed to Phase 2
+- If NO → Skip to Workflow 11 (Security Review)
+
+**Phase 2**: UI Validator → Creates `ui_validation_results.json`
+- Visual regression testing (Playwright screenshots)
+- Responsive design verification (mobile, tablet, desktop)
+- Accessibility compliance (WCAG AA)
+- Interactive states testing (hover, focus, loading)
+- Layout verification (no overlaps, proper spacing)
+- Cross-browser testing (Chrome, Firefox, Safari)
+
+**Phase 3**: Decision
+- **If Approved**: Proceed to Workflow 11 (Security Review)
+- **If Rejected**: Invoke Validation Fixer → Re-run UI Validator
+- **If Conditional**: User review required
+
+**Validation Checkpoints**:
+- [ ] Frontend code exists in project
+- [ ] Dev server can start
+- [ ] Playwright installed or installable
+- [ ] ui_validation_results.json created with status
+- [ ] Screenshots saved to screenshots/ folder
+- [ ] All critical visual issues addressed
+
+---
 
 ### Workflow 10: Code Implementation
 **Trigger**: Plan exists, ready to execute  
-**Sequence**: Validate plan + spec → Coder (per subtask) → QA Validator → Security Analyst
+**Sequence**: Validate plan + spec → Coder (per subtask) → QA Validator → **[Conditional: UI Validator]** → Security Analyst
 
 **Execution Rules**:
 - One subtask at a time (no batching)
@@ -258,6 +300,8 @@ For each agent, state:
 
 **QA Validator**: Run all tests, validate quality → `validation_results.json` (3-10 min)
 
+**UI Validator**: Visual regression, responsive, accessibility testing → `ui_validation_results.json` (5-10 min, only for UI changes)
+
 **Validation Fixer**: Auto-fix linting, formatting, simple errors (2-5 min)
 
 **Coder**: Execute subtasks systematically, verify, commit (15min-2hrs)
@@ -276,6 +320,7 @@ For each agent, state:
 | Spec Gatherer | requirements.json with all fields, valid workflow_type enum, 1+ requirement, 1+ acceptance criterion, edge cases, user confirmation |
 | Context Discovery | context.json with task_description, 1+ file to modify/reference, specific patterns, service contexts, valid relative paths |
 | QA Validator | validation_results.json with status (approved/rejected/conditional), all test suites, QA criteria verified, clear decision |
+| UI Validator | ui_validation_results.json with visual regression results, accessibility scan, responsive checks, screenshot diffs (only if UI changes) |
 | Validation Fixer | Auto-fixable issues resolved, checks re-run, complex issues flagged, functionality preserved |
 | Coder | All subtasks "completed", one commit per subtask, verifications passed, no console errors/secrets, build-progress.txt updated |
 

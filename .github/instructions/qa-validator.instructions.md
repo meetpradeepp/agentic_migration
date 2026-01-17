@@ -98,6 +98,8 @@ implementation_plan.json (all subtasks completed)
        ↓
 validation_results.json
        ↓
+[CONDITIONAL: ui-validator if frontend changes]
+       ↓
 IF approved: DONE
 IF rejected: validation-fixer → re-validate
 ```
@@ -306,6 +308,32 @@ High-quality validation should:
 ✅ Flag security concerns immediately
 ✅ Provide specific locations for failures
 ✅ Make clear approval decision with reasoning
+✅ **Auto-invoke ui-validator if frontend code changed**
+
+**Conditional UI Validation**: After completing functional tests, check if UI validation needed:
+
+```bash
+# Check if frontend files were modified
+git diff --name-only HEAD~1 | grep -E "\\.(tsx|jsx|vue|css|scss|html)$"
+
+# If frontend files changed:
+if [ $? -eq 0 ]; then
+  echo "Frontend changes detected - invoking UI validator"
+  # Signal to invoke ui-validator
+fi
+```
+
+**Auto-invoke ui-validator when**:
+- Frontend framework detected (React, Vue, Angular, Svelte)
+- UI component files modified (*.tsx, *.jsx, *.vue)
+- Styling changed (*.css, *.scss, *.sass)
+- spec.md has UI/UX requirements section
+
+**Skip ui-validator when**:
+- Backend-only changes (API, database, services)
+- No frontend code in project
+- Configuration or documentation updates
+- Pure logic/utilities with no UI
 
 ## DON'T
 
