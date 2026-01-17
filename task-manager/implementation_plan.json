@@ -412,7 +412,7 @@
             "command": "cd task-manager && grep -E '(getMonthGrid|date-fns)' src/views/Calendar.tsx",
             "expected": "Calendar uses date utilities or date-fns"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-6-3",
@@ -432,7 +432,7 @@
             "command": "cd task-manager && grep -E '(TaskList|FilterBar)' src/views/AllTasks.tsx | wc -l",
             "expected": "AllTasks uses TaskList and FilterBar components"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-6-4",
