@@ -6,9 +6,9 @@ import {
   getNextMonth, 
   getPrevMonth,
   isSameDay,
-  CalendarDay 
 } from '../utils/dateUtils';
-import { Task } from '../types';
+import type { CalendarDay } from '../utils/dateUtils';
+import type { Task } from '../types';
 import { TaskItem } from '../components/TaskItem';
 import './Calendar.css';
 

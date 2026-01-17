@@ -1,7 +1,8 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Task, UserList, TaskFilter, TaskMetrics } from '../types';
+import { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
+import type { Task, UserList, TaskFilter, TaskMetrics } from '../types';
 import { TaskStorage, ListStorage } from '../utils/storage';
-import { SortBy, SortDirection } from '../hooks/useTaskSort';
+import type { SortBy, SortDirection } from '../hooks/useTaskSort';
 
 interface TaskContextType {
   tasks: Task[];

@@ -1,4 +1,4 @@
-import { Task, UserList } from '../types';
+import type { Task, UserList } from '../types';
 
 const STORAGE_KEYS = {
   TASKS: 'enterprise_tasks',

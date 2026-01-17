@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TaskStatus, TaskPriority } from '../types';
+import type { TaskStatus, TaskPriority } from '../types';
 import { useTasks } from '../contexts/TaskContext';
 import './FilterBar.css';
 

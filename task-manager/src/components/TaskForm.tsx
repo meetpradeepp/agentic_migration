@@ -1,5 +1,6 @@
-import { useState, useEffect, FormEvent } from 'react';
-import { Task, TaskPriority, TaskStatus } from '../types';
+import { useState, useEffect } from 'react';
+import type { FormEvent } from 'react';
+import type { Task, TaskPriority, TaskStatus } from '../types';
 import { useTasks } from '../contexts/TaskContext';
 import './TaskForm.css';
 

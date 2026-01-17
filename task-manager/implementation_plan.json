@@ -483,7 +483,7 @@
             "command": "cd task-manager && grep -E '(sortTasks|getMetrics)' src/contexts/TaskContext.tsx",
             "expected": "TaskContext includes sorting and metrics methods"
           },
-          "status": "in_progress"
+          "status": "completed"
         }
       ]
     },
@@ -510,7 +510,7 @@
             "command": "cd task-manager && npm run build",
             "expected": "Build completes successfully with no TypeScript errors"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-8-2",

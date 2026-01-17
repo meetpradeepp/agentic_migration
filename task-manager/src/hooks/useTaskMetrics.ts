@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Task, TaskMetrics, TaskPriority } from '../types';
+import type { Task, TaskMetrics, TaskPriority } from '../types';
 
 /**
  * Custom hook to calculate task metrics from a list of tasks

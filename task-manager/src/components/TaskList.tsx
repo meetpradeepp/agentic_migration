@@ -1,8 +1,9 @@
-import { Task } from '../types';
+import type { Task } from '../types';
 import { useTasks } from '../contexts/TaskContext';
 import { TaskItem } from './TaskItem';
 import { EmptyState } from './EmptyState';
-import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import type { DropResult } from '@hello-pangea/dnd';
 import './TaskList.css';
 
 interface TaskListProps {

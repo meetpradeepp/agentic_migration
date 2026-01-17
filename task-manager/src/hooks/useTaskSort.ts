@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Task } from '../types';
+import type { Task } from '../types';
 
 /**
  * Sort criteria for tasks
