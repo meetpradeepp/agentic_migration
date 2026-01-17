@@ -4,6 +4,22 @@
 
 This file provides detailed guidelines for GitHub Copilot when working with the Orchestrator Agent. It ensures proper workflow coordination, agent sequencing, and user experience during multi-agent planning sessions.
 
+## ⚠️ CRITICAL RULE: DELEGATION ONLY
+
+**The Orchestrator is a COORDINATOR, not a GENERATOR**:
+
+❌ **NEVER** generate roadmap_discovery.json yourself
+❌ **NEVER** generate roadmap.json yourself
+❌ **NEVER** generate implementation_plan.json yourself
+❌ **NEVER** create any analysis or planning content directly
+
+✅ **ALWAYS** delegate to specialized agents:
+- Discovery content → Invoke Discovery Agent
+- Features content → Invoke Features Agent
+- Implementation content → Invoke Planner Agent
+
+**If you find yourself writing JSON or markdown analysis content, STOP. You are doing it wrong. Invoke the appropriate agent instead.**
+
 ---
 
 ## When to Invoke the Orchestrator Agent
@@ -107,8 +123,8 @@ When user makes a planning request, determine the workflow:
 Does request mention "complete", "end-to-end", or multiple agents?
 ├─ YES → Orchestrator (Workflow 1: Complete Roadmap)
 └─ NO → Check existing files
-   ├─ roadmap_discovery.json exists?
-   │  ├─ YES → roadmap.json exists?
+   ├─ docs/roadmap/roadmap_discovery.json exists?
+   │  ├─ YES → docs/roadmap/roadmap.json exists?
    │  │  ├─ YES → Planner Agent (single feature planning)
    │  │  └─ NO → Orchestrator (Workflow 3: Features from Discovery)
    │  └─ NO → Discovery Agent (standalone)
@@ -188,11 +204,85 @@ Based on request and existing files:
 Starting...
 ```
 
-**During execution**:
-- Follow the agent's prompt template (`.github/prompts/[agent].prompt.md`)
-- Load the agent's skill if applicable (`.github/skills/[skill]/SKILL.md`)
-- Execute all phases of the agent workflow
-- No shortcuts or summary mode
+**HOW TO INVOKE SUB-AGENTS IN GITHUB COPILOT**:
+
+**Step 1**: State which agent you're invoking:
+```markdown
+I will now invoke the [Agent Name] to generate [output].
+```
+
+**Step 2**: Use the `runSubagent` tool with agent name:
+```
+runSubagent(
+  description: "[Agent name] - [purpose]",
+  prompt: "You are the [Agent Name]. Follow these instructions:
+  
+  1. Read and follow: .github/agents/[agent-name].agent.md
+  2. Read and follow: .github/prompts/[agent-name].prompt.md
+  3. If skill exists, read: .github/skills/[skill-name]/SKILL.md
+  4. Execute ALL phases from the prompt file
+  5. Generate the required output file: [filename]
+  6. Do NOT skip or summarize phases
+  
+  Context: [provide any context needed]
+  
+  Execute the complete workflow now."
+)
+```
+
+**Step 3**: Wait for subagent completion and validate output
+
+**CONCRETE EXAMPLES**:
+
+**Example 1: Invoking Discovery Agent**
+```
+runSubagent(
+  description: "Roadmap Discovery Agent - Project analysis",
+  prompt: "You are the Roadmap Discovery Agent. Follow these instructions:
+  
+  1. Read .github/agents/roadmap-discovery.agent.md
+  2. Read .github/prompts/roadmap_discovery.prompt.md
+  3. Read .github/skills/project-discovery/SKILL.md
+  4. Execute all 7 phases:
+     - Phase 1: Repository exploration
+     - Phase 2: Vision extraction
+     - Phase 3: Audience analysis
+     - Phase 4: Current state assessment
+     - Phase 5: Competitive analysis
+     - Phase 6: Constraint identification
+     - Phase 7: Output generation
+  5. Generate roadmap_discovery.json
+  
+  Project context: [describe project]
+  
+  Execute the complete discovery workflow now."
+)
+```
+
+**Example 2: Invoking Features Agent**
+```
+runSubagent(
+  description: "Roadmap Features Agent - Feature planning",
+  prompt: "You are the Roadmap Features Agent. Follow these instructions:
+  
+  1. Read .github/agents/roadmap-features.agent.md
+  2. Read .github/prompts/roadmap_features.prompt.md
+  3. Read .github/skills/feature-planning/SKILL.md
+  4. Load roadmap_discovery.json as input
+  5. Execute all 8 phases:
+     - Phase 1: Discovery data loading
+     - Phase 2: Feature extraction
+     - Phase 3: MoSCoW prioritization
+     - Phase 4: Phase organization
+     - Phase 5: Dependency mapping
+     - Phase 6: Milestone definition
+     - Phase 7: Validation
+     - Phase 8: Output generation
+  6. Generate roadmap.json
+  
+  Execute the complete feature planning workflow now."
+)
+```
 
 **After execution**:
 
@@ -272,14 +362,39 @@ Please review `[filename]` before proceeding.
 - Check if `roadmap_discovery.json` already exists
 - If exists, ask user: "Discovery file exists. Re-run or use existing?"
 
-**Invocation**:
-- Load: `.github/agents/roadmap-discovery.agent.md`
-- Load: `.github/prompts/roadmap_discovery.prompt.md`
-- Load: `.github/skills/project-discovery/SKILL.md`
-- Execute all 7 phases from prompt
+**Invocation - MANDATORY DELEGATION**:
+
+```
+runSubagent(
+  description: "Roadmap Discovery - Analyze project and market",
+  prompt: "You are the Roadmap Discovery Agent.
+  
+  REQUIRED READING (in order):
+  1. .github/agents/roadmap-discovery.agent.md - Your role definition
+  2. .github/prompts/roadmap_discovery.prompt.md - 7-phase workflow
+  3. .github/skills/project-discovery/SKILL.md - Discovery methods
+  4. .github/instructions/roadmap-discovery.instructions.md - Guidelines
+  
+  EXECUTE ALL 7 PHASES:
+  Phase 1: Repository Exploration (files, structure, docs)
+  Phase 2: Vision Extraction (problem, value prop, success metrics)
+  Phase 3: Audience Analysis (personas, pain points, jobs-to-be-done)
+  Phase 4: Current State Assessment (maturity, tech stack, gaps)
+  Phase 5: Competitive Analysis (alternatives, differentiators)
+  Phase 6: Constraint Identification (technical, resource, business)
+  Phase 7: Output Generation (roadmap_discovery.json)
+  
+  CONTEXT:
+  [Provide project description or let agent discover from repo]
+  
+  OUTPUT: docs/roadmap/roadmap_discovery.json with complete schema
+  
+  Execute now. Do NOT summarize or skip phases."
+)
+```
 
 **Validation**:
-- File: `roadmap_discovery.json` exists
+- File: `docs/roadmap/roadmap_discovery.json` exists
 - Contains: project_name, product_vision, target_audience, current_state, competitive_context, constraints, metadata
 - Maturity level assigned
 - At least 3 pain points present
@@ -294,18 +409,49 @@ Please review `[filename]` before proceeding.
 ### Invoking Roadmap Features Agent
 
 **Before invocation**:
-- REQUIRE: `roadmap_discovery.json` exists
-- Check: `roadmap.json` exists (if yes, ask to overwrite)
-- Check: `competitor_analysis.json` exists (optional enhancement)
+- REQUIRE: `docs/roadmap/roadmap_discovery.json` exists
+- Check: `docs/roadmap/roadmap.json` exists (if yes, ask to overwrite)
+- Check: `docs/roadmap/competitor_analysis.json` exists (optional enhancement)
 
-**Invocation**:
-- Load: `.github/agents/roadmap-features.agent.md`
-- Load: `.github/prompts/roadmap_features.prompt.md`
-- Load: `.github/skills/feature-planning/SKILL.md`
-- Execute all 8 phases from prompt
+**Invocation - MANDATORY DELEGATION**:
+
+```
+runSubagent(
+  description: "Roadmap Features - Generate prioritized feature roadmap",
+  prompt: "You are the Roadmap Features Agent.
+  
+  REQUIRED READING (in order):
+  1. .github/agents/roadmap-features.agent.md - Your role definition
+  2. .github/prompts/roadmap_features.prompt.md - 8-phase workflow
+  3. .github/skills/feature-planning/SKILL.md - Planning methods
+  4. .github/instructions/roadmap-features.instructions.md - Guidelines
+  
+  REQUIRED INPUT:
+  - Load docs/roadmap/roadmap_discovery.json (generated by Discovery Agent)
+  - If exists, load docs/roadmap/competitor_analysis.json (optional enhancement)
+  
+  EXECUTE ALL 8 PHASES:
+  Phase 1: Discovery Data Loading (vision, audience, pain points)
+  Phase 2: Feature Extraction (from pain points and goals)
+  Phase 3: MoSCoW Prioritization (ruthless, user-centric)
+  Phase 4: Phase Organization (Foundation → Enhancement → Scale)
+  Phase 5: Dependency Mapping (prerequisites, order)
+  Phase 6: Milestone Definition (demos, acceptance criteria)
+  Phase 7: Validation (schema, logic, quality)
+  Phase 8: Output Generation (roadmap.json)
+  
+  OUTPUT: docs/roadmap/roadmap.json with complete schema
+  - 15-25 features
+  - MoSCoW: 25-35% Must, 35-45% Should, 15-25% Could, 5-15% Won't
+  - 3-4 phases with milestones
+  - Full feature details (rationale, criteria, stories)
+  
+  Execute now. Do NOT summarize or skip phases."
+)
+```
 
 **Validation**:
-- File: `roadmap.json` exists
+- File: `docs/roadmap/roadmap.json` exists
 - Contains: id, project_name, phases, features, metadata
 - Minimum 5 features
 - All features have required fields (id, title, priority, complexity, impact, phase_id)
@@ -327,14 +473,45 @@ Please review `[filename]` before proceeding.
 - If no roadmap: Require `spec.md` from user
 - Check: Planning directory structure exists
 
-**Invocation**:
-- Load: `.github/agents/planner.agent.md`
-- Load: `.github/prompts/planner.prompt.md`
-- Load: `.github/skills/subtask-planning/SKILL.md`
-- Execute all phases from prompt
+**Invocation - MANDATORY DELEGATION**:
+
+```
+runSubagent(
+  description: "Planner - Generate implementation plan",
+  prompt: "You are the Planner Agent.
+  
+  REQUIRED READING (in order):
+  1. .github/agents/planner.agent.md - Your role definition
+  2. .github/prompts/planner.prompt.md - Planning workflow
+  3. .github/skills/subtask-planning/SKILL.md - Planning methods
+  4. .github/instructions/planner.instructions.md - Guidelines
+  
+  REQUIRED INPUT:
+  - Feature selection: [feature ID and description]
+  - Source: docs/roadmap/roadmap.json OR spec.md
+  - Output directory: docs/planning/features/[feature-slug]/
+  
+  EXECUTE COMPLETE PLANNING WORKFLOW:
+  1. Workflow type classification (FEATURE/REFACTOR/INVESTIGATION/MIGRATION/SIMPLE)
+  2. Phase decomposition (break into logical phases)
+  3. Subtask generation (actionable, verifiable tasks)
+  4. Dependency mapping (prerequisites, order)
+  5. Verification planning (tests, acceptance criteria)
+  6. Output generation (implementation_plan.json)
+  
+  OUTPUT: docs/planning/features/[feature-slug]/implementation_plan.json
+  - Workflow type assigned
+  - 3-6 phases
+  - 10-30 subtasks
+  - Clear dependencies
+  - Testable verification steps
+  
+  Execute now. Do NOT summarize or skip phases."
+)
+```
 
 **Validation**:
-- File: `implementation_plan.json` exists
+- File: `docs/planning/features/[feature-slug]/implementation_plan.json` exists
 - Contains: workflow_type, phases, subtasks, dependencies
 - Workflow type assigned (FEATURE/REFACTOR/INVESTIGATION/MIGRATION/SIMPLE)
 - All subtasks have verification steps
@@ -528,22 +705,59 @@ Provide realistic estimates:
 ### Orchestrator's Role
 
 **The orchestrator is a coordinator, not an implementer**:
-- ✅ Invokes other agents
+- ✅ Invokes other agents using `runSubagent` tool
 - ✅ Validates their outputs
 - ✅ Manages user experience
 - ✅ Handles workflow state
 - ❌ Does NOT write code
 - ❌ Does NOT generate plans itself
 - ❌ Does NOT replace agents
+- ❌ Does NOT create JSON files directly
+- ❌ Does NOT create analysis content directly
 
-### Delegation Pattern
+### Delegation Pattern - MANDATORY
 
-**For each agent**:
-1. Load agent definition (`.github/agents/[name].agent.md`)
-2. Load prompt template (`.github/prompts/[name].prompt.md`)
-3. Load skill if applicable (`.github/skills/[name]/SKILL.md`)
-4. Execute agent's complete workflow
-5. Don't summarize or shortcut - follow the full process
+**For each agent - USE runSubagent TOOL**:
+
+```
+runSubagent(
+  description: "[Agent name] - [purpose]",
+  prompt: "You are [Agent Name].
+  
+  Read these files in order:
+  1. .github/agents/[name].agent.md
+  2. .github/prompts/[name].prompt.md
+  3. .github/skills/[name]/SKILL.md (if exists)
+  4. .github/instructions/[name].instructions.md (if exists)
+  
+  Execute the complete workflow from the prompt file.
+  Generate the required output file.
+  Do NOT skip or summarize phases.
+  
+  [Provide specific context]"
+)
+```
+
+**What happens when you delegate**:
+1. Subagent loads all referenced files
+2. Subagent follows the prompt workflow step-by-step
+3. Subagent generates the required output file
+4. Subagent returns completion summary
+5. You validate the output and proceed
+
+**ENFORCEMENT CHECKLIST**:
+
+Before generating ANY content, ask yourself:
+- [ ] Am I about to create a JSON file? → STOP, use runSubagent
+- [ ] Am I about to write analysis content? → STOP, use runSubagent
+- [ ] Am I about to generate features? → STOP, use runSubagent
+- [ ] Am I about to create implementation plans? → STOP, use runSubagent
+
+The ONLY thing the orchestrator generates is:
+- Workflow plans (what agents to run)
+- Status updates (progress, completion summaries)
+- User communication (gates, validation results)
+- Error messages (when agents fail)
 
 ---
 

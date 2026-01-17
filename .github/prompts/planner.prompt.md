@@ -173,11 +173,16 @@ Your plan structure depends on the workflow type. Choose wisely.
 
 ---
 
-## PHASE 3: CREATE implementation_plan.json
+## PHASE 3: CREATE IMPLEMENTATION_PLAN.JSON
 
-### Plan Structure
+**Create the feature directory and implementation plan:**
 
-```json
+```bash
+# Create directory structure (use feature slug from roadmap or generate from feature name)
+mkdir -p docs/planning/features/[feature-name-slug]
+
+# Create the implementation plan
+cat > docs/planning/features/[feature-name-slug]/implementation_plan.json << 'EOF'
 {
   "feature": "Short descriptive name for this task/feature",
   "workflow_type": "feature|refactor|investigation|migration|simple",
@@ -415,13 +420,13 @@ echo "Frontend PID: $FRONTEND_PID"
 
 Checklist before ending session:
 
-- [ ] `implementation_plan.json` created
-- [ ] `init.sh` created  
-- [ ] `build-progress.txt` created
+- [ ] `docs/planning/features/[feature-slug]/implementation_plan.json` created
+- [ ] `docs/planning/features/[feature-slug]/init.sh` created (optional)
+- [ ] `docs/planning/features/[feature-slug]/build-progress.txt` created (optional)
 - [ ] All phases have valid types
 - [ ] All subtasks have verification
 - [ ] Dependencies are correctly specified
-- [ ] All files are in planning directory (not committed to git)
+- [ ] Directory structure is correct
 
 ---
 
@@ -467,7 +472,7 @@ Parallel groups:
 
 ## Planning Session Complete
 
-Next: Implementation will follow subtasks from implementation_plan.json
+Next: Implementation will follow subtasks from docs/planning/features/[feature-slug]/implementation_plan.json
 ```
 
 ---
@@ -477,10 +482,10 @@ Next: Implementation will follow subtasks from implementation_plan.json
 **IMPORTANT: Your job is PLANNING ONLY - do NOT implement any code!**
 
 Your session ends after:
-1. ✅ Creating `implementation_plan.json` - the complete subtask-based plan
-2. ✅ Creating/updating context files - `project_index.json`, `context.json`
-3. ✅ Creating `init.sh` - the setup script
-4. ✅ Creating `build-progress.txt` - progress tracking document
+1. ✅ Creating `docs/planning/features/[feature-slug]/implementation_plan.json` - the complete subtask-based plan
+2. ✅ Creating/updating context files - `project_index.json`, `context.json` (optional)
+3. ✅ Creating `docs/planning/features/[feature-slug]/init.sh` - the setup script (optional)
+4. ✅ Creating `docs/planning/features/[feature-slug]/build-progress.txt` - progress tracking document (optional)
 
 **STOP HERE. Do NOT:**
 - ❌ Start implementing any subtasks
@@ -490,7 +495,7 @@ Your session ends after:
 - ❌ Push to remote repository
 
 A SEPARATE implementation step will:
-1. Read `implementation_plan.json` for subtask list
+1. Read `docs/planning/features/[feature-slug]/implementation_plan.json` for subtask list
 2. Find next pending subtask (respecting dependencies)
 3. Implement the actual code changes
 
@@ -499,7 +504,7 @@ A SEPARATE implementation step will:
 ## KEY REMINDERS
 
 1. **PHASE 0 is mandatory** - No shortcuts on codebase investigation
-2. **Create all files** - Don't just describe, actually create them!
+2. **Create all files in feature directory** - docs/planning/features/[feature-slug]/
 3. **One service per subtask** - Never mix services
 4. **Every subtask needs verification** - No "trust me, it works"
 5. **Respect dependencies** - Phase order matters
@@ -509,7 +514,7 @@ A SEPARATE implementation step will:
 
 ## PRE-PLANNING CHECKLIST (MANDATORY)
 
-Before creating `implementation_plan.json`, confirm:
+Before creating `docs/planning/features/[feature-slug]/implementation_plan.json`, confirm:
 
 ### Investigation Complete
 - [ ] Explored directory structure

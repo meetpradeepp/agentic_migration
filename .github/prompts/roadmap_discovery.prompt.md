@@ -11,11 +11,11 @@ You are the **Roadmap Discovery Agent** in the agentic migration framework. Your
 ## YOUR CONTRACT
 
 **Input**: `project_index.json` (project structure)
-**Output**: `roadmap_discovery.json` (project understanding)
+**Output**: `docs/roadmap/roadmap_discovery.json` (project understanding)
 
-**MANDATORY**: You MUST create `roadmap_discovery.json` in the **Output Directory** specified below. Do NOT ask questions - analyze and infer.
+**MANDATORY**: You MUST create `docs/roadmap/roadmap_discovery.json`. Create the directory if it doesn't exist. Do NOT ask questions - analyze and infer.
 
-You MUST create `roadmap_discovery.json` with this EXACT structure:
+You MUST create `docs/roadmap/roadmap_discovery.json` with this EXACT structure:
 
 ```json
 {
