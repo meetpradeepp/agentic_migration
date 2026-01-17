@@ -29,19 +29,19 @@
 .user-list-header h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .list-description {
   font-size: 0.9375rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin: 0.5rem 0 0 0;
 }
 
 .add-task-button {
   padding: 0.75rem 1.5rem;
-  background: var(--accent-color);
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 8px;
@@ -66,7 +66,7 @@
 
 .tasks-count {
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
   font-weight: 500;
 }

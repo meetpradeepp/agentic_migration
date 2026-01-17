@@ -1,8 +1,8 @@
 .sidebar {
   width: 280px;
   height: 100vh;
-  background: var(--background-secondary);
-  border-right: 1px solid var(--border-color);
+  background: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border-primary);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -10,13 +10,13 @@
 
 .sidebar-header {
   padding: 1.5rem 1.25rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--color-border-primary);
 }
 
 .sidebar-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin: 0;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
 .app-icon {
   width: 36px;
   height: 36px;
-  background: var(--accent-color);
+  background: var(--color-primary);
   color: white;
   border-radius: 8px;
   display: flex;
@@ -59,7 +59,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin: 0 0 0.5rem 1.25rem;
 }
 
@@ -68,19 +68,19 @@
   align-items: center;
   gap: 0.875rem;
   padding: 0.75rem 1.25rem;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   text-decoration: none;
   transition: all 0.2s ease;
   position: relative;
 }
 
 .nav-link:hover {
-  background: var(--background-tertiary);
+  background: var(--color-bg-tertiary);
 }
 
 .nav-link.active {
-  background: var(--background-tertiary);
-  color: var(--accent-color);
+  background: var(--color-bg-tertiary);
+  color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -91,7 +91,7 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--accent-color);
+  background: var(--color-primary);
 }
 
 .nav-icon {
@@ -107,8 +107,8 @@
   height: 24px;
   border-radius: 6px;
   border: none;
-  background: var(--background-tertiary);
-  color: var(--text-primary);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
   font-size: 1.25rem;
   cursor: pointer;
   display: flex;
@@ -118,7 +118,7 @@
 }
 
 .add-list-button:hover {
-  background: var(--accent-color);
+  background: var(--color-primary);
   color: white;
   transform: scale(1.1);
 }
@@ -159,7 +159,7 @@
 .list-action-icon {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 4px;
@@ -168,12 +168,12 @@
 }
 
 .list-action-icon:hover {
-  background: var(--background-primary);
-  color: var(--text-primary);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 .list-action-icon.delete:hover {
-  color: var(--danger-color);
+  color: var(--color-danger);
   background: rgba(239, 68, 68, 0.1);
 }
 
@@ -187,16 +187,16 @@
 .list-input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border-primary);
   border-radius: 6px;
-  background: var(--background-primary);
-  color: var(--text-primary);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-size: 0.875rem;
 }
 
 .list-input:focus {
   outline: none;
-  border-color: var(--accent-color);
+  border-color: var(--color-primary);
 }
 
 .list-form-actions {
@@ -219,7 +219,7 @@
 }
 
 .list-action-button.save {
-  background: var(--success-color);
+  background: var(--color-success);
   color: white;
 }
 
@@ -228,18 +228,18 @@
 }
 
 .list-action-button.cancel {
-  background: var(--background-tertiary);
-  color: var(--text-secondary);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .list-action-button.cancel:hover {
-  background: var(--danger-color);
+  background: var(--color-danger);
   color: white;
 }
 
 .empty-lists {
   padding: 1rem 1.25rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   font-style: italic;
   margin: 0;
@@ -251,7 +251,7 @@
     width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--color-border-primary);
   }
   
   .sidebar-nav {

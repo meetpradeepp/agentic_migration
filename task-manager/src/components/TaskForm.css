@@ -13,7 +13,7 @@
 }
 
 .task-form {
-  background: var(--background-primary);
+  background: var(--color-bg-primary);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   max-width: 600px;
@@ -28,16 +28,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--color-border-primary);
   position: sticky;
   top: 0;
-  background: var(--background-primary);
+  background: var(--color-bg-primary);
   z-index: 1;
 }
 
 .task-form-header h2 {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-size: 1.5rem;
 }
 
@@ -45,7 +45,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   cursor: pointer;
   padding: 0.25rem;
   width: 32px;
@@ -58,8 +58,8 @@
 }
 
 .close-button:hover {
-  background: var(--background-tertiary);
-  color: var(--text-primary);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .task-form form {
@@ -73,13 +73,13 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .required {
-  color: var(--danger-color);
+  color: var(--color-danger);
 }
 
 .form-group input,
@@ -87,10 +87,10 @@
 .form-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border-primary);
   border-radius: 6px;
-  background: var(--background-secondary);
-  color: var(--text-primary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
   font-size: 0.9375rem;
   font-family: inherit;
   transition: all 0.2s ease;
@@ -100,7 +100,7 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--accent-color);
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -121,7 +121,7 @@
   justify-content: flex-end;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--color-border-primary);
 }
 
 .button-primary,
@@ -136,7 +136,7 @@
 }
 
 .button-primary {
-  background: var(--accent-color);
+  background: var(--color-primary);
   color: white;
 }
 
@@ -147,13 +147,13 @@
 }
 
 .button-secondary {
-  background: var(--background-tertiary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-primary);
 }
 
 .button-secondary:hover {
-  background: var(--background-secondary);
+  background: var(--color-bg-secondary);
 }
 
 /* Responsive */

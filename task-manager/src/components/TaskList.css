@@ -8,21 +8,21 @@
 }
 
 .task-list.dragging-over {
-  background: var(--background-tertiary);
+  background: var(--color-bg-tertiary);
 }
 
 .task-list-item {
   display: flex;
   align-items: stretch;
-  background: var(--background-primary);
-  border: 1px solid var(--border-color);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.2s ease;
 }
 
 .task-list-item:hover {
-  border-color: var(--accent-color);
+  border-color: var(--color-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -37,17 +37,17 @@
   align-items: center;
   justify-content: center;
   padding: 0 0.75rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   cursor: grab;
-  background: var(--background-secondary);
-  border-right: 1px solid var(--border-color);
+  background: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border-primary);
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .drag-handle:hover {
-  color: var(--text-primary);
-  background: var(--background-tertiary);
+  color: var(--color-text-primary);
+  background: var(--color-bg-tertiary);
 }
 
 .drag-handle:active {
