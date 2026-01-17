@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Task, UserList, TaskFilter } from '../types';
+import { Task, UserList, TaskFilter, TaskMetrics } from '../types';
 import { TaskStorage, ListStorage } from '../utils/storage';
+import { SortBy, SortDirection } from '../hooks/useTaskSort';
 
 interface TaskContextType {
   tasks: Task[];
@@ -14,6 +15,8 @@ interface TaskContextType {
   deleteList: (id: string) => void;
   setFilter: (filter: TaskFilter) => void;
   getFilteredTasks: () => Task[];
+  sortTasks: (tasks: Task[], sortBy: SortBy, direction?: SortDirection) => Task[];
+  getMetrics: (tasks?: Task[]) => TaskMetrics;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -114,6 +117,98 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     return filtered;
   };
 
+  /**
+   * Sort tasks by specified criteria
+   * @param tasks - Tasks to sort
+   * @param sortBy - Sort criterion
+   * @param direction - Sort direction (default: 'asc')
+   * @returns Sorted array of tasks
+   */
+  const sortTasks = (
+    tasks: Task[], 
+    sortBy: SortBy, 
+    direction: SortDirection = 'asc'
+  ): Task[] => {
+    const PRIORITY_ORDER: Record<string, number> = {
+      none: 0,
+      low: 1,
+      medium: 2,
+      high: 3,
+    };
+
+    const sorted = [...tasks];
+
+    sorted.sort((a, b) => {
+      let comparison = 0;
+
+      switch (sortBy) {
+        case 'dueDate': {
+          if (!a.dueDate && !b.dueDate) comparison = 0;
+          else if (!a.dueDate) comparison = 1;
+          else if (!b.dueDate) comparison = -1;
+          else comparison = new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+          break;
+        }
+
+        case 'priority': {
+          const aPriority = PRIORITY_ORDER[a.priority] ?? 0;
+          const bPriority = PRIORITY_ORDER[b.priority] ?? 0;
+          comparison = aPriority - bPriority;
+          break;
+        }
+
+        case 'createdAt': {
+          comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          break;
+        }
+
+        case 'title': {
+          comparison = a.title.localeCompare(b.title, undefined, {
+            sensitivity: 'base',
+          });
+          break;
+        }
+
+        default:
+          comparison = 0;
+      }
+
+      return direction === 'asc' ? comparison : -comparison;
+    });
+
+    return sorted;
+  };
+
+  /**
+   * Calculate metrics for tasks
+   * @param tasksToAnalyze - Optional tasks array (defaults to all tasks)
+   * @returns TaskMetrics object
+   */
+  const getMetrics = (tasksToAnalyze: Task[] = tasks): TaskMetrics => {
+    const total = tasksToAnalyze.length;
+    const completed = tasksToAnalyze.filter(t => t.status === 'completed').length;
+    const inProgress = tasksToAnalyze.filter(t => t.status === 'in-progress').length;
+    const todo = tasksToAnalyze.filter(t => t.status === 'todo').length;
+
+    const byPriority = {
+      none: tasksToAnalyze.filter(t => t.priority === 'none').length,
+      low: tasksToAnalyze.filter(t => t.priority === 'low').length,
+      medium: tasksToAnalyze.filter(t => t.priority === 'medium').length,
+      high: tasksToAnalyze.filter(t => t.priority === 'high').length,
+    };
+
+    const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    return {
+      total,
+      completed,
+      inProgress,
+      todo,
+      byPriority,
+      completionRate,
+    };
+  };
+
   return (
     <TaskContext.Provider value={{
       tasks,
@@ -127,6 +222,8 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       deleteList,
       setFilter,
       getFilteredTasks,
+      sortTasks,
+      getMetrics,
     }}>
       {children}
     </TaskContext.Provider>

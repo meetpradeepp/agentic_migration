@@ -452,7 +452,7 @@
             "command": "cd task-manager && grep 'useParams' src/views/UserListView.tsx",
             "expected": "UserListView uses useParams to get listId from route"
           },
-          "status": "in_progress"
+          "status": "completed"
         }
       ]
     },
@@ -483,7 +483,7 @@
             "command": "cd task-manager && grep -E '(sortTasks|getMetrics)' src/contexts/TaskContext.tsx",
             "expected": "TaskContext includes sorting and metrics methods"
           },
-          "status": "pending"
+          "status": "in_progress"
         }
       ]
     },
