@@ -46,6 +46,8 @@ export interface TaskFilter {
   searchQuery?: string;
   hideCompleted?: boolean;
   listId?: string;
+  sortBy?: 'priority' | 'dueDate' | 'createdAt' | 'title';
+  sortDirection?: 'asc' | 'desc';
 }
 
 /**

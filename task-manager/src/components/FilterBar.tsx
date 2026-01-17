@@ -15,11 +15,15 @@ export function FilterBar() {
   const [hideCompleted, setHideCompleted] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | ''>('');
   const [selectedPriority, setSelectedPriority] = useState<TaskPriority | ''>('');
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   // Initialize from filter context
   useEffect(() => {
     setSearchQuery(filter.searchQuery || '');
     setHideCompleted(filter.hideCompleted || false);
+    setSortBy(filter.sortBy || '');
+    setSortDirection(filter.sortDirection || 'asc');
   }, [filter]);
 
   /**
@@ -71,6 +75,29 @@ export function FilterBar() {
   };
 
   /**
+   * Handle sort change
+   */
+  const handleSortChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setFilter({
+      ...filter,
+      sortBy: newSortBy as any || undefined,
+    });
+  };
+
+  /**
+   * Toggle sort direction
+   */
+  const toggleSortDirection = () => {
+    const newDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    setSortDirection(newDirection);
+    setFilter({
+      ...filter,
+      sortDirection: newDirection,
+    });
+  };
+
+  /**
    * Clear all filters
    */
   const handleClearFilters = () => {
@@ -78,6 +105,8 @@ export function FilterBar() {
     setHideCompleted(false);
     setSelectedStatus('');
     setSelectedPriority('');
+    setSortBy('');
+    setSortDirection('asc');
     setFilter({});
   };
 
@@ -89,7 +118,8 @@ export function FilterBar() {
       searchQuery ||
       hideCompleted ||
       selectedStatus ||
-      selectedPriority
+      selectedPriority ||
+      sortBy
     );
   };
 
@@ -165,6 +195,31 @@ export function FilterBar() {
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
+
+          <select
+            className="filter-select"
+            value={sortBy}
+            onChange={(e) => handleSortChange(e.target.value)}
+            aria-label="Sort by"
+          >
+            <option value="">No Sorting</option>
+            <option value="priority">Priority</option>
+            <option value="dueDate">Due Date</option>
+            <option value="title">Title</option>
+            <option value="createdAt">Created Date</option>
+          </select>
+
+          {sortBy && (
+            <button
+              type="button"
+              className="sort-direction-button"
+              onClick={toggleSortDirection}
+              aria-label={`Sort ${sortDirection === 'asc' ? 'ascending' : 'descending'}`}
+              title={`Sort ${sortDirection === 'asc' ? 'ascending' : 'descending'}`}
+            >
+              {sortDirection === 'asc' ? '↑' : '↓'}
+            </button>
+          )}
 
           <label className="checkbox-label">
             <input

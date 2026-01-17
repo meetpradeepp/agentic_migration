@@ -115,6 +115,11 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       );
     }
 
+    // Apply sorting if specified
+    if (filter.sortBy) {
+      filtered = sortTasks(filtered, filter.sortBy, filter.sortDirection || 'asc');
+    }
+
     return filtered;
   };
 

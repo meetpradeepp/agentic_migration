@@ -83,6 +83,27 @@
   gap: var(--spacing-xs);
 }
 
+.task-item__edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all var(--transition-fast);
+  font-size: 1rem;
+}
+
+.task-item__edit:hover {
+  opacity: 1;
+  background-color: var(--color-bg-tertiary);
+}
+
 .task-item__delete {
   display: flex;
   align-items: center;

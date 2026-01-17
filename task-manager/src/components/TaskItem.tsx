@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Task } from '../types';
 import { useTasks } from '../contexts/TaskContext';
 import { formatDate } from '../utils/dateUtils';
+import { TaskForm } from './TaskForm';
 import './TaskItem.css';
 
 interface TaskItemProps {
@@ -15,6 +16,7 @@ export function TaskItem({ task }: TaskItemProps) {
   const { updateTask, deleteTask } = useTasks();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   /**
    * Toggles task completion status
@@ -103,6 +105,14 @@ export function TaskItem({ task }: TaskItemProps) {
 
         <div className="task-item__actions">
           <button
+            onClick={() => setShowEditForm(true)}
+            className="task-item__edit"
+            aria-label="Edit task"
+            type="button"
+          >
+            ✎
+          </button>
+          <button
             onClick={handleDelete}
             className="task-item__delete"
             aria-label="Delete task"
@@ -135,6 +145,13 @@ export function TaskItem({ task }: TaskItemProps) {
           </div>
         )}
       </div>
+
+      {showEditForm && (
+        <TaskForm 
+          taskToEdit={task} 
+          onClose={() => setShowEditForm(false)} 
+        />
+      )}
     </div>
   );
 }
