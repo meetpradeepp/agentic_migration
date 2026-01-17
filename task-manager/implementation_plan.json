@@ -43,7 +43,7 @@
             "command": "cd task-manager && grep \"'none'\" src/types/index.ts",
             "expected": "TaskPriority includes 'none' option"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-1-3",
@@ -61,7 +61,7 @@
             "command": "cd task-manager && grep ':root' src/index.css && grep 'data-theme=\"dark\"' src/index.css",
             "expected": "CSS variables defined for both light and dark themes"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-1-4",
