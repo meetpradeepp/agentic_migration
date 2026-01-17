@@ -158,6 +158,47 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 
 ---
 
+### Workflow 8: Complexity-Driven Specification
+
+**Trigger**: Requirements exist, need complexity assessment and appropriate spec generation
+
+**Sequence**:
+1. **Validate** `requirements.json` exists
+2. **Complexity Assessor Agent** → Generates `complexity_assessment.json`
+3. **User Review** → Validate complexity assessment
+4. **Route based on complexity**:
+   - **SIMPLE** → Spec Quick Agent → `spec.md` + `implementation_plan.json`
+   - **STANDARD/COMPLEX** → Spec Writer Agent → `spec.md` → Planner → `implementation_plan.json`
+
+**Example User Request**:
+- "Assess the complexity of this task"
+- "Create spec based on complexity"
+- "Route to appropriate workflow for this requirement"
+- "Determine if this needs quick spec or full spec"
+
+**Complexity Routing Logic**:
+
+```
+requirements.json exists?
+  ↓ YES
+Complexity Assessor → complexity_assessment.json
+  ↓
+Check complexity tier:
+  ├─ SIMPLE → Spec Quick → spec.md + implementation_plan.json (DONE)
+  ├─ STANDARD → Spec Writer → spec.md → Planner → implementation_plan.json
+  └─ COMPLEX → Spec Writer (with research) → spec.md → Planner → implementation_plan.json
+```
+
+**Validation Checkpoints**:
+- [ ] `requirements.json` exists before complexity assessment
+- [ ] `complexity_assessment.json` has valid complexity tier (simple/standard/complex)
+- [ ] Confidence >= 0.7 before routing
+- [ ] SIMPLE tasks go to spec-quick only
+- [ ] STANDARD/COMPLEX tasks go to full spec writer
+- [ ] All outputs validated before next phase
+
+---
+
 ## Execution Protocol
 
 ### Phase 0: Request Analysis

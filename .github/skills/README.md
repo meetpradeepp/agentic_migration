@@ -18,6 +18,7 @@ Based on the [Agent Skills specification](https://agentskills.io/specification),
 | [project-discovery](./project-discovery/SKILL.md) | Autonomous project analysis to understand purpose, target audience, competitive positioning, and constraints. Use for roadmap generation, strategic planning, and project profiling. | `LICENSE.txt`<br>`references/` |
 | [feature-planning](./feature-planning/SKILL.md) | Generates strategic product roadmaps with prioritized features, phases, and milestones using MoSCoW framework. Use for feature prioritization, roadmap creation, and phase organization. | `LICENSE.txt`<br>`references/` |
 | [requirements-gathering](./requirements-gathering/SKILL.md) | Interactive requirements elicitation that transforms user needs into structured requirements.json. Use when starting new features, clarifying vague requests, or gathering acceptance criteria. | `LICENSE.txt`<br>`examples/` |
+| [complexity-assessment](./complexity-assessment/SKILL.md) | Multi-dimensional task complexity analysis determining simple/standard/complex tiers. Use for workflow routing, validation depth recommendations, and phase determination after requirements gathering. | `LICENSE.txt` |
 
 ## How Skills Work
 
