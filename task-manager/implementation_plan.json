@@ -359,7 +359,7 @@
             "command": "cd task-manager && grep -E '(ThemeProvider|TaskProvider)' src/main.tsx | wc -l",
             "expected": "Both providers present in main.tsx"
           },
-          "status": "pending"
+          "status": "completed"
         }
       ]
     },
