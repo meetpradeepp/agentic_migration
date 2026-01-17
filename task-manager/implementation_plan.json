@@ -340,7 +340,7 @@
             "command": "cd task-manager && grep -E '(BrowserRouter|Routes|Route)' src/App.tsx | wc -l",
             "expected": "At least 3 routing elements present"
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-5-3",
