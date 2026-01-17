@@ -45,6 +45,22 @@ Workflows were stopping prematurely after completing individual agent phases:
    - Others said "Call to subagent X" (active)
    - Copilot didn't recognize passive language as action trigger
 
+4. **Spec-Gatherer Q&A Phase Stoppage** (Discovered 2026-01-17 during user testing)
+   - **Phase 5 labeled as "Confirmation"** with "Getting user approval"
+   - Troubleshooting section said "Wait for user confirmation before creating requirements.json"
+   - Multiple "don't proceed without user approval" statements throughout file
+   - These contradicted the AUTO-CONTINUATION rule added earlier
+   - **Result**: Agent stopped after user answered questions, never created requirements.json
+   
+   **Observed behavior from user logs**:
+   ```
+   1. Orchestrator invokes spec-gatherer ✅
+   2. Spec-gatherer asks clarifying questions ✅
+   3. User provides comprehensive answers ✅
+   4. Agent says "Let me wait for workflow to continue" ❌
+   5. Workflow never continues - permanent stoppage ❌
+   ```
+
 ---
 
 ## Solution Implemented
@@ -96,6 +112,21 @@ Call to subagent [next-agent]
 | security-analyst | **NONE** (final gate) | Signals completion |
 
 ### 4. Special Handling
+
+**Spec-Gatherer Q&A Flow** (Fixed 2026-01-17):
+- Removed "Phase 5: Confirmation" → replaced with "Phase 5: Document Requirements"
+- Eliminated "Getting user approval" step that caused stoppage
+- Added explicit flow after Q&A completion:
+  ```
+  User answers last question
+      ↓
+  [No pause, no confirmation phase]
+      ↓
+  Create requirements.json immediately
+      ↓
+  Call to subagent complexity-assessor
+  ```
+- Added DO/DON'T list to prevent passive waiting language
 
 **Security Analyst** (Final Gate):
 - Does NOT auto-continue (workflow endpoint)
@@ -231,6 +262,10 @@ If this fix causes issues:
 
 ## Changelog
 
-- **2026-01-17**: Initial fix deployed (9 agents updated)
+- **2026-01-17 (11:00)**: Initial fix deployed (9 agents updated) - Commit 5d51e14
+- **2026-01-17 (11:30)**: Fixed spec-gatherer Q&A stoppage - Commit dbc2fe0
+  - Removed "Phase 5: Confirmation" blocking instruction
+  - Eliminated "wait for user approval" contradictions
+  - Added explicit flow diagram after Q&A phase
 - **2026-01-17**: Documentation created
-- **2026-01-17**: Committed to main branch (commit 5d51e14)
+- **2026-01-17**: Committed to main branch
