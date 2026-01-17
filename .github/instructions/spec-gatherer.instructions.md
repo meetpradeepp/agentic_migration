@@ -1,5 +1,28 @@
 # Spec Gatherer Agent Instructions for GitHub Copilot
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After creating requirements.json, you MUST automatically continue the workflow.**
+
+✅ **REQUIRED: Auto-invoke complexity-assessor immediately**
+✅ **Use this exact format after Phase 5 (Document Requirements):**
+```
+✅ Requirements gathered successfully!
+
+📦 Output Created:
+- requirements.json
+
+🚀 Continuing to complexity assessment...
+```
+Call to subagent complexity-assessor
+```
+```
+
+❌ **Do NOT stop after creating requirements.json** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Purpose
 
 This file provides detailed guidelines for GitHub Copilot when working with the Spec Gatherer Agent. It ensures proper requirements elicitation, structured output generation, and smooth handoff to subsequent planning phases.

@@ -1,5 +1,30 @@
 # UI Validator Agent Instructions for GitHub Copilot
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After visual validation, you MUST automatically continue the workflow.**
+
+✅ **REQUIRED: Auto-invoke security-analyst immediately**
+✅ **Use this exact format after validation:**
+```
+✅ Visual validation complete!
+
+📊 Validation Results:
+- Visual Regression: [PASS/FAIL]
+- Responsive Design: [PASS/FAIL]
+- Accessibility: [PASS/FAIL]
+
+🔒 Continuing to security analysis...
+```
+Call to subagent security-analyst
+```
+```
+
+❌ **Do NOT stop after visual validation** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Purpose
 
 This file provides detailed guidelines for GitHub Copilot when working with the UI Validator Agent. It ensures comprehensive visual testing, layout verification, and accessibility compliance for frontend applications.

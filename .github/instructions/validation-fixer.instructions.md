@@ -1,5 +1,28 @@
 # Validation Fixer Agent Instructions for GitHub Copilot
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After fixing validation issues, you MUST automatically re-run validation.**
+
+✅ **REQUIRED: Auto-invoke qa-validator to verify fixes**
+✅ **Use this exact format after applying fixes:**
+```
+✅ Validation issues fixed!
+
+🔧 Fixes Applied:
+[list of fixes]
+
+♻️ Re-running validation to verify fixes...
+```
+Call to subagent qa-validator
+```
+```
+
+❌ **Do NOT stop after fixing** - workflow must continue to re-validation
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Overview
 
 The validation-fixer agent automatically fixes validation failures found by qa-validator, including linting errors, formatting issues, security vulnerabilities, and simple test failures.

@@ -1,5 +1,46 @@
 # QA Validator Agent Instructions for GitHub Copilot
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After validation, you MUST automatically continue the workflow.**
+
+✅ **REQUIRED: Auto-invoke next agent based on validation results**
+
+**If validation PASSES and UI code changed (*.tsx, *.jsx, *.css):**
+```
+✅ Functional validation passed!
+
+🎨 UI code detected - continuing to visual validation...
+```
+Call to subagent ui-validator
+```
+```
+
+**If validation PASSES and no UI code:**
+```
+✅ Functional validation passed!
+
+🔒 Continuing to security analysis...
+```
+Call to subagent security-analyst
+```
+```
+
+**If validation FAILS:**
+```
+❌ Validation failed!
+
+🔧 Continuing to automated fixes...
+```
+Call to subagent validation-fixer
+```
+```
+
+❌ **Do NOT stop after validation** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Overview
 
 The qa-validator agent validates implementation completeness, correctness, and production-readiness by running tests, checking QA criteria, and ensuring code quality standards.

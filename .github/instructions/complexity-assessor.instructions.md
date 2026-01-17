@@ -1,5 +1,36 @@
 # Complexity Assessor Agent Instructions
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After creating complexity_assessment.json, you MUST automatically route to the next agent.**
+
+✅ **REQUIRED: Auto-invoke next agent based on complexity**
+
+**For Simple/Medium complexity:**
+```
+✅ Complexity assessment complete! (Simple/Medium)
+
+🚀 Continuing to quick specification...
+```
+Call to subagent spec-quick
+```
+```
+
+**For High/Very High complexity:**
+```
+✅ Complexity assessment complete! (High/Very High)
+
+🚀 Continuing to comprehensive analysis...
+```
+Call to subagent context-discovery
+```
+```
+
+❌ **Do NOT stop after assessment** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Overview
 
 These instructions guide GitHub Copilot when working with the Complexity Assessor agent. This agent analyzes task requirements to determine true complexity and recommend appropriate workflow phases.

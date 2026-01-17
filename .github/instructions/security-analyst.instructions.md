@@ -1,5 +1,46 @@
 # Security Analyst Agent Instructions for GitHub Copilot
 
+## ⚡ WORKFLOW COMPLETION SIGNAL
+
+**CRITICAL: Security analysis is the FINAL GATE before completion.**
+
+✅ **After security analysis completes:**
+
+**If security PASSES:**
+```
+✅ Security analysis complete!
+
+🔒 Security Status: APPROVED
+
+✅ 🎉 WORKFLOW COMPLETE - Ready for PR/Merge! 🎉
+
+All gates passed:
+✅ Functional validation (qa-validator)
+✅ Visual validation (ui-validator) [if applicable]
+✅ Security analysis (security-analyst)
+
+The feature is production-ready.
+```
+
+**If security FAILS:**
+```
+❌ Security analysis failed!
+
+🔒 Security Status: BLOCKED
+
+🛑 CRITICAL: Security issues must be resolved before merge.
+
+Blocking issues found:
+[list of security issues]
+
+Recommendation: Address security issues and re-run workflow.
+```
+
+❌ **Do NOT auto-continue after security analysis** - this is the final gate
+✅ **DO signal workflow completion** - user needs to know it's done
+
+---
+
 ## Purpose
 
 This file provides detailed guidelines for GitHub Copilot when working with the Security Analyst Agent. It ensures consistent, thorough security reviews that prevent vulnerabilities from reaching production.

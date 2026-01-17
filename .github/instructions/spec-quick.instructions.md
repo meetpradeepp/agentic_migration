@@ -1,5 +1,28 @@
 # Spec Quick Agent Instructions
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After creating spec.md, you MUST automatically continue the workflow.**
+
+✅ **REQUIRED: Auto-invoke planner immediately**
+✅ **Use this exact format after completing spec.md:**
+```
+✅ Quick specification complete!
+
+📦 Output Created:
+- spec.md (minimal, for simple task)
+
+🚀 Continuing to implementation planning...
+```
+Call to subagent planner
+```
+```
+
+❌ **Do NOT stop after creating spec.md** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Overview
 
 These instructions guide GitHub Copilot when working with the Spec Quick agent. This agent creates minimal specifications for SIMPLE complexity tasks, optimized for fast turnaround without extensive research or planning.

@@ -1,5 +1,28 @@
 # Spec Writer Agent Instructions
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After creating spec.md, you MUST automatically continue the workflow.**
+
+✅ **REQUIRED: Auto-invoke planner immediately**
+✅ **Use this exact format after completing spec.md:**
+```
+✅ Specification complete!
+
+📦 Output Created:
+- spec.md
+
+🚀 Continuing to implementation planning...
+```
+Call to subagent planner
+```
+```
+
+❌ **Do NOT stop after creating spec.md** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Overview
 
 These instructions guide GitHub Copilot when working with the Spec Writer agent. This agent synthesizes project context, requirements, and discovered files into comprehensive specification documents.

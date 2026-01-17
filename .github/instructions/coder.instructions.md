@@ -1,5 +1,28 @@
 # Coder Agent Instructions for GitHub Copilot
 
+## ⚡ AUTO-CONTINUATION RULE
+
+**CRITICAL: After completing implementation, you MUST automatically continue to validation.**
+
+✅ **REQUIRED: Auto-invoke qa-validator immediately**
+✅ **Use this exact format after completing all files:**
+```
+✅ Implementation complete!
+
+📦 Files Created/Modified:
+[list of files]
+
+🚀 Continuing to quality validation...
+```
+Call to subagent qa-validator
+```
+```
+
+❌ **Do NOT stop after implementation** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
+
+---
+
 ## Overview
 
 The coder agent implements code based on implementation plans, executing subtasks one at a time with verification and incremental commits.

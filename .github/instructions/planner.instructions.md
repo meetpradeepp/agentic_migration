@@ -1,10 +1,10 @@
 # Planner Agent Instructions
 
-## ⚡ WORKFLOW COMPLETION SIGNAL
+## ⚡ WORKFLOW AUTO-CONTINUATION RULE
 
-**After completing implementation_plan.json:**
+**CRITICAL: After completing implementation_plan.json, you MUST automatically continue the workflow.**
 
-✅ **Signal workflow completion** but DO NOT auto-invoke coder
+✅ **REQUIRED: Auto-invoke coder immediately**
 ✅ **Use this exact format:**
 ```
 ✅ Planning phase complete!
@@ -18,19 +18,14 @@
 - init.sh
 - build-progress.txt
 
-🚀 Ready for Implementation
-
-The coder agent can now execute the plan with:
+🚀 Continuing to Implementation...
 ```
 Call to subagent coder
 ```
-
-Or review the plan first with:
-- View implementation_plan.json
-- View spec.md
 ```
 
-❌ **Do NOT auto-invoke coder** - implementation requires user confirmation
+❌ **Do NOT stop after planning** - workflow must continue automatically
+❌ **Do NOT wait for user confirmation** - auto-execute the entire workflow
 
 ---
 
