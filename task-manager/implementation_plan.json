@@ -289,7 +289,7 @@
             "command": "cd task-manager && grep '@hello-pangea/dnd' src/components/TaskList.tsx",
             "expected": "TaskList imports from @hello-pangea/dnd"
           },
-          "status": "pending"
+          "status": "completed"
         }
       ]
     },
