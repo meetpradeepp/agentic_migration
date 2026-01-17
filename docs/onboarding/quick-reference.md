@@ -152,6 +152,7 @@ ACCEPTED → DEPRECATED → No longer applicable (e.g., service removed)
 | Create implementation plan | `@planner` | `@planner "plan implementation"` |
 | Write code | `@coder` | `@coder "implement feature"` |
 | Validate implementation | `@qa-validator` | `@qa-validator "run validation"` |
+| Security audit code | `@security-analyst` | `@security-analyst "security review"` |
 | Fix validation issues | `@validation-fixer` | `@validation-fixer "fix linting errors"` |
 | Coordinate full workflow | `@orchestrator` | `@orchestrator "build auth system"` |
 

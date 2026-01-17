@@ -63,14 +63,15 @@ For specialized instructions, see the `.github/instructions/` directory:
 - **QA Validator Agent**: `.github/instructions/qa-validator.instructions.md`
 - **Validation Fixer Agent**: `.github/instructions/validation-fixer.instructions.md`
 - **Coder Agent**: `.github/instructions/coder.instructions.md`
+- **Security Analyst Agent**: `.github/instructions/security-analyst.instructions.md`
 - **ADR Generator Agent**: `.github/instructions/adr-generator.instructions.md`
 - **README Generation**: `.github/instructions/README.instructions.md`
 - **Agent Skills**: `.github/instructions/agent-skills.instructions.md`
 
 For agent definitions, prompts, and skills, see:
-- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features, spec-gatherer, complexity-assessor, spec-quick, spec-writer, spec-researcher, context-discovery, qa-validator, validation-fixer, coder, adr-generator)
+- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features, spec-gatherer, complexity-assessor, spec-quick, spec-writer, spec-researcher, context-discovery, qa-validator, validation-fixer, coder, security-analyst, adr-generator)
 - **Skills**: `.github/skills/` directory (subtask-planning, project-discovery, feature-planning, requirements-gathering, complexity-assessment)
-- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md, spec-gatherer.prompt.md, complexity-assessor.prompt.md, spec-quick.prompt.md, spec-writer.prompt.md, spec-researcher.prompt.md, context-discovery.prompt.md, qa-validator.prompt.md, validation-fixer.prompt.md, coder.prompt.md, adr-generator.prompt.md)
+- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md, spec-gatherer.prompt.md, complexity-assessor.prompt.md, spec-quick.prompt.md, spec-writer.prompt.md, spec-researcher.prompt.md, context-discovery.prompt.md, qa-validator.prompt.md, validation-fixer.prompt.md, coder.prompt.md, security-analyst.prompt.md, adr-generator.prompt.md)
 
 Also check the root-level `.instructions.md` for a complete index.
 

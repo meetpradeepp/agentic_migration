@@ -46,6 +46,7 @@ Each agent is a specialist that does ONE thing well:
 | **planner** | Breaks work into subtasks | Project planner |
 | **coder** | Implements the code | Developer |
 | **qa-validator** | Tests and validates | QA engineer |
+| **security-analyst** | Audits code for vulnerabilities | Security engineer |
 
 ### 2. Workflows = Sequences
 
@@ -63,6 +64,7 @@ Workflows chain agents together for specific goals:
 8. **planner**: Creates subtasks → `implementation_plan.json`
 9. **coder**: Implements code → commits
 10. **qa-validator**: Runs tests → `validation_results.json`
+11. **security-analyst**: Security audit → `security_review.json`
 
 ### 3. JSON Files = Handoffs
 

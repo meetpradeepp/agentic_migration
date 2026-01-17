@@ -134,7 +134,7 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 
 ### Workflow 10: Code Implementation
 **Trigger**: Plan exists, ready to execute  
-**Sequence**: Validate plan + spec → Coder (per subtask) → QA Validator
+**Sequence**: Validate plan + spec → Coder (per subtask) → QA Validator → Security Analyst
 
 **Execution Rules**:
 - One subtask at a time (no batching)
@@ -145,6 +145,51 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 - Never push to remote
 - Follow pattern files
 - Only modify files in subtask scope
+
+---
+
+### Workflow 11: Security Review Gate
+**Trigger**: After QA validation passes  
+**Purpose**: Audit code for security vulnerabilities before merge
+
+**Sequence**:
+
+**Phase 1**: Validate QA approved → Security Analyst → Creates `security_review.json`
+
+**Phase 2**: ⏸️ **CONDITIONAL PAUSE** - Based on security status:
+- **PASS**: No pause, ready to merge
+- **WARNING**: PAUSE for manual review of non-critical issues
+- **BLOCK**: PAUSE - MUST fix critical/high severity issues
+
+**Phase 3**: Resolution (if BLOCK/WARNING)
+- **Auto-Fix**: Invoke Validation Fixer for simple issues (console.log, dependency updates)
+- **Manual Fix**: Developer fixes critical vulnerabilities (SQL injection, hardcoded secrets)
+- **Re-Scan**: After fixes → Security Analyst → Verify PASS
+
+**When Security Review Required**:
+- ✅ Authentication/authorization changes
+- ✅ Payment processing
+- ✅ Data encryption
+- ✅ API integrations
+- ✅ Database queries
+- ✅ User input handling
+- ✅ File uploads/downloads
+- ❌ Documentation-only changes
+- ❌ Test-only changes (non-security)
+
+**Quality Gates**:
+| Status | Critical | High | Action |
+|--------|----------|------|--------|
+| PASS | 0 | 0 | Merge approved |
+| WARNING | 0 | 0 | Manual review, can merge |
+| BLOCK | >0 OR >0 | Must fix, re-scan |
+
+**Validation Checkpoints**:
+- [ ] validation_results.json exists with status=approved
+- [ ] All modified files scanned for vulnerabilities
+- [ ] SAST + DAST + Supply Chain + Governance checks complete
+- [ ] security_review.json has security_status decision
+- [ ] Critical/high issues have remediation plans
 
 ---
 
@@ -165,6 +210,8 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 ### Phase 1.5: Approval Gates
 **ADR Review**: After ADR generation, workflow STOPS. User reviews ADRs independently, then manually resumes with approval/rejection command. Orchestrator updates ADR status and branches accordingly.
 
+**Security Analyst**: Audit code for vulnerabilities (SAST, DAST, Supply Chain, Governance) → `security_review.json` (5-10 min)
+
 **Other Gates** (optional): Spec approval, plan approval, pre-deployment approval - same pattern (generate → STOP → user reviews → manual resume)
 
 ### Phase 2: Data Handoff
@@ -181,7 +228,8 @@ List artifacts generated, suggest next steps
 **Missing Prerequisites**: State missing file, required for which agent, offer resolution options (run previous agent, create manually, switch workflow)
 
 **Invalid Agent Output**: State agent, output file, specific issue, re-run with corrections
-
+Security Analyst | security_review.json with security_status (pass/block/warning), findings with severity, remediation steps, blocking_issues if any, SAST+DAST+Supply Chain+Governance scans complete |
+| 
 **User Rejection**: Capture feedback, offer options (re-run with adjustments, manual edit, cancel)
 
 ## Agent Invocation Patterns
