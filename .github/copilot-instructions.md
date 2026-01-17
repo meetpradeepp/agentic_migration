@@ -15,13 +15,17 @@ For specialized instructions, see the `.github/instructions/` directory:
 - **Spec Quick Agent**: `.github/instructions/spec-quick.instructions.md`
 - **Spec Writer Agent**: `.github/instructions/spec-writer.instructions.md`
 - **Spec Researcher Agent**: `.github/instructions/spec-researcher.instructions.md`
+- **Context Discovery Agent**: `.github/instructions/context-discovery.instructions.md`
+- **QA Validator Agent**: `.github/instructions/qa-validator.instructions.md`
+- **Validation Fixer Agent**: `.github/instructions/validation-fixer.instructions.md`
+- **Coder Agent**: `.github/instructions/coder.instructions.md`
 - **README Generation**: `.github/instructions/README.instructions.md`
 - **Agent Skills**: `.github/instructions/agent-skills.instructions.md`
 
 For agent definitions, prompts, and skills, see:
-- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features, spec-gatherer, complexity-assessor, spec-quick, spec-writer, spec-researcher)
+- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features, spec-gatherer, complexity-assessor, spec-quick, spec-writer, spec-researcher, context-discovery, qa-validator, validation-fixer, coder)
 - **Skills**: `.github/skills/` directory (subtask-planning, project-discovery, feature-planning, requirements-gathering, complexity-assessment)
-- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md, spec-gatherer.prompt.md, complexity-assessor.prompt.md, spec-quick.prompt.md, spec-writer.prompt.md, spec-researcher.prompt.md)
+- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md, spec-gatherer.prompt.md, complexity-assessor.prompt.md, spec-quick.prompt.md, spec-writer.prompt.md, spec-researcher.prompt.md, context-discovery.prompt.md, qa-validator.prompt.md, validation-fixer.prompt.md, coder.prompt.md)
 
 Also check the root-level `.instructions.md` for a complete index.
 

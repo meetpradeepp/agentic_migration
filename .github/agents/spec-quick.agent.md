@@ -1,4 +1,3 @@
-```chatagent
 ---
 name: spec-quick
 description: Fast specification generator for SIMPLE complexity tasks. Creates minimal spec.md and single-phase implementation plan for straightforward changes like typo fixes, color changes, and single-file updates.

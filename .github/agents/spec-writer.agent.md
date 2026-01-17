@@ -1,4 +1,3 @@
-```chatagent
 ---
 name: spec-writer
 description: Synthesizes gathered context into complete specification documents. Creates detailed spec.md with implementation guidance, patterns, QA criteria, and success metrics for standard and complex tasks.

@@ -1,4 +1,3 @@
-```chatagent
 ---
 name: complexity-assessor
 description: Analyzes task complexity and determines optimal workflow phases. Assesses scope, integrations, infrastructure needs, and risk to recommend appropriate validation depth and planning strategy.

@@ -1,4 +1,3 @@
-```chatagent
 ---
 name: spec-gatherer
 description: Interactive requirements gathering agent that understands user needs and outputs structured requirements.json. Asks targeted questions to clarify workflow type, services involved, requirements, and acceptance criteria.

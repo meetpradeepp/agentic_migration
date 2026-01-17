@@ -184,17 +184,18 @@ requirements.json exists?
 Complexity Assessor → complexity_assessment.json
   ↓
 Check complexity tier:
-  ├─ SIMPLE → Spec Quick → spec.md + implementation_plan.json (DONE)
+  ├─ SIMPLE (1-2 files, no integrations) →
+  │    Spec Quick → spec.md + implementation_plan.json (DONE)
   │
-  ├─ STANDARD (no external deps) →
+  ├─ STANDARD (3-10 files, no external deps) →
   │    Context Discovery → context.json
   │    → Spec Writer → spec.md
   │    → Planner → implementation_plan.json
   │
-  └─ COMPLEX (or external integrations) →
-       Spec Researcher → research.json
+  └─ COMPLEX (10+ files or external integrations) →
+       Spec Researcher → research.json (for integrations)
        → Context Discovery → context.json
-       → Spec Writer → spec.md (with research)
+       → Spec Writer → spec.md (with research + context)
        → Planner → implementation_plan.json
 ```
 
@@ -202,12 +203,25 @@ Check complexity tier:
 - [ ] `requirements.json` exists before complexity assessment
 - [ ] `complexity_assessment.json` has valid complexity tier (simple/standard/complex)
 - [ ] Confidence >= 0.7 before routing
-- [ ] SIMPLE tasks go to spec-quick only
-- [ ] COMPLEX or tasks with external integrations run spec-researcher first
-- [ ] context.json created before spec-writer (except for SIMPLE)
+- [ ] SIMPLE tasks go to spec-quick only (context-discovery optional)
+- [ ] STANDARD tasks run context-discovery before spec-writer
+- [ ] COMPLEX or tasks with external integrations run spec-researcher first, then context-discovery
+- [ ] context.json validated before spec-writer invocation
 - [ ] All outputs validated before next phase
 
 **Agent Invocation Patterns**:
+
+**For Context Discovery**:
+```markdown
+## 🔍 Invoking Context Discovery
+
+**Purpose**: Discover codebase files, patterns, and service contexts
+**Input**: requirements.json, complexity_assessment.json (optional)
+**Expected Output**: context.json (files to modify, reference patterns, service contexts)
+**Estimated Time**: 1-2 minutes
+
+Analyzing codebase for relevant files and patterns...
+```
 
 **For Spec Researcher**:
 ```markdown
@@ -236,6 +250,219 @@ Starting research on: [list external services]
 
 Starting specification generation...
 ```
+
+---
+
+### Workflow 9: Implementation Validation Loop
+
+**Trigger**: Implementation complete, need quality validation before deployment
+
+**Sequence**:
+1. **Validate** `spec.md` and `implementation_plan.json` exist
+2. **Verify** all subtasks marked "completed"
+3. **QA Validator Agent** → Generates `validation_results.json`
+4. **Decision Point**:
+   - **APPROVED** → Implementation complete, ready for deployment
+   - **CONDITIONAL** → Minor issues, can approve with notes
+   - **REJECTED** → Critical issues found, must fix
+5. **If REJECTED**:
+   - **Validation Fixer Agent** → Auto-fixes issues
+   - Re-run **QA Validator Agent**
+   - Repeat until APPROVED
+
+**Example User Request**:
+- "Validate the implementation"
+- "Run QA checks on completed feature"
+- "Is this ready for production?"
+- "Check implementation quality"
+
+**Validation Flow**:
+
+```
+implementation_plan.json (all subtasks completed)
+  ↓
+QA Validator → validation_results.json
+  ↓
+Check validation_status:
+  ├─ APPROVED → ✅ Ready for deployment
+  │
+  ├─ CONDITIONAL → ⚠️ Minor issues
+  │    ↓
+  │    User decision: Deploy with warnings or fix
+  │
+  └─ REJECTED → ❌ Critical issues
+       ↓
+       Validation Fixer → Fix auto-fixable issues
+       ↓
+       Re-run QA Validator
+       ↓
+       Repeat until APPROVED or manual intervention needed
+```
+
+**Validation Checkpoints**:
+- [ ] `spec.md` exists with QA Acceptance Criteria section
+- [ ] `implementation_plan.json` exists with all subtasks "completed"
+- [ ] `requirements.json` exists with acceptance criteria
+- [ ] All test commands are executable
+- [ ] Services can be started for runtime validation
+- [ ] validation_results.json has clear approval decision
+
+**Agent Invocation Patterns**:
+
+**For QA Validator**:
+```markdown
+## 🧪 Invoking QA Validator
+
+**Purpose**: Validate implementation quality and production-readiness
+**Inputs**:
+  - spec.md (QA Acceptance Criteria)
+  - implementation_plan.json (subtask completion)
+  - requirements.json (acceptance criteria)
+**Expected Output**: validation_results.json (test results, issues, approval status)
+**Estimated Time**: 3-10 minutes (depends on test suite)
+
+Running validation checks:
+- ✓ Subtask completion verification
+- ✓ Automated tests (unit, integration, E2E)
+- ✓ QA criteria validation
+- ✓ Code quality (linting, formatting, types)
+- ✓ Runtime checks (build, services, console errors)
+- ✓ Security checks
+```
+
+**For Validation Fixer**:
+```markdown
+## 🔧 Invoking Validation Fixer
+
+**Purpose**: Auto-fix validation failures
+**Input**: validation_results.json (issues to fix)
+**Expected Output**: Fixed code files
+**Estimated Time**: 2-5 minutes
+
+Auto-fixing:
+- Linting errors (eslint --fix)
+- Formatting issues (prettier --write)
+- Security issues (remove sensitive logs)
+- Simple runtime errors (null checks)
+- Simple test failures (imports, assertions)
+
+Note: Complex issues will be flagged for manual review.
+```
+
+**Validation Loop Example**:
+
+```
+Iteration 1:
+  QA Validator → validation_status: REJECTED
+  Issues: 5 linting errors, 2 security issues, 1 test failure
+    ↓
+  Validation Fixer → Fixed 7/8 issues
+    ↓
+  QA Validator → validation_status: CONDITIONAL
+  Issues: 1 test failure (complex logic bug)
+    ↓
+  User Review → Manual fix required
+
+Iteration 2 (after manual fix):
+  QA Validator → validation_status: APPROVED ✅
+  All checks passed, ready for deployment
+```
+
+**Quality Gates**:
+
+| Validation Status | Pass Rate | Critical Issues | Action |
+|------------------|-----------|-----------------|--------|
+| APPROVED | ≥95% | 0 | Deploy |
+| CONDITIONAL | 80-95% | 0 | Review warnings, then deploy |
+| REJECTED | <80% or any | >0 | Must fix before deploy |
+
+---
+
+### Workflow 10: Code Implementation
+
+**Trigger**: Implementation plan exists, ready to execute subtasks
+
+**Sequence**:
+1. **Validate** `implementation_plan.json` and `spec.md` exist
+2. **Coder Agent** → Executes subtasks one at a time
+3. **For each subtask**:
+   - Mark as in_progress
+   - Implement code following patterns
+   - Self-critique work
+   - Verify functionality
+   - Commit progress
+   - Mark as completed
+4. **Repeat** until all subtasks done
+5. **Invoke** QA Validator (Workflow 9)
+
+**Example User Request**:
+- "Implement the plan"
+- "Start coding the feature"
+- "Execute the subtasks"
+- "Begin implementation"
+
+**Implementation Flow**:
+
+```
+implementation_plan.json (pending subtasks)
+  ↓
+Coder Agent (systematic execution)
+  ↓
+For each subtask:
+  ├─ Find next pending (respect dependencies)
+  ├─ Read files to modify + pattern files
+  ├─ Implement code changes
+  ├─ Self-critique (pattern adherence, quality)
+  ├─ Verify (run verification command/API/browser)
+  ├─ Commit (one subtask = one commit)
+  └─ Mark completed
+  ↓
+All subtasks completed
+  ↓
+QA Validator → validation_results.json
+```
+
+**Execution Rules**:
+- [ ] One subtask at a time (no batching)
+- [ ] Respect phase dependencies (depends_on)
+- [ ] Verify each subtask before marking complete
+- [ ] Commit after each successful subtask
+- [ ] Fix bugs immediately (next session has no memory)
+- [ ] Never push to remote (stay local)
+- [ ] Follow patterns from patterns_from files
+- [ ] Only modify files in subtask scope
+
+**Agent Invocation Pattern**:
+
+```markdown
+## 💻 Invoking Coder Agent
+
+**Purpose**: Execute implementation plan systematically
+**Inputs**:
+  - implementation_plan.json (subtasks to execute)
+  - spec.md (requirements and context)
+  - context.json (file patterns and conventions)
+**Expected Output**: 
+  - Code files (modified/created)
+  - Git commits (one per subtask)
+  - Updated implementation_plan.json (status: completed)
+  - build-progress.txt (session log)
+**Estimated Time**: Varies by complexity (15min - 2hrs)
+
+Executing subtasks:
+- Total subtasks: X
+- Pending: Y
+- First subtask: [description]
+```
+
+**Subtask Verification Types**:
+
+| Type | Example | Verification Method |
+|------|---------|---------------------|
+| command | Run tests | `npm test` matches expected output |
+| api | Test endpoint | `curl` returns expected status code |
+| browser | Check UI | Navigate to URL, verify elements exist |
+| e2e | Full flow | Complete user journey works |
 
 ---
 
@@ -535,6 +762,130 @@ I'll now run the Spec Gatherer Agent to help you clarify your requirements.
 
 ---
 
+### Invoking Context Discovery Agent
+
+```markdown
+I'll now run the Context Discovery Agent to analyze the codebase for relevant files and patterns.
+
+**Using**:
+- Agent: `.github/agents/context-discovery.agent.md`
+- Prompt: `.github/prompts/context-discovery.prompt.md`
+
+**Inputs**: 
+- `requirements.json` (task requirements)
+- `complexity_assessment.json` (optional, for search depth guidance)
+
+**This will**:
+- Search codebase for relevant files
+- Identify files to modify (with reasons)
+- Find reference pattern files
+- Extract code conventions (naming, style, architecture)
+- Document service contexts (tech stack, dependencies)
+- Generate `context.json`
+
+**Estimated Time**: 1-2 minutes
+
+[Then execute the context discovery agent workflow]
+```
+
+---
+
+### Invoking QA Validator Agent
+
+```markdown
+I'll now run the QA Validator Agent to validate implementation quality.
+
+**Using**:
+- Agent: `.github/agents/qa-validator.agent.md`
+- Prompt: `.github/prompts/qa-validator.prompt.md`
+
+**Inputs**:
+- `spec.md` (QA Acceptance Criteria section)
+- `implementation_plan.json` (subtask completion)
+- `requirements.json` (acceptance criteria)
+
+**This will**:
+- Verify all subtasks completed
+- Run automated tests (unit, integration, E2E)
+- Validate against QA criteria
+- Check code quality (linting, formatting, types)
+- Verify runtime health (build, services)
+- Check for security issues
+- Generate `validation_results.json` with approval status
+
+**Estimated Time**: 3-10 minutes (depends on test suite)
+
+[Then execute the qa validator agent workflow]
+```
+
+---
+
+### Invoking Validation Fixer Agent
+
+```markdown
+I'll now run the Validation Fixer Agent to auto-fix validation failures.
+
+**Using**:
+- Agent: `.github/agents/validation-fixer.agent.md`
+- Prompt: `.github/prompts/validation-fixer.prompt.md`
+
+**Input**: `validation_results.json` (issues from QA)
+
+**This will**:
+- Fix linting errors (eslint --fix)
+- Fix formatting issues (prettier --write)
+- Remove sensitive data from logs
+- Add null/undefined checks
+- Fix simple test failures
+- Fix type checking errors
+- Re-run checks to verify fixes
+
+**Note**: Complex issues (logic bugs, missing features) will be flagged for manual review.
+
+**Estimated Time**: 2-5 minutes
+
+[Then execute the validation fixer agent workflow]
+```
+
+---
+
+### Invoking Coder Agent
+
+```markdown
+I'll now run the Coder Agent to implement the code based on the plan.
+
+**Using**:
+- Agent: `.github/agents/coder.agent.md`
+- Prompt: `.github/prompts/coder.prompt.md`
+
+**Inputs**:
+- `implementation_plan.json` (subtasks to execute)
+- `spec.md` (requirements and context)
+- `context.json` (file patterns and conventions)
+
+**This will**:
+- Find next pending subtask (respecting dependencies)
+- Read files to modify and pattern files
+- Implement code following project conventions
+- Self-critique implementation
+- Verify functionality (command/API/browser/E2E)
+- Commit progress (one subtask = one commit)
+- Update subtask status to completed
+- Repeat until all subtasks done
+
+**Work Pattern**:
+- One subtask at a time (no batching)
+- Verify before marking complete
+- Fix bugs immediately
+- Never push to remote
+
+**Estimated Time**: Varies by complexity (15 minutes - 2 hours)
+
+[Then execute the coder agent workflow]
+```
+
+---
+
 ## Quality Standards
 
 ### Output Validation Checklist
@@ -575,6 +926,43 @@ Before marking agent as complete:
 - [ ] At least one acceptance criterion specified
 - [ ] Edge cases considered and documented
 - [ ] User confirmed the summary before creation
+
+**Context Discovery Agent**:
+- [ ] `context.json` exists
+- [ ] Valid JSON structure
+- [ ] `task_description` field present
+- [ ] At least 1 file in `files_to_modify`
+- [ ] At least 1 file in `files_to_reference`
+- [ ] Patterns section has specific conventions (not generic)
+- [ ] Service contexts include tech stack
+- [ ] All file paths are relative and exist
+
+**QA Validator Agent**:
+- [ ] `validation_results.json` exists
+- [ ] Valid JSON structure
+- [ ] `validation_status` is approved/rejected/conditional
+- [ ] All test suites executed (unit/integration/E2E)
+- [ ] QA criteria from spec.md verified
+- [ ] Code quality checks complete
+- [ ] Clear approval decision with reasoning
+- [ ] Issues_found array populated if rejected
+
+**Validation Fixer Agent**:
+- [ ] Auto-fixable issues resolved
+- [ ] All checks re-run after fixes
+- [ ] Complex issues flagged for manual review
+- [ ] Code functionality preserved
+- [ ] Ready for qa-validator re-run
+
+**Coder Agent**:
+- [ ] All subtasks marked "completed" in implementation_plan.json
+- [ ] One git commit per subtask
+- [ ] All verifications passed
+- [ ] No console errors in production code
+- [ ] No hardcoded secrets
+- [ ] App in working state
+- [ ] build-progress.txt updated
+- [ ] Ready for qa-validator invocation
 
 ---
 

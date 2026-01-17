@@ -1,4 +1,3 @@
-```chatagent
 ---
 name: spec-researcher
 description: Research agent that investigates external integrations, APIs, and third-party services. Uses Context7 MCP tools and web search to validate integration points and document API patterns for complex tasks.
