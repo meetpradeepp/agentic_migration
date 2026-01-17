@@ -216,7 +216,7 @@
             "command": "cd task-manager && grep -E '(useTasks|Task)' src/components/TaskItem.tsx | head -5",
             "expected": "TaskItem imports Task type and useTasks hook"
           },
-          "status": "in_progress"
+          "status": "completed"
         }
       ]
     },
@@ -249,7 +249,7 @@
             "command": "cd task-manager && grep -E '(addTask|updateTask)' src/components/TaskForm.tsx",
             "expected": "TaskForm uses addTask and updateTask from context"
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-4-2",
