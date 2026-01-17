@@ -110,7 +110,7 @@
             "command": "cd task-manager && node -e \"const fs = require('fs'); const content = fs.readFileSync('src/hooks/useTaskMetrics.ts', 'utf8'); console.log(content.includes('useMemo') ? 'OK' : 'FAIL');\"",
             "expected": "OK"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-2-2",
@@ -128,7 +128,7 @@
             "command": "cd task-manager && grep -E '(dueDate|priority|createdAt|title)' src/hooks/useTaskSort.ts | wc -l",
             "expected": "At least 4 sort criteria defined"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-2-3",
