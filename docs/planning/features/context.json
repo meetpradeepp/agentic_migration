@@ -1,0 +1,288 @@
+{
+  "task_description": "Build the complete Enterprise Task Manager application from scratch - a React SPA with system views (Dashboard, Calendar, All Tasks), user lists, full CRUD task management, drag-and-drop, inline editing, context-aware creation, advanced filtering/sorting, dark mode, URL routing, and local-first storage",
+  "scoped_services": ["task-manager"],
+  "files_to_modify": [
+    {
+      "path": "task-manager/src/App.tsx",
+      "reason": "Main application component - will be completely rewritten to implement routing structure with BrowserRouter and main layout including sidebar navigation",
+      "current_content_summary": "Boilerplate Vite React app with counter demo, needs complete replacement with router setup and app shell"
+    },
+    {
+      "path": "task-manager/src/main.tsx",
+      "reason": "Application entry point - will add ThemeProvider and TaskProvider context wrappers around App",
+      "current_content_summary": "Basic React root setup with StrictMode, needs to wrap App with context providers"
+    },
+    {
+      "path": "task-manager/src/index.css",
+      "reason": "Global styles - will implement semantic CSS custom properties for theming (light/dark mode) and reset styles",
+      "current_content_summary": "Basic Vite default styles with color-scheme, needs complete theming system with CSS variables"
+    },
+    {
+      "path": "task-manager/src/App.css",
+      "reason": "App-level styles - will be removed or repurposed for app shell layout styles",
+      "current_content_summary": "Vite demo styles for logos and cards, not needed for task manager app"
+    },
+    {
+      "path": "task-manager/src/types/index.ts",
+      "reason": "Type definitions - minor adjustments needed to align with requirements (priority levels need 'none' option, status may need adjustment)",
+      "current_content_summary": "Comprehensive type definitions for Task, UserList, TaskFilter, TaskMetrics, and routing - mostly complete, may need minor tweaks"
+    },
+    {
+      "path": "task-manager/src/utils/storage.ts",
+      "reason": "Storage utilities - already implements TaskStorage, ListStorage, ThemeStorage classes with localStorage - may need quota exceeded error handling",
+      "current_content_summary": "Complete localStorage abstraction with CRUD operations for tasks/lists/theme, handles date serialization correctly"
+    },
+    {
+      "path": "task-manager/src/contexts/TaskContext.tsx",
+      "reason": "Task state management - already implements core CRUD operations and filtering, may need sorting and metrics computation",
+      "current_content_summary": "Complete TaskContext with CRUD operations, filter state, and getFilteredTasks - missing sorting logic and metrics calculations"
+    },
+    {
+      "path": "task-manager/src/contexts/ThemeContext.tsx",
+      "reason": "Theme state management - already implements light/dark toggle with persistence, fully functional",
+      "current_content_summary": "Complete ThemeContext with toggle and localStorage persistence, applies data-theme attribute to document root"
+    }
+  ],
+  "files_to_reference": [
+    {
+      "path": "task-manager/src/types/index.ts",
+      "reason": "Excellent reference for type-driven development approach and comprehensive type definitions",
+      "key_patterns": [
+        "Uses JSDoc comments for type documentation",
+        "Defines union types for enums (TaskPriority, TaskStatus, SystemView)",
+        "Comprehensive interfaces with optional properties marked with ?",
+        "Separates concerns: domain types (Task, UserList), filter types (TaskFilter), UI types (RouteParams, ViewType)"
+      ]
+    },
+    {
+      "path": "task-manager/src/utils/storage.ts",
+      "reason": "Shows localStorage abstraction pattern with static class methods and error handling",
+      "key_patterns": [
+        "Static class pattern for utility functions (TaskStorage, ListStorage, ThemeStorage)",
+        "Consistent CRUD methods: getTasks(), saveTasks(), addTask(), updateTask(), deleteTask()",
+        "Date serialization handling: converts Date objects to/from JSON",
+        "Try-catch error handling with console.error logging",
+        "Immutable updates: creates new arrays rather than mutating"
+      ]
+    },
+    {
+      "path": "task-manager/src/contexts/TaskContext.tsx",
+      "reason": "Demonstrates React Context pattern with custom hooks and state management",
+      "key_patterns": [
+        "Context + Provider + custom hook pattern (createContext, TaskProvider, useTasks)",
+        "Context type interface separate from provider implementation",
+        "useEffect for initial data loading from storage",
+        "CRUD operations sync state and localStorage",
+        "Filter logic in getFilteredTasks with multiple conditions (status, priority, tags, search)",
+        "Error boundary pattern with throw Error in custom hook"
+      ]
+    },
+    {
+      "path": "task-manager/src/contexts/ThemeContext.tsx",
+      "reason": "Shows minimal context pattern for simple state management",
+      "key_patterns": [
+        "Lazy initialization with callback: useState(() => ThemeStorage.getTheme())",
+        "useEffect for side effects: applies theme to DOM and syncs storage",
+        "Simple toggle function with previous state callback"
+      ]
+    }
+  ],
+  "files_to_create": [
+    {
+      "path": "task-manager/src/views/Dashboard.tsx",
+      "reason": "Dashboard view component - displays task metrics, charts, high-priority tasks overview",
+      "notes": "New file - will implement metrics calculation and display using TaskMetrics type"
+    },
+    {
+      "path": "task-manager/src/views/Calendar.tsx",
+      "reason": "Monthly calendar view - organizes tasks by due date with navigation and visual indicators",
+      "notes": "New file - requires date manipulation library (date-fns) and calendar grid layout"
+    },
+    {
+      "path": "task-manager/src/views/AllTasks.tsx",
+      "reason": "Comprehensive task list view - all tasks with filtering, sorting, search",
+      "notes": "New file - uses TaskList component with full filter/sort controls"
+    },
+    {
+      "path": "task-manager/src/views/UserListView.tsx",
+      "reason": "Dynamic user list view - displays tasks from a specific user-created list",
+      "notes": "New file - similar to AllTasks but filtered by listId from route params"
+    },
+    {
+      "path": "task-manager/src/components/Sidebar.tsx",
+      "reason": "Navigation sidebar - system views (Dashboard, Calendar, All Tasks) and user lists with CRUD",
+      "notes": "New file - implements navigation links, list creation, editing, deletion"
+    },
+    {
+      "path": "task-manager/src/components/TaskList.tsx",
+      "reason": "Task list component - reusable list with drag-drop, inline edit, filtering, sorting",
+      "notes": "New file - core component used by all views, implements react-beautiful-dnd"
+    },
+    {
+      "path": "task-manager/src/components/TaskItem.tsx",
+      "reason": "Individual task item - displays task with inline editing, priority indicator, tags",
+      "notes": "New file - supports click-to-edit mode, delete button, checkbox for completion"
+    },
+    {
+      "path": "task-manager/src/components/TaskForm.tsx",
+      "reason": "Task creation/edit form - modal or inline form with all task properties",
+      "notes": "New file - form with title, description, priority, tags, due date, list assignment"
+    },
+    {
+      "path": "task-manager/src/components/FilterBar.tsx",
+      "reason": "Filter controls - hide completed, priority filter, tag filter, search input",
+      "notes": "New file - updates TaskContext filter state, used in AllTasks and UserListView"
+    },
+    {
+      "path": "task-manager/src/components/ThemeToggle.tsx",
+      "reason": "Dark mode toggle button - switches between light and dark themes",
+      "notes": "New file - simple button using useTheme hook with sun/moon icon"
+    },
+    {
+      "path": "task-manager/src/components/EmptyState.tsx",
+      "reason": "Empty state component - displays helpful messages when no tasks/lists exist",
+      "notes": "New file - reusable component with icon, message, and optional CTA button"
+    },
+    {
+      "path": "task-manager/src/hooks/useTaskMetrics.ts",
+      "reason": "Custom hook - calculates task metrics from task array for Dashboard",
+      "notes": "New file - computes total, completed, pending, byPriority, completionRate"
+    },
+    {
+      "path": "task-manager/src/hooks/useTaskSort.ts",
+      "reason": "Custom hook - provides sorting logic for tasks by various criteria",
+      "notes": "New file - implements sort by due date, priority, creation date, title"
+    },
+    {
+      "path": "task-manager/src/utils/dateUtils.ts",
+      "reason": "Date utility functions - formatting, calendar grid generation, date comparisons",
+      "notes": "New file - helper functions for calendar view and date display"
+    }
+  ],
+  "patterns": {
+    "naming_conventions": {
+      "files": "PascalCase for components/views (TaskList.tsx, Dashboard.tsx), camelCase for utilities/hooks (storage.ts, useTaskMetrics.ts)",
+      "variables": "camelCase for variables and functions (taskData, filteredTasks, addTask)",
+      "types": "PascalCase for interfaces and types (Task, UserList, TaskFilter), camelCase for type parameters",
+      "constants": "UPPER_SNAKE_CASE for constants (STORAGE_KEYS)",
+      "components": "PascalCase function components with named exports (export function TaskList)"
+    },
+    "code_style": {
+      "typescript": "Strict mode enabled, explicit return types on functions, optional properties with ?, union types for enums, JSDoc comments for documentation",
+      "react": "Functional components with hooks, named exports, Context + Provider + custom hook pattern, prop destructuring in function parameters",
+      "imports": "Absolute imports from 'react', relative imports with '../' for local modules, type imports grouped separately",
+      "formatting": "2-space indentation (inferred from existing code), single quotes for strings, semicolons at end of statements, trailing commas in multi-line objects/arrays"
+    },
+    "architectural_patterns": {
+      "component_structure": "Feature-based organization: /views for page-level components, /components for reusable UI, /contexts for state management, /hooks for custom hooks, /utils for helpers, /types for TypeScript definitions",
+      "state_management": "React Context API for global state (TaskContext, ThemeContext), custom hooks for encapsulation (useTasks, useTheme), localStorage sync in context providers",
+      "data_flow": "Context Provider → Custom Hook → Component → User Action → Context Method → Storage → State Update → Re-render",
+      "routing": "react-router-dom with BrowserRouter, Route components for views, dynamic routes for user lists (/list/:listId), system view routes (/dashboard, /calendar, /all-tasks)",
+      "styling": "CSS custom properties (CSS variables) for theming, data-theme attribute on document root for theme switching, global styles in index.css, component-specific styles in separate CSS files or inline styles"
+    },
+    "error_handling": {
+      "storage": "Try-catch blocks around localStorage operations, console.error logging, fallback to empty arrays on parse errors",
+      "context": "Throw error in custom hooks if used outside provider (ensures proper context wrapping)",
+      "validation": "TypeScript strict mode for compile-time validation, optional runtime validation for user inputs"
+    }
+  },
+  "service_contexts": {
+    "task-manager": {
+      "directory": "task-manager",
+      "tech_stack": [
+        "React 19.2.0",
+        "TypeScript 5.9.3",
+        "react-router-dom 7.12.0",
+        "Vite (rolldown-vite 7.2.5)",
+        "ESLint with TypeScript",
+        "No UI library (vanilla CSS)"
+      ],
+      "key_files": [
+        "src/main.tsx",
+        "src/App.tsx",
+        "src/types/index.ts",
+        "src/contexts/TaskContext.tsx",
+        "src/contexts/ThemeContext.tsx",
+        "src/utils/storage.ts",
+        "vite.config.ts",
+        "tsconfig.app.json",
+        "eslint.config.js"
+      ],
+      "dependencies": [],
+      "build_commands": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "lint": "eslint .",
+        "preview": "vite preview"
+      },
+      "notes": "Single-page application with no backend dependencies, uses localStorage for persistence, Vite for bundling and dev server, strict TypeScript configuration"
+    }
+  },
+  "discovered_issues": [
+    {
+      "issue": "Task priority type uses 'urgent' but requirements specify 'none/low/medium/high'",
+      "impact": "Type definition doesn't match requirements - need to update TaskPriority type to include 'none' and potentially remove 'urgent' or map it to 'high'",
+      "recommendation": "Update src/types/index.ts to: export type TaskPriority = 'none' | 'low' | 'medium' | 'high'; OR keep 4 levels as 'low' | 'medium' | 'high' | 'urgent' and document mapping"
+    },
+    {
+      "issue": "Task status uses 'todo' | 'in-progress' | 'completed' but requirements only mention 'completed status'",
+      "impact": "May be overengineered - requirements suggest binary completed/not-completed, but three-state status adds value for 'in-progress' tasks",
+      "recommendation": "Clarify if in-progress state is needed; if not, simplify to boolean 'completed' field; if yes, keep current TaskStatus type"
+    },
+    {
+      "issue": "No drag-and-drop library in dependencies yet",
+      "impact": "Requirements specify drag-and-drop task reordering - need to add react-beautiful-dnd or @dnd-kit/core library",
+      "recommendation": "Add react-beautiful-dnd to package.json for drag-drop functionality, or use native HTML5 drag-drop API for lighter bundle"
+    },
+    {
+      "issue": "No date manipulation library in dependencies",
+      "impact": "Calendar view requires date manipulation (month navigation, grid generation) - vanilla JS Date can work but date-fns or dayjs would simplify implementation",
+      "recommendation": "Add date-fns (lighter than moment.js) for calendar view date utilities, or implement pure vanilla JS date helpers in dateUtils.ts"
+    },
+    {
+      "issue": "Bundle size constraint (<500KB) with drag-drop library",
+      "impact": "react-beautiful-dnd is ~50KB gzipped, date-fns is ~13KB gzipped - should fit within 500KB budget but needs monitoring",
+      "recommendation": "Use bundle analyzer to track size, consider tree-shaking with date-fns, possibly defer drag-drop to Phase 2 if needed"
+    },
+    {
+      "issue": "localStorage quota exceeded not handled",
+      "impact": "Edge case in requirements: need graceful handling when localStorage exceeds ~5-10MB quota",
+      "recommendation": "Add quota exceeded detection in storage.ts catch blocks, show user-friendly error message, optionally implement data cleanup or export feature"
+    },
+    {
+      "issue": "No components directory structure yet",
+      "impact": "Need to create 10+ components - should organize into subdirectories for better maintainability",
+      "recommendation": "Create structure: src/components/layout/ (Sidebar), src/components/task/ (TaskList, TaskItem, TaskForm), src/components/ui/ (FilterBar, ThemeToggle, EmptyState)"
+    },
+    {
+      "issue": "Undo/redo functionality is complex",
+      "impact": "Requirements specify undo/redo for task operations - requires command pattern or state history management, significant complexity",
+      "recommendation": "Implement undo/redo in Phase 2 or create separate context (UndoContext) with action history stack, may need to revise TaskContext to support this"
+    },
+    {
+      "issue": "Keyboard shortcuts require event listener management",
+      "impact": "Requirements specify keyboard shortcuts - need global key handler, potential conflicts with browser shortcuts",
+      "recommendation": "Create useKeyboardShortcuts hook with useEffect cleanup, document shortcuts in UI, use modifier keys (Ctrl/Cmd) to avoid conflicts"
+    },
+    {
+      "issue": "Accessibility WCAG AA compliance not verified",
+      "impact": "Requirements specify WCAG AA contrast ratios for dark mode - need to test color combinations",
+      "recommendation": "Use contrast checker tools during theming implementation, ensure focus indicators on interactive elements, semantic HTML in components"
+    }
+  ],
+  "additional_dependencies_needed": [
+    {
+      "name": "date-fns",
+      "version": "^4.1.0",
+      "reason": "Calendar view date manipulation and formatting",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@hello-pangea/dnd",
+      "version": "^17.0.0",
+      "reason": "Drag-and-drop task reordering (fork of react-beautiful-dnd, actively maintained)",
+      "ecosystem": "npm"
+    }
+  ],
+  "created_at": "2025-01-17T18:15:00.000Z"
+}
