@@ -22,6 +22,7 @@ The key objectives of this project are to:
 agentic_migration/
 ├── .github/
 │   ├── agents/
+│   │   ├── orchestrator.agent.md      # Orchestrator agent (workflow coordinator)
 │   │   ├── planner.agent.md           # Planner agent definition
 │   │   ├── roadmap-discovery.agent.md # Roadmap discovery agent definition
 │   │   └── roadmap-features.agent.md  # Roadmap features agent definition
@@ -67,6 +68,7 @@ agentic_migration/
 - **[.github/copilot-instructions.md](.github/copilot-instructions.md)**: Project-wide guidelines and preferences for Copilot
 
 #### Agent System
+- **[.github/agents/orchestrator.agent.md](.github/agents/orchestrator.agent.md)**: Orchestrator agent for multi-agent workflow coordination
 - **[.github/agents/planner.agent.md](.github/agents/planner.agent.md)**: Planner agent definition and capabilities
 - **[.github/agents/roadmap-discovery.agent.md](.github/agents/roadmap-discovery.agent.md)**: Roadmap discovery agent for autonomous project analysis
 - **[.github/agents/roadmap-features.agent.md](.github/agents/roadmap-features.agent.md)**: Roadmap features agent for strategic planning
@@ -137,6 +139,38 @@ See [docs/README.md](docs/README.md) for detailed structure and guidelines.
 ## Agent System
 
 This project implements an agentic workflow system based on the Auto-Claude architecture:
+
+### Orchestrator Agent
+
+The **Orchestrator Agent** coordinates multi-agent workflows for comprehensive planning:
+
+- **Role**: Manages agent sequencing, data handoffs, and user feedback loops
+- **Supported Workflows**:
+  1. **Complete Roadmap Generation**: Discovery → Features → Implementation
+  2. **Discovery Only**: Standalone project analysis
+  3. **Features from Discovery**: Generate roadmap from existing discovery
+  4. **Implementation Planning**: Create execution plans from roadmap
+  5. **Direct Planning**: Skip roadmap, plan specific features
+- **Key Features**:
+  - **Workflow Detection**: Analyzes requests to determine appropriate agent sequence
+  - **Data Validation**: Ensures outputs match schemas and prerequisites exist
+  - **User Gates**: Requests approval before major transitions
+  - **Error Handling**: Provides actionable guidance when issues occur
+  - **State Tracking**: Maintains progress visibility throughout workflows
+
+**Usage Example**:
+```
+User: "Create a complete roadmap for this project"
+
+Orchestrator:
+1. Runs Discovery Agent → roadmap_discovery.json
+2. Shows findings, awaits approval
+3. Runs Features Agent → roadmap.json
+4. Shows roadmap, awaits approval
+5. Offers to plan specific features
+```
+
+**See**: [Orchestrator Usage Guide](docs/orchestrator-usage.md) for detailed workflows and examples.
 
 ### Planner Agent
 

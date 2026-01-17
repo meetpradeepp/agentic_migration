@@ -13,7 +13,7 @@ For specialized instructions, see the `.github/instructions/` directory:
 - **Agent Skills**: `.github/instructions/agent-skills.instructions.md`
 
 For agent definitions, prompts, and skills, see:
-- **Agents**: `.github/agents/` directory (planner, roadmap-discovery, roadmap-features)
+- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features)
 - **Skills**: `.github/skills/` directory (subtask-planning, project-discovery, feature-planning)
 - **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md)
 
