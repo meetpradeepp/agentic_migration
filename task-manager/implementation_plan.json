@@ -269,7 +269,7 @@
             "command": "cd task-manager && grep 'setFilter' src/components/FilterBar.tsx",
             "expected": "FilterBar uses setFilter from context"
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-4-3",
