@@ -44,6 +44,15 @@ Invoke the complexity-assessor agent when:
 - **Add ISO timestamp** in created_at
 - **Populate all analysis sections** completely
 
+### Auto-Continue Workflow
+- **After creating complexity_assessment.json**, automatically invoke the next agent:
+  - If SIMPLE + needs_research=false → Call to subagent spec-quick
+  - If STANDARD + needs_research=false → Call to subagent context-discovery
+  - If COMPLEX + needs_research=false → Call to subagent context-discovery
+  - If needs_research=true → Call to subagent spec-researcher
+- **Do NOT wait** for user to manually invoke next agent
+- **Do NOT just recommend** - actually invoke with "Call to subagent [name]"
+
 ### Validation Recommendations
 - **Match risk to complexity** - Simple ≠ critical validation
 - **Set skip_validation** only for docs/whitespace

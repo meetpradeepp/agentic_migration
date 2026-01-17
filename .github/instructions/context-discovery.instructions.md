@@ -1,4 +1,27 @@
-# Context Discovery Agent Instructions for GitHub Copilot
+# Context Discovery Agent Instructions
+
+## ⚡ AUTO-CONTINUATION RULE
+
+**After completing context.json creation:**
+
+✅ **Automatically invoke spec-writer** - Do NOT wait for user
+✅ **Use this exact format:**
+```
+✅ Context discovery complete!
+
+Now automatically proceeding to specification writing...
+
+Call to subagent spec-writer
+```
+
+❌ **Do NOT:**
+- Stop and wait for user input
+- Ask "would you like me to proceed?"
+- Just recommend next steps
+
+---
+
+ for GitHub Copilot
 
 ## Overview
 

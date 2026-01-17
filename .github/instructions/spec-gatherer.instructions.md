@@ -416,13 +416,13 @@ After requirements.json is created:
 **Output Created**:
 - requirements.json
 
-**Next Steps**:
-The Context Discovery Agent will:
-1. Read your requirements
-2. Analyze the codebase to find relevant files
-3. Create context.json with files to modify/reference
+**Next Steps - AUTO-EXECUTING**:
 
-Would you like me to proceed with context discovery, or would you like to review/modify the requirements first?
+✅ Requirements gathered successfully!
+
+Now automatically proceeding to complexity assessment...
+
+Call to subagent complexity-assessor
 ```
 
 ---

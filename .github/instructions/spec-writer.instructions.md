@@ -455,6 +455,12 @@ Copilot: [Reads requirements.json, context.json, project_index.json]
 All required sections present ✓
 Files to modify: 4 files across 2 services
 Ready for implementation planning"
+
+✅ Specification complete!
+
+Now automatically proceeding to implementation planning...
+
+Call to subagent planner
 ```
 
 ### Example 2: Complex Integration
@@ -470,6 +476,12 @@ Copilot: [Reads requirements.json, research.json, context.json]
 Includes Stripe API patterns from research.json
 QA criteria includes payment security verification
 Ready for planning"
+
+✅ Specification complete!
+
+Now automatically proceeding to implementation planning...
+
+Call to subagent planner
 ```
 
 ## Validation Checklist

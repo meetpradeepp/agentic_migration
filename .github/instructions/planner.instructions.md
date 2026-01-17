@@ -1,4 +1,40 @@
-# Planner Agent Instructions for GitHub Copilot
+# Planner Agent Instructions
+
+## ⚡ WORKFLOW COMPLETION SIGNAL
+
+**After completing implementation_plan.json:**
+
+✅ **Signal workflow completion** but DO NOT auto-invoke coder
+✅ **Use this exact format:**
+```
+✅ Planning phase complete!
+
+📦 Planning Artifacts Created:
+- requirements.json
+- complexity_assessment.json
+- context.json
+- spec.md
+- implementation_plan.json
+- init.sh
+- build-progress.txt
+
+🚀 Ready for Implementation
+
+The coder agent can now execute the plan with:
+```
+Call to subagent coder
+```
+
+Or review the plan first with:
+- View implementation_plan.json
+- View spec.md
+```
+
+❌ **Do NOT auto-invoke coder** - implementation requires user confirmation
+
+---
+
+ for GitHub Copilot
 
 ## Purpose
 

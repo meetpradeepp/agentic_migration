@@ -22,6 +22,54 @@ This file provides detailed guidelines for GitHub Copilot when working with the 
 
 ---
 
+## ⚡ WORKFLOW AUTO-EXECUTION RULE
+
+**Once a workflow is determined, EXECUTE IT COMPLETELY**:
+
+✅ **DO**: Immediately invoke the first agent in the sequence
+✅ **DO**: After each agent completes, automatically invoke the next agent
+✅ **DO**: Continue until the entire workflow is complete
+✅ **DO**: Only pause for user review when explicitly required (ADR approval, requirement clarification)
+
+❌ **DON'T**: Just recommend what to do and wait
+❌ **DON'T**: Stop after explaining the workflow
+❌ **DON'T**: Ask user to manually invoke each agent
+
+**Example - WRONG**:
+```
+Orchestrator: "I recommend Workflow 8. Start with spec-gatherer."
+[STOPS - waiting for user to type "Call to subagent spec-gatherer"]
+```
+
+**Example - CORRECT**:
+```
+Orchestrator: "Starting Workflow 8: Complexity-Driven Specification"
+
+Call to subagent spec-gatherer
+[spec-gatherer executes...]
+
+Call to subagent complexity-assessor
+[complexity-assessor executes...]
+
+Call to subagent context-discovery
+[context-discovery executes...]
+
+Call to subagent spec-writer
+[spec-writer executes...]
+
+Call to subagent planner
+[planner executes...]
+
+Workflow 8 Complete! ✅
+```
+
+**When to Pause**:
+- User confirmation needed (ADR approval, ambiguous requirements)
+- Error occurred requiring user decision
+- Workflow explicitly defines pause point (Workflow 5.5 ADR Gate)
+
+---
+
 ## When to Invoke the Orchestrator Agent
 
 ### ✅ Use Orchestrator Agent For
