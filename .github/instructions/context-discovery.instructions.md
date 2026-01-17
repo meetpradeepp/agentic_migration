@@ -21,6 +21,49 @@ Call to subagent spec-writer
 
 ---
 
+## 📚 Domain Knowledge Integration (Optional)
+
+**PHASE 0.5: Before analyzing codebase, check for domain knowledge:**
+
+```bash
+# Read task description from requirements.json
+TASK_DESC=$(cat requirements.json | jq -r '.task_description' | tr '[:upper:]' '[:lower:]')
+
+# Detect domain from keywords
+DOMAIN=""
+if echo "$TASK_DESC" | grep -qE "billing|rating|cdr|telecom|subscriber"; then
+  DOMAIN="telecom"
+elif echo "$TASK_DESC" | grep -qE "payment|invoice|transaction|accounting"; then
+  DOMAIN="finance"
+elif echo "$TASK_DESC" | grep -qE "patient|hl7|fhir|healthcare|claim"; then
+  DOMAIN="healthcare"
+elif echo "$TASK_DESC" | grep -qE "order|cart|inventory|ecommerce|product"; then
+  DOMAIN="ecommerce"
+fi
+
+# Load domain patterns if available
+if [ -n "$DOMAIN" ] && [ -f "docs/knowledge-base/domains/$DOMAIN/patterns.md" ]; then
+  echo "📚 Loading $DOMAIN domain patterns..."
+  cat "docs/knowledge-base/domains/$DOMAIN/patterns.md"
+  DOMAIN_LOADED=true
+else
+  echo "ℹ️  No domain-specific knowledge found - using general patterns"
+  DOMAIN_LOADED=false
+fi
+```
+
+**If domain knowledge loaded:**
+- Include `domain_knowledge` section in context.json
+- Add domain-specific recommendations to `patterns_to_follow`
+- Reference domain best practices in service contexts
+
+**If no domain knowledge:**
+- Skip domain sections
+- Proceed with standard codebase analysis
+- No impact on workflow quality
+
+---
+
  for GitHub Copilot
 
 ## Overview

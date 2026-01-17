@@ -177,8 +177,61 @@ Let me start the requirements gathering process...
 - Understanding project structure
 - Identifying available services
 
+## Phase 0.5: Load Domain Knowledge (Optional)
+
+**Before asking questions, check for domain-specific knowledge:**
+
+```bash
+# Detect domain from task description
+TASK_LOWER=$(echo "$TASK_DESCRIPTION" | tr '[:upper:]' '[:lower:]')
+
+# Check for domain keywords
+if echo "$TASK_LOWER" | grep -qE "billing|rating|cdr|telecom|subscriber"; then
+  DOMAIN="telecom"
+elif echo "$TASK_LOWER" | grep -qE "payment|invoice|transaction|accounting|finance"; then
+  DOMAIN="finance"
+elif echo "$TASK_LOWER" | grep -qE "patient|hl7|fhir|healthcare|claim"; then
+  DOMAIN="healthcare"
+elif echo "$TASK_LOWER" | grep -qE "order|cart|inventory|ecommerce|product"; then
+  DOMAIN="ecommerce"
+fi
+
+# Load domain knowledge if exists
+if [ -n "$DOMAIN" ] && [ -d "docs/knowledge-base/domains/$DOMAIN" ]; then
+  echo "📚 Loading $DOMAIN domain knowledge..."
+  
+  # Load overview
+  if [ -f "docs/knowledge-base/domains/$DOMAIN/overview.md" ]; then
+    cat "docs/knowledge-base/domains/$DOMAIN/overview.md"
+  fi
+  
+  # Load examples
+  if [ -d "docs/knowledge-base/domains/$DOMAIN/examples" ]; then
+    ls docs/knowledge-base/domains/$DOMAIN/examples/*.json 2>/dev/null | head -3 | while read file; do
+      cat "$file"
+    done
+  fi
+  
+  echo "✅ Domain knowledge loaded - will use to inform questions"
+else
+  echo "ℹ️  No domain knowledge found - proceeding with general questions"
+fi
+```
+
+**If domain knowledge loaded:**
+- Ask domain-specific clarifying questions
+- Suggest industry-standard patterns
+- Include domain edge cases in requirements
+- Reference common integration points
+
+**If no domain knowledge:**
+- Proceed with general requirements gathering as normal
+- No impact on workflow
+
+---
+
 **Phase 1-2: Task Understanding & Classification**:
-- Asking clarifying questions
+- Asking clarifying questions (domain-informed if knowledge loaded)
 - Confirming user intent
 - Suggesting workflow type
 - Getting user confirmation
