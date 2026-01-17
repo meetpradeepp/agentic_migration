@@ -1,5 +1,75 @@
 # Copilot Instructions for agentic_migration
 
+## 🚨 MANDATORY PRE-FLIGHT CHECK 🚨
+
+**BEFORE responding to ANY user request, evaluate this decision tree:**
+
+```
+User makes a request
+    ↓
+Is it a trivial change? (typo, docs, formatting)
+    ↓ YES → Implement directly
+    ↓ NO
+    ↓
+STOP IMMEDIATELY
+    ↓
+Invoke orchestrator FIRST
+    ↓
+[Orchestrator determines workflow]
+    ↓
+[Agents execute automatically]
+```
+
+### ⚡ DEFAULT BEHAVIOR: AUTO-INVOKE ORCHESTRATOR
+
+**For ANY request that is NOT trivial, your FIRST action MUST be:**
+
+```
+Call to subagent orchestrator
+```
+
+**DO NOT**:
+- ❌ Ask "Should we use the agentic workflow?"
+- ❌ Start planning implementation yourself
+- ❌ Create files directly
+- ❌ Analyze code and suggest solutions
+- ❌ Say "I'll implement this by..."
+
+**DO**:
+- ✅ Immediately invoke orchestrator
+- ✅ Let orchestrator determine the workflow
+- ✅ Trust the agentic system to handle it
+
+---
+
+## 📋 What is "Trivial"? (Can Skip Orchestrator)
+
+**ONLY these requests can be handled directly without orchestrator:**
+
+### ✅ Trivial Changes (No Orchestrator Needed)
+- **Typo fixes**: Fixing spelling in comments/docs/strings
+- **Documentation**: Updating README, adding code comments
+- **Formatting**: Running prettier, fixing indentation
+- **Import fixes**: Adding/removing unused imports
+- **Simple renames**: Variable/function name changes (single file)
+
+### ❌ NOT Trivial (MUST Use Orchestrator)
+- **New features**: Any new functionality
+- **Bug fixes**: Investigating and fixing bugs
+- **New files**: Creating new components/services/modules
+- **Refactoring**: Restructuring code across files
+- **Configuration**: Adding env vars, changing settings
+- **Dependencies**: Installing new packages
+- **API changes**: Modifying endpoints or contracts
+- **Database**: Schema changes, migrations
+- **Tests**: Writing new test files
+- **Investigations**: "Why doesn't X work?"
+- **Enhancements**: "Make X better/faster"
+
+**If you're unsure whether something is trivial, DEFAULT TO ORCHESTRATOR.**
+
+---
+
 ## Project Overview
 This is an experimental project to test GitHub Copilot's capabilities in agentic workflows and migration tasks.
 
@@ -25,25 +95,49 @@ This is an experimental project to test GitHub Copilot's capabilities in agentic
 
 ### How to Start Properly
 
-**When user requests a new feature/component:**
-1. **STOP** - Do not start implementing
-2. **ASK**: "This looks like a new feature. Should we use the agentic workflow system?"
-3. **INVOKE**: Use orchestrator or spec-gatherer agent
-4. **FOLLOW**: The workflow will guide you through requirements → spec → plan → implementation
+**When user requests a new feature/component/investigation/fix:**
 
-**Example Flow**:
+**✅ CORRECT FLOW**:
 ```
 User: "Add user authentication"
-❌ WRONG: Create TaskContext.tsx directly
-✅ RIGHT: "@orchestrator I need to plan user authentication feature"
+    ↓
+Call to subagent orchestrator
 ```
 
-**Example Flow**:
+**❌ WRONG - DO NOT DO THIS**:
 ```
-User: "Create global state management"  
-❌ WRONG: Start implementing context files
-✅ RIGHT: "@spec-gatherer gather requirements for state management"
+User: "Add user authentication"
+    ↓
+"I'll create AuthService.ts..." ← WRONG! Bypassed orchestrator
 ```
+
+```
+User: "Fix the login bug"
+    ↓
+"Let me investigate the issue..." ← WRONG! Bypassed orchestrator
+```
+
+```
+User: "Create global state management"
+    ↓
+"I'll implement React Context..." ← WRONG! Bypassed orchestrator
+```
+
+### ⚡ THE ONLY ACCEPTABLE FIRST RESPONSE
+
+For non-trivial requests, your response MUST start with:
+
+```
+Call to subagent orchestrator
+```
+
+That's it. No analysis. No questions. No implementation. Just invoke orchestrator immediately.
+
+The orchestrator will:
+- Analyze the request
+- Determine appropriate workflow
+- Auto-execute the complete agent chain
+- Deliver final implementation
 
 **If you find yourself creating new files/components without a spec.md or implementation_plan.json, STOP immediately.**
 
