@@ -510,7 +510,7 @@
             "command": "cd task-manager && npm run build",
             "expected": "Build completes successfully with no TypeScript errors"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-8-2",
@@ -529,7 +529,7 @@
               "Navigate to /list/:id - verify user list view works"
             ]
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-8-3",
@@ -549,7 +549,7 @@
               "Delete task and verify removal"
             ]
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-8-4",
@@ -568,7 +568,7 @@
               "Toggle back to light mode and verify"
             ]
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-8-5",
@@ -587,7 +587,7 @@
               "Search by keyword and verify results"
             ]
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-8-6",
@@ -606,7 +606,7 @@
               "Delete the list and verify redirect"
             ]
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-8-7",
@@ -625,7 +625,7 @@
               "Refresh page to verify order persists"
             ]
           },
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
