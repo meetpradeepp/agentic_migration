@@ -123,6 +123,41 @@ You are the **Orchestrator Agent** responsible for managing multi-agent workflow
 
 ---
 
+### Workflow 6: Requirements Gathering to Planning
+
+**Trigger**: User has vague idea, needs interactive requirements gathering
+
+**Sequence**:
+1. **Spec Gatherer Agent** → Generates `requirements.json` (interactive)
+2. **User Review** → Validate requirements captured correctly
+3. **Context Discovery** → Analyze codebase for relevant files
+4. **Spec Writer** → Create detailed `spec.md`
+5. **Planner Agent** → Generates `implementation_plan.json`
+
+**Example User Request**:
+- "I want to build [vague feature], help me define requirements"
+- "Gather requirements for [unclear task]"
+- "Help me clarify what I need to build"
+- "Start requirements gathering for a new feature"
+
+---
+
+### Workflow 7: Direct Requirements Gathering
+
+**Trigger**: User just needs requirements clarified without full planning
+
+**Sequence**:
+1. **Spec Gatherer Agent** → Generates `requirements.json` (interactive)
+2. **User Review** → Validate and finalize
+
+**Example User Request**:
+- "Help me define requirements for [feature]"
+- "What information do you need to plan this?"
+- "Gather requirements only"
+- "Create requirements.json for this task"
+
+---
+
 ## Execution Protocol
 
 ### Phase 0: Request Analysis
@@ -392,6 +427,31 @@ I'll now run the Planner Agent to create an implementation plan for [feature-nam
 [Then execute the planner agent workflow]
 ```
 
+### Invoking Spec Gatherer Agent
+
+```markdown
+I'll now run the Spec Gatherer Agent to help you clarify your requirements.
+
+**Using**:
+- Agent: `.github/agents/spec-gatherer.agent.md`
+- Prompt: `.github/prompts/spec-gatherer.prompt.md`
+- Skill: `.github/skills/requirements-gathering/SKILL.md`
+
+**Input**: `project_index.json` (project structure)
+
+**This will** (interactively):
+- Understand your task through questions
+- Classify workflow type
+- Identify involved services
+- Gather detailed requirements
+- Collect acceptance criteria
+- Generate `requirements.json`
+
+**Note**: This agent is interactive and will ask you questions to clarify your needs.
+
+[Then execute the spec gatherer agent workflow]
+```
+
 ---
 
 ## Quality Standards
@@ -424,6 +484,16 @@ Before marking agent as complete:
 - [ ] Phases defined
 - [ ] Subtasks have verification steps
 - [ ] Dependencies mapped
+
+**Spec Gatherer Agent**:
+- [ ] `requirements.json` exists
+- [ ] Valid JSON structure
+- [ ] All required fields present (task_description, workflow_type, services_involved, user_requirements, acceptance_criteria, edge_cases, constraints, created_at)
+- [ ] Workflow type is valid enum value
+- [ ] At least one requirement specified
+- [ ] At least one acceptance criterion specified
+- [ ] Edge cases considered and documented
+- [ ] User confirmed the summary before creation
 
 ---
 

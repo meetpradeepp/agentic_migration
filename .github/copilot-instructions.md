@@ -6,16 +6,18 @@ This is an experimental project to test GitHub Copilot's capabilities in agentic
 ## Additional Instructions
 
 For specialized instructions, see the `.github/instructions/` directory:
+- **Orchestrator Agent**: `.github/instructions/orchestrator.instructions.md`
 - **Planner Agent**: `.github/instructions/planner.instructions.md`
 - **Roadmap Discovery Agent**: `.github/instructions/roadmap-discovery.instructions.md`
 - **Roadmap Features Agent**: `.github/instructions/roadmap-features.instructions.md`
+- **Spec Gatherer Agent**: `.github/instructions/spec-gatherer.instructions.md`
 - **README Generation**: `.github/instructions/README.instructions.md`
 - **Agent Skills**: `.github/instructions/agent-skills.instructions.md`
 
 For agent definitions, prompts, and skills, see:
-- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features)
-- **Skills**: `.github/skills/` directory (subtask-planning, project-discovery, feature-planning)
-- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md)
+- **Agents**: `.github/agents/` directory (orchestrator, planner, roadmap-discovery, roadmap-features, spec-gatherer)
+- **Skills**: `.github/skills/` directory (subtask-planning, project-discovery, feature-planning, requirements-gathering)
+- **Prompts**: `.github/prompts/` directory (planner.prompt.md, roadmap_discovery.prompt.md, roadmap_features.prompt.md, spec-gatherer.prompt.md)
 
 Also check the root-level `.instructions.md` for a complete index.
 

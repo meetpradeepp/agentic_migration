@@ -157,6 +157,14 @@ Based on request and existing files:
 - **Trigger**: User has spec, skip roadmap
 - **Sequence**: Planner
 
+**Workflow 6**: Requirements Gathering to Planning
+- **Trigger**: User has vague idea, needs requirements gathered
+- **Sequence**: Spec Gatherer → Context Discovery → Spec Writer → Planner
+
+**Workflow 7**: Direct Requirements Gathering
+- **Trigger**: User just needs requirements clarified
+- **Sequence**: Spec Gatherer
+
 ---
 
 ## User Interaction Protocol
@@ -281,6 +289,33 @@ runSubagent(
   6. Generate roadmap.json
   
   Execute the complete feature planning workflow now."
+)
+```
+
+**Example 3: Invoking Spec Gatherer Agent**
+```
+runSubagent(
+  description: "Spec Gatherer Agent - Requirements gathering",
+  prompt: "You are the Spec Gatherer Agent. Follow these instructions:
+  
+  1. Read .github/agents/spec-gatherer.agent.md
+  2. Read .github/prompts/spec-gatherer.prompt.md
+  3. Read .github/skills/requirements-gathering/SKILL.md
+  4. Load project_index.json as input
+  5. Execute all 6 phases INTERACTIVELY:
+     - Phase 0: Load project context
+     - Phase 1: Understand the task (ask user)
+     - Phase 2: Determine workflow type (confirm with user)
+     - Phase 3: Identify services (suggest and confirm)
+     - Phase 4: Gather requirements (ask targeted questions)
+     - Phase 5: Confirm and output (show summary, get approval)
+     - Phase 6: Create requirements.json (MANDATORY)
+  6. Generate requirements.json
+  
+  User's initial request: [user's task description]
+  
+  Execute the complete requirements gathering workflow now.
+  Remember: This is INTERACTIVE - ask questions and wait for user responses."
 )
 ```
 
