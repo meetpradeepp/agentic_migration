@@ -6,6 +6,68 @@ This file provides detailed guidelines for GitHub Copilot when working with the 
 
 ---
 
+## 📚 Domain Knowledge Integration (Optional)
+
+**PHASE 0: Before analyzing project, check for domain knowledge:**
+
+```bash
+# Detect domain from project README and package files
+DOMAIN=""
+FILES_TO_CHECK="README.md package.json pyproject.toml Cargo.toml"
+
+for file in $FILES_TO_CHECK; do
+  if [ -f "$file" ]; then
+    if grep -qiE "billing|rating|cdr|telecom|subscriber" "$file"; then
+      DOMAIN="telecom"; break
+    elif grep -qiE "payment|invoice|transaction|accounting" "$file"; then
+      DOMAIN="finance"; break
+    elif grep -qiE "patient|hl7|fhir|healthcare|claim" "$file"; then
+      DOMAIN="healthcare"; break
+    elif grep -qiE "order|cart|inventory|ecommerce|product" "$file"; then
+      DOMAIN="ecommerce"; break
+    fi
+  fi
+done
+
+# Load domain knowledge if detected
+if [ -n "$DOMAIN" ] && [ -f "docs/knowledge-base/domains/$DOMAIN/overview.md" ]; then
+  echo "📚 Detected $DOMAIN domain project - loading knowledge base..."
+  cat "docs/knowledge-base/domains/$DOMAIN/overview.md"
+  DOMAIN_LOADED=true
+else
+  echo "ℹ️  No specific domain detected - general project analysis"
+  DOMAIN_LOADED=false
+fi
+```
+
+**If domain knowledge loaded:**
+- Include domain-specific gap analysis in roadmap_discovery.json
+- Check for standard domain components (e.g., rating engine for telecom)
+- Flag missing industry-standard integrations
+- Identify non-standard patterns as potential risks
+
+**Example - Telecom Domain Gaps:**
+```json
+{
+  "gaps": [
+    "No rating engine implementation found (telecom standard)",
+    "Missing OCS integration for real-time charging",
+    "CDR processing pipeline not detected"
+  ],
+  "domain_risks": [
+    "Custom billing logic instead of industry-standard pattern",
+    "No balance reservation mechanism for prepaid"
+  ]
+}
+```
+
+**If no domain knowledge:**
+- Proceed with standard software engineering gap analysis
+- No domain-specific checks
+- No impact on workflow quality
+
+---
+
 ## When to Invoke the Roadmap Discovery Agent
 
 ### ✅ Use Discovery Agent For
