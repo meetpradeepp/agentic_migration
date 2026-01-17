@@ -185,8 +185,17 @@ Complexity Assessor → complexity_assessment.json
   ↓
 Check complexity tier:
   ├─ SIMPLE → Spec Quick → spec.md + implementation_plan.json (DONE)
-  ├─ STANDARD → Spec Writer → spec.md → Planner → implementation_plan.json
-  └─ COMPLEX → Spec Writer (with research) → spec.md → Planner → implementation_plan.json
+  │
+  ├─ STANDARD (no external deps) →
+  │    Context Discovery → context.json
+  │    → Spec Writer → spec.md
+  │    → Planner → implementation_plan.json
+  │
+  └─ COMPLEX (or external integrations) →
+       Spec Researcher → research.json
+       → Context Discovery → context.json
+       → Spec Writer → spec.md (with research)
+       → Planner → implementation_plan.json
 ```
 
 **Validation Checkpoints**:
@@ -194,8 +203,39 @@ Check complexity tier:
 - [ ] `complexity_assessment.json` has valid complexity tier (simple/standard/complex)
 - [ ] Confidence >= 0.7 before routing
 - [ ] SIMPLE tasks go to spec-quick only
-- [ ] STANDARD/COMPLEX tasks go to full spec writer
+- [ ] COMPLEX or tasks with external integrations run spec-researcher first
+- [ ] context.json created before spec-writer (except for SIMPLE)
 - [ ] All outputs validated before next phase
+
+**Agent Invocation Patterns**:
+
+**For Spec Researcher**:
+```markdown
+## 🔬 Invoking Spec Researcher
+
+**Purpose**: Research external integrations and validate API documentation
+**Input**: requirements.json
+**Expected Output**: research.json (integration details, API patterns, config)
+**Estimated Time**: 3-5 minutes
+
+Starting research on: [list external services]
+```
+
+**For Spec Writer**:
+```markdown
+## 📝 Invoking Spec Writer
+
+**Purpose**: Create comprehensive specification document
+**Inputs**: 
+  - requirements.json (user requirements)
+  - context.json (discovered files and patterns)
+  - research.json (if external integrations exist)
+  - complexity_assessment.json (validation recommendations)
+**Expected Output**: spec.md (200-500 lines, 12 sections)
+**Estimated Time**: 2-3 minutes
+
+Starting specification generation...
+```
 
 ---
 
