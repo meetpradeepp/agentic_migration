@@ -43,7 +43,7 @@
             "command": "cd task-manager && grep \"'none'\" src/types/index.ts",
             "expected": "TaskPriority includes 'none' option"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-1-3",
