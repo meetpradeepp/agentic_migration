@@ -1,0 +1,68 @@
+{
+  "complexity": "simple",
+  "workflow_type": "simple",
+  "confidence": 0.95,
+  "reasoning": "This is a straightforward find/replace task affecting 13 CSS files in a single service. No external integrations, no infrastructure changes, no new dependencies, and the fix pattern is well-known. The only minor complexity is ensuring all variable references are caught, including potential inline styles.",
+  
+  "analysis": {
+    "scope": {
+      "estimated_files": 13,
+      "estimated_services": 1,
+      "is_cross_cutting": false,
+      "notes": "Limited to CSS files in frontend service. Explicit scope of 13 files with mechanical find/replace of variable names."
+    },
+    "integrations": {
+      "external_services": [],
+      "new_dependencies": [],
+      "research_needed": false,
+      "notes": "No external services or new dependencies. Pure CSS variable renaming within existing codebase."
+    },
+    "infrastructure": {
+      "docker_changes": false,
+      "database_changes": false,
+      "config_changes": false,
+      "notes": "No infrastructure changes required. Works with existing build pipeline."
+    },
+    "knowledge": {
+      "patterns_exist": true,
+      "research_required": false,
+      "unfamiliar_tech": [],
+      "notes": "CSS variable usage is standard practice. The mapping is clearly defined (--background-* to --color-bg-*, etc.). No unfamiliar technologies involved."
+    },
+    "risk": {
+      "level": "low",
+      "concerns": [
+        "Potential missed references in inline styles or dynamic className assignments",
+        "Visual regression if any variable reference is missed",
+        "Need to verify both light and dark theme modes"
+      ],
+      "notes": "Low risk as changes are purely cosmetic variable renaming. Visual testing will quickly catch any issues."
+    }
+  },
+  
+  "recommended_phases": [
+    "discovery",
+    "quick_spec",
+    "validation"
+  ],
+  
+  "flags": {
+    "needs_research": false,
+    "needs_self_critique": false,
+    "needs_infrastructure_setup": false
+  },
+  
+  "validation_recommendations": {
+    "risk_level": "low",
+    "skip_validation": false,
+    "minimal_mode": true,
+    "test_types_required": [
+      "unit"
+    ],
+    "security_scan_required": false,
+    "staging_deployment_required": false,
+    "reasoning": "While this is a simple CSS change, visual validation is important to ensure no variables were missed. Unit tests for CSS variable consistency are sufficient. No security implications as this is purely cosmetic. However, manual visual inspection of light/dark themes recommended."
+  },
+  
+  "created_at": "2025-01-10T06:30:00Z"
+}

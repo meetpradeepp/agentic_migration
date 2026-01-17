@@ -1,0 +1,32 @@
+{
+  "task_description": "Fix CSS variable naming inconsistencies causing UI rendering issues due to mismatch between defined variables in index.css and component CSS files",
+  "workflow_type": "investigation",
+  "services_involved": [
+    "frontend"
+  ],
+  "user_requirements": [
+    "Update all component CSS files to use the correct variable names defined in index.css",
+    "Fix all variable categories: --background-* to --color-bg-*, --text-* to --color-text-*, --border-color to --color-border-primary, --accent-color to --color-primary, --success/warning/danger-color to --color-success/warning/danger, --info-color to --color-primary",
+    "Preserve all existing styling and visual appearance",
+    "Maintain compatibility with both light and dark modes"
+  ],
+  "acceptance_criteria": [
+    "All CSS variables in component files match the names defined in index.css",
+    "No more undefined CSS variable warnings in browser console",
+    "UI renders correctly after rebuild with proper colors and styling",
+    "Dashboard, Calendar, and Task List components display properly",
+    "Both light and dark theme modes work correctly"
+  ],
+  "edge_cases": [
+    "CSS variables used in inline styles (if any)",
+    "Dynamic className assignments that might reference old variables",
+    "Hardcoded color values that bypass the variable system"
+  ],
+  "constraints": [
+    "Must not change color values or visual design",
+    "Must not introduce new variables or rename variables in index.css",
+    "Solution must work with existing build pipeline",
+    "No third-party CSS libraries expected to override variables"
+  ],
+  "created_at": "2025-01-10T00:00:00Z"
+}
