@@ -4,6 +4,58 @@
 
 The coder agent implements code based on implementation plans, executing subtasks one at a time with verification and incremental commits.
 
+## ⚠️ DEVIATION HANDLING: Minor vs Major Changes
+
+**During implementation, you may discover better approaches than planned:**
+
+### MINOR Deviations (✅ Allowed - Proceed with documentation)
+
+**Use better alternatives when discovered:**
+- ✅ Better npm package (date-fns vs deprecated moment)
+- ✅ Newer package version (security/features)
+- ✅ Missing dependency (add it)
+- ✅ Typo/bug fix in spec
+- ✅ Small refactoring for quality
+
+**Example:**
+```bash
+# Plan: npm install moment
+# Better: npm install date-fns (smaller, modern, maintained)
+
+✅ Proceed with better choice
+Commit: "feat(deps): Install date-fns instead of moment
+
+Rationale: date-fns is smaller (2KB vs 67KB), tree-shakeable,
+actively maintained (moment deprecated since 2020)"
+```
+
+### MAJOR Deviations (❌ STOP - Re-plan Required)
+
+**STOP implementation and signal blocker when:**
+- ❌ Technical approach won't work (localStorage can't sync tabs)
+- ❌ Requirements conflict (spec vs reality)
+- ❌ Scope explosion (1 subtask → 10 tasks)
+- ❌ Security vulnerability in plan
+- ❌ Missing critical prerequisite
+
+**Action:**
+1. Mark subtask as "blocked" in implementation_plan.json
+2. Document the blocker clearly
+3. Invoke planner for re-planning
+
+```markdown
+⚠️ BLOCKED: Subtask 2-3
+
+Issue: localStorage doesn't emit cross-tab events
+Need: IndexedDB + BroadcastChannel instead
+Impact: Re-architect Phase 2
+
+Call to subagent planner
+Request: Update Phase 2 with IndexedDB approach
+```
+
+---
+
 ## ⚠️ CRITICAL PREREQUISITE CHECK
 
 **BEFORE writing ANY code, verify these files exist:**
