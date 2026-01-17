@@ -1,0 +1,683 @@
+{
+  "feature": "Enterprise Task Manager - Complete SPA Implementation",
+  "workflow_type": "feature",
+  "workflow_rationale": "This is a greenfield feature implementation building a complete multi-view task management application from scratch. The scope includes 20+ new files across views, components, hooks, and utilities with comprehensive state management, routing infrastructure, and persistent storage. This follows the FEATURE workflow with Foundation \u2192 UI Components \u2192 Views \u2192 Integration phases.",
+  "phases": [
+    {
+      "id": "phase-1-foundation",
+      "name": "Foundation & Infrastructure",
+      "type": "setup",
+      "description": "Set up routing infrastructure, install dependencies, configure theming system, and update type definitions to match requirements",
+      "depends_on": [],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-1-1",
+          "description": "Install required dependencies: date-fns and @hello-pangea/dnd",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/package.json"
+          ],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && npm list date-fns @hello-pangea/dnd",
+            "expected": "Both packages listed in dependencies"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-1-2",
+          "description": "Update TaskPriority type to support 'none' priority level as per requirements",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/src/types/index.ts"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "task-manager/src/types/index.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep \"'none'\" src/types/index.ts",
+            "expected": "TaskPriority includes 'none' option"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-1-3",
+          "description": "Implement global CSS theming system with semantic custom properties for light/dark mode",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/src/index.css"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "task-manager/src/contexts/ThemeContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep ':root' src/index.css && grep 'data-theme=\"dark\"' src/index.css",
+            "expected": "CSS variables defined for both light and dark themes"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-1-4",
+          "description": "Add localStorage quota exceeded error handling in storage utilities",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/src/utils/storage.ts"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "task-manager/src/utils/storage.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -i 'QuotaExceededError' src/utils/storage.ts",
+            "expected": "QuotaExceededError handling present in catch blocks"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-2-utilities",
+      "name": "Utility Hooks & Helpers",
+      "type": "implementation",
+      "description": "Create custom hooks for business logic (metrics, sorting) and utility functions (date handling)",
+      "depends_on": [
+        "phase-1-foundation"
+      ],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-2-1",
+          "description": "Create useTaskMetrics hook for dashboard metrics calculation",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/hooks/useTaskMetrics.ts"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/types/index.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && node -e \"const fs = require('fs'); const content = fs.readFileSync('src/hooks/useTaskMetrics.ts', 'utf8'); console.log(content.includes('useMemo') ? 'OK' : 'FAIL');\"",
+            "expected": "OK"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-2-2",
+          "description": "Create useTaskSort hook for sorting tasks by multiple criteria",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/hooks/useTaskSort.ts"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(dueDate|priority|createdAt|title)' src/hooks/useTaskSort.ts | wc -l",
+            "expected": "At least 4 sort criteria defined"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-2-3",
+          "description": "Create dateUtils helper functions for calendar view",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/utils/dateUtils.ts"
+          ],
+          "patterns_from": [
+            "task-manager/src/utils/storage.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(getMonthGrid|formatDate|isSameDay)' src/utils/dateUtils.ts | wc -l",
+            "expected": "At least 3 date utility functions defined"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-3-core-components",
+      "name": "Core Reusable Components",
+      "type": "implementation",
+      "description": "Build foundational UI components: EmptyState, ThemeToggle, and core task components",
+      "depends_on": [
+        "phase-1-foundation"
+      ],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-3-1",
+          "description": "Create EmptyState component for empty views",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/EmptyState.tsx",
+            "task-manager/src/components/EmptyState.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/ThemeContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep 'export function EmptyState' src/components/EmptyState.tsx",
+            "expected": "Named export function EmptyState found"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-3-2",
+          "description": "Create ThemeToggle component for dark mode switching",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/ThemeToggle.tsx",
+            "task-manager/src/components/ThemeToggle.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/ThemeContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep 'useTheme' src/components/ThemeToggle.tsx",
+            "expected": "ThemeToggle uses useTheme hook"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-3-3",
+          "description": "Create TaskItem component for individual task display with inline editing",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/TaskItem.tsx",
+            "task-manager/src/components/TaskItem.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/types/index.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(useTasks|Task)' src/components/TaskItem.tsx | head -5",
+            "expected": "TaskItem imports Task type and useTasks hook"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-4-task-management",
+      "name": "Task Management Components",
+      "type": "implementation",
+      "description": "Build task form, task list with drag-drop, and filter controls",
+      "depends_on": [
+        "phase-3-core-components",
+        "phase-2-utilities"
+      ],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-4-1",
+          "description": "Create TaskForm component for task creation and editing",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/TaskForm.tsx",
+            "task-manager/src/components/TaskForm.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/types/index.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(addTask|updateTask)' src/components/TaskForm.tsx",
+            "expected": "TaskForm uses addTask and updateTask from context"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-4-2",
+          "description": "Create FilterBar component for filtering and search controls",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/FilterBar.tsx",
+            "task-manager/src/components/FilterBar.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/types/index.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep 'setFilter' src/components/FilterBar.tsx",
+            "expected": "FilterBar uses setFilter from context"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-4-3",
+          "description": "Create TaskList component with drag-and-drop reordering using @hello-pangea/dnd",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/TaskList.tsx",
+            "task-manager/src/components/TaskList.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/components/TaskItem.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep '@hello-pangea/dnd' src/components/TaskList.tsx",
+            "expected": "TaskList imports from @hello-pangea/dnd"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-5-navigation",
+      "name": "Navigation & Layout",
+      "type": "implementation",
+      "description": "Build sidebar navigation with list management and main app layout",
+      "depends_on": [
+        "phase-3-core-components"
+      ],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-5-1",
+          "description": "Create Sidebar component with navigation links and user list CRUD",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/components/Sidebar.tsx",
+            "task-manager/src/components/Sidebar.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(addList|deleteList|NavLink)' src/components/Sidebar.tsx | wc -l",
+            "expected": "At least 3 matches for list operations and navigation"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-5-2",
+          "description": "Rewrite App.tsx to implement routing structure with BrowserRouter and main layout",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/src/App.tsx",
+            "task-manager/src/App.css"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/components/Sidebar.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(BrowserRouter|Routes|Route)' src/App.tsx | wc -l",
+            "expected": "At least 3 routing elements present"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-5-3",
+          "description": "Update main.tsx to wrap App with ThemeProvider and TaskProvider",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/src/main.tsx"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "task-manager/src/contexts/TaskContext.tsx",
+            "task-manager/src/contexts/ThemeContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(ThemeProvider|TaskProvider)' src/main.tsx | wc -l",
+            "expected": "Both providers present in main.tsx"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-6-system-views",
+      "name": "System Views Implementation",
+      "type": "implementation",
+      "description": "Create Dashboard, Calendar, and All Tasks system views",
+      "depends_on": [
+        "phase-4-task-management",
+        "phase-5-navigation"
+      ],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-6-1",
+          "description": "Create Dashboard view with task metrics and high-priority overview",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/views/Dashboard.tsx",
+            "task-manager/src/views/Dashboard.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/hooks/useTaskMetrics.ts",
+            "task-manager/src/contexts/TaskContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep 'useTaskMetrics' src/views/Dashboard.tsx",
+            "expected": "Dashboard uses useTaskMetrics hook"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-6-2",
+          "description": "Create Calendar view with monthly grid and date navigation",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/views/Calendar.tsx",
+            "task-manager/src/views/Calendar.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/utils/dateUtils.ts",
+            "task-manager/src/contexts/TaskContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(getMonthGrid|date-fns)' src/views/Calendar.tsx",
+            "expected": "Calendar uses date utilities or date-fns"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-6-3",
+          "description": "Create AllTasks view with filtering, sorting, and search",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/views/AllTasks.tsx",
+            "task-manager/src/views/AllTasks.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/components/TaskList.tsx",
+            "task-manager/src/components/FilterBar.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(TaskList|FilterBar)' src/views/AllTasks.tsx | wc -l",
+            "expected": "AllTasks uses TaskList and FilterBar components"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-6-4",
+          "description": "Create UserListView for displaying tasks from specific user lists",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [
+            "task-manager/src/views/UserListView.tsx",
+            "task-manager/src/views/UserListView.css"
+          ],
+          "patterns_from": [
+            "task-manager/src/views/AllTasks.tsx",
+            "task-manager/src/contexts/TaskContext.tsx"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep 'useParams' src/views/UserListView.tsx",
+            "expected": "UserListView uses useParams to get listId from route"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-7-context-enhancements",
+      "name": "Context Enhancements",
+      "type": "implementation",
+      "description": "Add sorting logic and metrics calculation to TaskContext",
+      "depends_on": [
+        "phase-2-utilities"
+      ],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-7-1",
+          "description": "Add sorting logic and metrics calculation methods to TaskContext",
+          "service": "task-manager",
+          "files_to_modify": [
+            "task-manager/src/contexts/TaskContext.tsx"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "task-manager/src/hooks/useTaskSort.ts",
+            "task-manager/src/hooks/useTaskMetrics.ts"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && grep -E '(sortTasks|getMetrics)' src/contexts/TaskContext.tsx",
+            "expected": "TaskContext includes sorting and metrics methods"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-8-integration",
+      "name": "Integration & End-to-End Testing",
+      "type": "integration",
+      "description": "Verify complete application functionality with all views, routing, and data persistence",
+      "depends_on": [
+        "phase-6-system-views",
+        "phase-7-context-enhancements"
+      ],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-8-1",
+          "description": "Verify application builds and runs without errors",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "cd task-manager && npm run build",
+            "expected": "Build completes successfully with no TypeScript errors"
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-8-2",
+          "description": "Verify all routes are accessible and render correctly",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "browser",
+            "url": "http://localhost:5173",
+            "steps": [
+              "Navigate to /dashboard - verify metrics display",
+              "Navigate to /calendar - verify calendar grid renders",
+              "Navigate to /all-tasks - verify task list displays",
+              "Navigate to /list/:id - verify user list view works"
+            ]
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-8-3",
+          "description": "Verify complete task lifecycle: create, edit, complete, delete with persistence",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "e2e",
+            "steps": [
+              "Create a new task via TaskForm",
+              "Verify task appears in All Tasks view",
+              "Edit task inline in TaskList",
+              "Mark task as completed",
+              "Refresh page and verify task persists",
+              "Delete task and verify removal"
+            ]
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-8-4",
+          "description": "Verify dark mode toggle works across all views",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "browser",
+            "url": "http://localhost:5173",
+            "steps": [
+              "Toggle dark mode on",
+              "Navigate through all views to verify theme applied",
+              "Refresh page to verify theme persists",
+              "Toggle back to light mode and verify"
+            ]
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-8-5",
+          "description": "Verify filtering and sorting work correctly",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "e2e",
+            "steps": [
+              "Create tasks with different priorities and statuses",
+              "Apply priority filter and verify results",
+              "Apply hide completed filter",
+              "Sort by due date and verify order",
+              "Search by keyword and verify results"
+            ]
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-8-6",
+          "description": "Verify custom list management workflow",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "e2e",
+            "steps": [
+              "Create a new custom list via Sidebar",
+              "Create task assigned to that list",
+              "Navigate to list view and verify task appears",
+              "Rename the list",
+              "Delete the list and verify redirect"
+            ]
+          },
+          "status": "completed"
+        },
+        {
+          "id": "subtask-8-7",
+          "description": "Verify drag-and-drop task reordering",
+          "service": "task-manager",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "browser",
+            "url": "http://localhost:5173/all-tasks",
+            "steps": [
+              "Create 3-5 tasks",
+              "Drag task from position 1 to position 3",
+              "Verify visual reorder",
+              "Refresh page to verify order persists"
+            ]
+          },
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "parallel_groups": [
+    {
+      "group_id": 1,
+      "phases": [
+        "phase-2-utilities",
+        "phase-3-core-components"
+      ],
+      "rationale": "Utilities and core components have no dependencies on each other and can be built in parallel after foundation is complete"
+    },
+    {
+      "group_id": 2,
+      "phases": [
+        "phase-5-navigation",
+        "phase-7-context-enhancements"
+      ],
+      "rationale": "Navigation components and context enhancements can be developed in parallel after their respective dependencies are met"
+    }
+  ],
+  "sequential_dependencies": [
+    {
+      "sequence": [
+        "phase-1-foundation",
+        "phase-2-utilities",
+        "phase-4-task-management",
+        "phase-6-system-views",
+        "phase-8-integration"
+      ],
+      "rationale": "Foundation must come first, then utilities/components, then complex components using utilities, then views using all components, finally integration testing"
+    }
+  ],
+  "estimated_duration": {
+    "total_subtasks": 22,
+    "estimated_hours": 30,
+    "complexity": "complex",
+    "notes": "Comprehensive SPA with 22 subtasks spanning 8 phases. Parallelization opportunities exist but sequential dependencies require careful orchestration. Complex phase includes drag-drop, routing, theming, and persistence."
+  },
+  "risk_mitigation": {
+    "high_risk_areas": [
+      "Drag-and-drop implementation with @hello-pangea/dnd",
+      "localStorage quota exceeded handling",
+      "Calendar date calculations and navigation",
+      "Cross-tab synchronization edge cases"
+    ],
+    "mitigation_strategies": [
+      "Test drag-drop early with simple example before full integration",
+      "Implement quota detection and user-friendly error messages in Phase 1",
+      "Use date-fns library for robust date handling rather than vanilla JS",
+      "Add storage event listener for cross-tab sync in TaskContext"
+    ]
+  }
+}

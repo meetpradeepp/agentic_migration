@@ -1,0 +1,92 @@
+.user-list-view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 2rem 1rem 2rem;
+  gap: 1rem;
+}
+
+.list-title-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+.list-color-indicator {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.user-list-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.list-description {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  margin: 0.5rem 0 0 0;
+}
+
+.add-task-button {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.add-task-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.user-list-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 2rem 2rem 2rem;
+}
+
+.tasks-count {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-list-header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .list-title-section {
+    width: 100%;
+  }
+  
+  .add-task-button {
+    width: 100%;
+  }
+  
+  .user-list-content {
+    padding: 0 1rem 1rem 1rem;
+  }
+}
