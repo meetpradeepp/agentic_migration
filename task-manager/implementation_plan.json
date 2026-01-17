@@ -196,7 +196,7 @@
             "command": "cd task-manager && grep 'useTheme' src/components/ThemeToggle.tsx",
             "expected": "ThemeToggle uses useTheme hook"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-3-3",
@@ -216,7 +216,7 @@
             "command": "cd task-manager && grep -E '(useTasks|Task)' src/components/TaskItem.tsx | head -5",
             "expected": "TaskItem imports Task type and useTasks hook"
           },
-          "status": "pending"
+          "status": "in_progress"
         }
       ]
     },
