@@ -1,0 +1,451 @@
+{
+  "workflow_type": "REFACTOR",
+  "specification_id": "R001",
+  "title": "Extract Authentication Logic to AuthService",
+  "description": "Extract authentication and session management logic from bloated UserService (1000+ lines) into a dedicated AuthService, improving maintainability and single responsibility",
+  "phases": [
+    {
+      "phase_id": 0,
+      "phase_name": "INVESTIGATION",
+      "purpose": "Map current authentication logic, identify dependencies, and plan extraction strategy",
+      "entry_criteria": [
+        "Access to codebase",
+        "Test suite available"
+      ],
+      "exit_criteria": [
+        "Auth methods identified and documented",
+        "Dependencies mapped",
+        "Extraction boundaries defined",
+        "Test coverage baseline established"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P0-T1",
+          "service": "user-service",
+          "title": "Audit UserService authentication methods",
+          "description": "Identify all authentication-related methods (login, logout, validateToken, refreshToken, etc.) in UserService",
+          "files_to_modify": [
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [],
+          "verification_steps": [
+            "List all auth-related methods",
+            "Document method signatures",
+            "Note private helper methods",
+            "Identify shared state/dependencies"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P0-T2",
+          "service": "user-service",
+          "title": "Map dependencies and call sites",
+          "description": "Find all places where UserService auth methods are called and identify injected dependencies",
+          "files_to_modify": [
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [
+            "P0-T1"
+          ],
+          "verification_steps": [
+            "Document external callers (controllers, middleware)",
+            "List injected dependencies (repos, config, etc.)",
+            "Note circular dependencies if any",
+            "Identify interface contracts"
+          ],
+          "estimated_complexity": "MEDIUM",
+          "notes": [
+            "Use IDE find usages feature",
+            "Check for reflection/dynamic calls"
+          ]
+        },
+        {
+          "subtask_id": "P0-T3",
+          "service": "user-service",
+          "title": "Analyze test coverage",
+          "description": "Review existing tests for auth methods to understand test requirements and coverage",
+          "files_to_modify": [
+            "tests/services/UserService.test.ts"
+          ],
+          "dependencies": [
+            "P0-T1"
+          ],
+          "verification_steps": [
+            "Identify auth-specific tests",
+            "Note test patterns and mocks",
+            "Calculate coverage percentage for auth code",
+            "Document edge cases tested"
+          ],
+          "estimated_complexity": "LOW"
+        }
+      ]
+    },
+    {
+      "phase_id": 1,
+      "phase_name": "Create AuthService Structure",
+      "purpose": "Create new AuthService with proper interfaces and dependency injection setup",
+      "entry_criteria": [
+        "Phase 0 complete",
+        "Extraction boundaries clear"
+      ],
+      "exit_criteria": [
+        "AuthService class created",
+        "Interface defined",
+        "DI configured",
+        "No auth logic moved yet (structure only)"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P1-T1",
+          "service": "user-service",
+          "title": "Create IAuthService interface",
+          "description": "Define interface with auth method signatures based on P0-T1 findings",
+          "files_to_modify": [
+            "src/interfaces/IAuthService.ts"
+          ],
+          "dependencies": [
+            "P0-T1"
+          ],
+          "verification_steps": [
+            "Interface includes all auth methods",
+            "Method signatures match current UserService",
+            "Type definitions are complete",
+            "JSDoc comments added"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P1-T2",
+          "service": "user-service",
+          "title": "Create empty AuthService class",
+          "description": "Create AuthService class implementing IAuthService with constructor DI and empty methods",
+          "files_to_modify": [
+            "src/services/AuthService.ts"
+          ],
+          "dependencies": [
+            "P1-T1",
+            "P0-T2"
+          ],
+          "verification_steps": [
+            "Class implements IAuthService",
+            "Constructor accepts required dependencies",
+            "All interface methods present (empty implementations)",
+            "TypeScript compiles without errors"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P1-T3",
+          "service": "user-service",
+          "title": "Configure dependency injection",
+          "description": "Register AuthService in DI container and update UserService to inject AuthService",
+          "files_to_modify": [
+            "src/config/container.ts",
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [
+            "P1-T2"
+          ],
+          "verification_steps": [
+            "AuthService registered in DI container",
+            "UserService constructor accepts IAuthService",
+            "Application starts without DI errors",
+            "Can inject AuthService in tests"
+          ],
+          "estimated_complexity": "LOW",
+          "notes": [
+            "Ensure proper lifecycle (singleton vs transient)",
+            "Update DI documentation if exists"
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": 2,
+      "phase_name": "Extract Authentication Methods",
+      "purpose": "Move authentication logic from UserService to AuthService incrementally",
+      "entry_criteria": [
+        "Phase 1 complete",
+        "AuthService structure ready"
+      ],
+      "exit_criteria": [
+        "All auth methods moved",
+        "UserService delegates to AuthService",
+        "All tests updated and passing"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P2-T1",
+          "service": "user-service",
+          "title": "Extract core authentication methods",
+          "description": "Move login, logout, and validateToken methods from UserService to AuthService",
+          "files_to_modify": [
+            "src/services/AuthService.ts",
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [
+            "P1-T3"
+          ],
+          "verification_steps": [
+            "Methods moved with identical logic",
+            "UserService delegates to AuthService",
+            "Existing tests still pass",
+            "No regression in functionality"
+          ],
+          "estimated_complexity": "MEDIUM",
+          "notes": [
+            "Move one method at a time",
+            "Run tests after each move",
+            "Keep UserService methods as thin delegates initially"
+          ]
+        },
+        {
+          "subtask_id": "P2-T2",
+          "service": "user-service",
+          "title": "Extract session management methods",
+          "description": "Move refreshToken, revokeToken, and session validation methods to AuthService",
+          "files_to_modify": [
+            "src/services/AuthService.ts",
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [
+            "P2-T1"
+          ],
+          "verification_steps": [
+            "Session methods fully functional in AuthService",
+            "UserService delegates session calls",
+            "Session tests passing",
+            "No token leakage or security issues"
+          ],
+          "estimated_complexity": "MEDIUM"
+        },
+        {
+          "subtask_id": "P2-T3",
+          "service": "user-service",
+          "title": "Extract helper methods and utilities",
+          "description": "Move private auth helper methods (password hashing, token generation, etc.) to AuthService",
+          "files_to_modify": [
+            "src/services/AuthService.ts",
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [
+            "P2-T2"
+          ],
+          "verification_steps": [
+            "All helpers moved to AuthService",
+            "No duplicate helper code remains",
+            "Tests verify helper functionality",
+            "Proper encapsulation (private methods)"
+          ],
+          "estimated_complexity": "LOW"
+        }
+      ]
+    },
+    {
+      "phase_id": 3,
+      "phase_name": "Update Callers and Remove Delegation",
+      "purpose": "Update external callers to use AuthService directly and remove UserService delegation layer",
+      "entry_criteria": [
+        "Phase 2 complete",
+        "All auth logic in AuthService"
+      ],
+      "exit_criteria": [
+        "Controllers use AuthService directly",
+        "Middleware uses AuthService",
+        "UserService delegation removed",
+        "All tests passing"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P3-T1",
+          "service": "user-service",
+          "title": "Update AuthController to use AuthService",
+          "description": "Change AuthController to inject and use AuthService instead of UserService for auth operations",
+          "files_to_modify": [
+            "src/controllers/AuthController.ts"
+          ],
+          "dependencies": [
+            "P2-T3"
+          ],
+          "verification_steps": [
+            "AuthController injects IAuthService",
+            "All auth endpoints use AuthService",
+            "Integration tests pass",
+            "API responses unchanged"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P3-T2",
+          "service": "user-service",
+          "title": "Update authentication middleware",
+          "description": "Update auth middleware to use AuthService for token validation",
+          "files_to_modify": [
+            "src/middleware/authMiddleware.ts"
+          ],
+          "dependencies": [
+            "P2-T3"
+          ],
+          "verification_steps": [
+            "Middleware uses AuthService",
+            "Protected routes still work",
+            "Unauthorized access blocked",
+            "Middleware tests pass"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P3-T3",
+          "service": "user-service",
+          "title": "Remove auth methods from UserService",
+          "description": "Delete auth-related methods from UserService now that all callers use AuthService directly",
+          "files_to_modify": [
+            "src/services/UserService.ts"
+          ],
+          "dependencies": [
+            "P3-T1",
+            "P3-T2"
+          ],
+          "verification_steps": [
+            "All auth methods removed from UserService",
+            "UserService focuses on user profile operations only",
+            "No broken imports or references",
+            "All tests still pass"
+          ],
+          "estimated_complexity": "LOW",
+          "notes": [
+            "Verify no other services depend on UserService auth methods",
+            "Check for reflection/dynamic method calls"
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": 4,
+      "phase_name": "Testing and Cleanup",
+      "purpose": "Ensure comprehensive test coverage, update documentation, and remove dead code",
+      "entry_criteria": [
+        "Phase 3 complete",
+        "All auth logic in AuthService",
+        "All callers updated"
+      ],
+      "exit_criteria": [
+        "Test coverage maintained or improved",
+        "Documentation updated",
+        "No dead code remains",
+        "Performance verified"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P4-T1",
+          "service": "user-service",
+          "title": "Create comprehensive AuthService tests",
+          "description": "Migrate and enhance auth tests from UserService to AuthService",
+          "files_to_modify": [
+            "tests/services/AuthService.test.ts",
+            "tests/services/UserService.test.ts"
+          ],
+          "dependencies": [
+            "P3-T3"
+          ],
+          "verification_steps": [
+            "All auth tests moved to AuthService.test.ts",
+            "Test coverage ≥ baseline from P0-T3",
+            "Edge cases covered",
+            "Mock dependencies properly",
+            "Remove auth tests from UserService.test.ts"
+          ],
+          "estimated_complexity": "MEDIUM"
+        },
+        {
+          "subtask_id": "P4-T2",
+          "service": "user-service",
+          "title": "Update documentation",
+          "description": "Update architecture docs, API docs, and code comments to reflect new AuthService",
+          "files_to_modify": [
+            "docs/architecture/services.md",
+            "docs/api/authentication.md",
+            "README.md"
+          ],
+          "dependencies": [
+            "P3-T3"
+          ],
+          "verification_steps": [
+            "Architecture diagrams updated",
+            "Service responsibilities documented",
+            "API examples reference AuthService",
+            "Migration notes added"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P4-T3",
+          "service": "user-service",
+          "title": "Performance verification and cleanup",
+          "description": "Verify no performance regression and remove any dead imports/code",
+          "files_to_modify": [
+            "src/services/UserService.ts",
+            "src/services/AuthService.ts"
+          ],
+          "dependencies": [
+            "P4-T1"
+          ],
+          "verification_steps": [
+            "Load tests show no regression",
+            "Memory usage unchanged",
+            "No unused imports",
+            "No commented-out code",
+            "ESLint passes"
+          ],
+          "estimated_complexity": "LOW"
+        }
+      ]
+    }
+  ],
+  "global_considerations": {
+    "security": [
+      "Ensure no auth secrets logged during refactor",
+      "Verify token validation still secure",
+      "Check for timing attack vulnerabilities",
+      "Maintain encryption for sensitive data",
+      "No auth bypasses introduced"
+    ],
+    "performance": [
+      "No additional service hops (same DI container)",
+      "Method inlining opportunities preserved",
+      "No impact on auth response times",
+      "Memory footprint unchanged"
+    ],
+    "backwards_compatibility": [
+      "External API unchanged",
+      "Database schema unchanged",
+      "Token format unchanged",
+      "Session behavior identical",
+      "Other services unaffected"
+    ],
+    "rollback_strategy": "Revert by re-adding auth methods to UserService and updating DI; database unchanged so no data migration needed; feature flags not required since internal refactor"
+  },
+  "verification_strategy": {
+    "unit_tests": [
+      "AuthService.login() with valid/invalid credentials",
+      "AuthService.validateToken() with various token states",
+      "AuthService.refreshToken() edge cases",
+      "Password hashing utilities",
+      "Token generation and expiry"
+    ],
+    "integration_tests": [
+      "Full auth flow (login → access protected endpoint → logout)",
+      "Token refresh flow",
+      "Concurrent login sessions",
+      "Middleware integration with AuthService",
+      "Controller integration tests"
+    ],
+    "manual_verification": [
+      "Login via API still works",
+      "Protected endpoints require authentication",
+      "Logout invalidates sessions",
+      "Password reset flow unchanged",
+      "Review code for improved readability"
+    ]
+  }
+}

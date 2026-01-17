@@ -1,0 +1,30 @@
+# Knowledge Base
+
+This directory contains team learnings, best practices, common patterns, and troubleshooting guides.
+
+## Suggested Organization
+
+```
+knowledge-base/
+├── patterns/           # Reusable code patterns
+├── guides/             # How-to guides
+├── troubleshooting/    # Common issues and solutions
+└── onboarding/         # Onboarding materials
+```
+
+## Content Guidelines
+
+- Focus on "why" not just "what"
+- Include examples and code snippets
+- Link to related planning artifacts
+- Keep content up-to-date
+- Consolidate learnings from investigations
+
+## Sources
+
+Knowledge base articles can come from:
+- Investigation session findings
+- Lessons learned during implementation
+- Code review insights
+- Production incidents
+- Team discussions and decisions

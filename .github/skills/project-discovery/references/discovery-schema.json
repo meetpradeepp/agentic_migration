@@ -1,0 +1,340 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentic-migration.dev/schemas/roadmap-discovery.json",
+  "title": "Roadmap Discovery Schema",
+  "description": "Schema for project discovery output used in roadmap generation",
+  "type": "object",
+  "required": [
+    "project_name",
+    "target_audience",
+    "product_vision"
+  ],
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "description": "Name of the project from README or package.json",
+      "minLength": 1,
+      "examples": ["TaskFlow", "DevOps Deployer", "Auth Service"]
+    },
+    "project_type": {
+      "type": "string",
+      "description": "Type of project based on structure and usage",
+      "enum": [
+        "web-app",
+        "mobile-app",
+        "cli",
+        "library",
+        "api",
+        "desktop-app",
+        "other"
+      ],
+      "default": "other"
+    },
+    "tech_stack": {
+      "type": "object",
+      "description": "Technology stack powering the project",
+      "required": ["primary_language"],
+      "properties": {
+        "primary_language": {
+          "type": "string",
+          "description": "Main programming language",
+          "examples": ["TypeScript", "Python", "Rust", "Go"]
+        },
+        "frameworks": {
+          "type": "array",
+          "description": "Key frameworks used",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            ["React", "Express"],
+            ["FastAPI", "SQLAlchemy"]
+          ]
+        },
+        "key_dependencies": {
+          "type": "array",
+          "description": "Major dependencies the project relies on",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20
+        }
+      }
+    },
+    "target_audience": {
+      "type": "object",
+      "description": "Who the project is for",
+      "required": ["primary_persona"],
+      "properties": {
+        "primary_persona": {
+          "type": "string",
+          "description": "Main user persona",
+          "minLength": 10,
+          "examples": [
+            "Remote teams needing async task management",
+            "DevOps engineers deploying to multiple clouds"
+          ]
+        },
+        "secondary_personas": {
+          "type": "array",
+          "description": "Additional user types who may benefit",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5
+        },
+        "pain_points": {
+          "type": "array",
+          "description": "Problems the target audience faces",
+          "items": {
+            "type": "string",
+            "minLength": 5
+          },
+          "minItems": 1,
+          "examples": [
+            [
+              "Manual deployments are error-prone",
+              "Difficult to track deployment history"
+            ]
+          ]
+        },
+        "goals": {
+          "type": "array",
+          "description": "What users want to achieve",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Automate deployments",
+              "Reduce deployment time"
+            ]
+          ]
+        },
+        "usage_context": {
+          "type": "string",
+          "description": "When/where/how users interact with the project",
+          "examples": [
+            "During CI/CD pipeline execution",
+            "Daily standup planning sessions"
+          ]
+        }
+      }
+    },
+    "product_vision": {
+      "type": "object",
+      "description": "What the project aims to accomplish",
+      "required": ["one_liner"],
+      "properties": {
+        "one_liner": {
+          "type": "string",
+          "description": "Concise vision statement",
+          "minLength": 10,
+          "maxLength": 200,
+          "examples": [
+            "The async-first task manager for distributed teams",
+            "Multi-cloud deployment automation for DevOps engineers"
+          ]
+        },
+        "problem_statement": {
+          "type": "string",
+          "description": "What problem does this solve?",
+          "examples": [
+            "Remote teams struggle with synchronous task management tools that require real-time presence"
+          ]
+        },
+        "value_proposition": {
+          "type": "string",
+          "description": "Why someone would use this over alternatives",
+          "examples": [
+            "Async-first design means no notifications, no real-time sync pressure, and timezone-aware collaboration"
+          ]
+        },
+        "success_metrics": {
+          "type": "array",
+          "description": "How to measure success",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Teams reduce meeting time by 30%",
+              "Cross-timezone collaboration increases",
+              "Task completion rate improves"
+            ]
+          ]
+        }
+      }
+    },
+    "current_state": {
+      "type": "object",
+      "description": "Where the project is now",
+      "properties": {
+        "maturity": {
+          "type": "string",
+          "description": "Development stage",
+          "enum": [
+            "idea",
+            "prototype",
+            "mvp",
+            "growth",
+            "mature"
+          ],
+          "default": "idea"
+        },
+        "existing_features": {
+          "type": "array",
+          "description": "Features currently implemented",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "User authentication",
+              "Task creation and assignment",
+              "Basic dashboard"
+            ]
+          ]
+        },
+        "known_gaps": {
+          "type": "array",
+          "description": "Missing features or capabilities",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "No mobile app",
+              "Missing notification system",
+              "No analytics dashboard"
+            ]
+          ]
+        },
+        "technical_debt": {
+          "type": "array",
+          "description": "Code issues, TODOs, refactoring needs",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Authentication needs JWT migration",
+              "Database queries not optimized",
+              "Missing integration tests"
+            ]
+          ]
+        }
+      }
+    },
+    "competitive_context": {
+      "type": "object",
+      "description": "Market positioning and alternatives",
+      "properties": {
+        "alternatives": {
+          "type": "array",
+          "description": "Competing solutions",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            ["Asana", "Monday.com", "Linear"]
+          ]
+        },
+        "differentiators": {
+          "type": "array",
+          "description": "What makes this unique",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Async-first design",
+              "Built-in timezone awareness",
+              "No real-time sync required"
+            ]
+          ]
+        },
+        "market_position": {
+          "type": "string",
+          "description": "How this fits in the market",
+          "examples": [
+            "Niche alternative for distributed teams frustrated with synchronous tools"
+          ]
+        },
+        "competitor_pain_points": {
+          "type": "array",
+          "description": "Pain points from competitor users (from competitor_analysis.json)",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Asana users complain about notification overload",
+              "Linear pricing prohibitive for small teams"
+            ]
+          ]
+        },
+        "competitor_analysis_available": {
+          "type": "boolean",
+          "description": "Whether competitor_analysis.json data was incorporated",
+          "default": false
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Limitations and dependencies",
+      "properties": {
+        "technical": {
+          "type": "array",
+          "description": "Technical limitations",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Must support legacy browser IE11",
+              "Limited to PostgreSQL database",
+              "API rate limits on external service"
+            ]
+          ]
+        },
+        "resources": {
+          "type": "array",
+          "description": "Team or resource constraints",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Solo developer (1 contributor)",
+              "Part-time development only",
+              "No budget for paid services"
+            ]
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "description": "External dependencies or services",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "Auth0 for authentication",
+              "Stripe for payments",
+              "AWS S3 for file storage"
+            ]
+          ]
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "description": "ISO8601 timestamp of discovery creation",
+      "format": "date-time",
+      "examples": ["2024-01-15T10:30:00Z"]
+    }
+  },
+  "additionalProperties": false
+}

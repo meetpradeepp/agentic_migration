@@ -1,0 +1,367 @@
+{
+  "workflow_type": "FEATURE",
+  "specification_id": "F001",
+  "title": "Add User Profile Avatar Upload",
+  "description": "Enable users to upload profile avatars in JPG/PNG format with automatic resizing to 200x200px and cloud storage integration",
+  "phases": [
+    {
+      "phase_id": 0,
+      "phase_name": "INVESTIGATION",
+      "purpose": "Understand existing storage infrastructure, image processing capabilities, and user profile architecture",
+      "entry_criteria": [
+        "Access to codebase",
+        "Cloud storage credentials available"
+      ],
+      "exit_criteria": [
+        "Storage solution identified",
+        "Image processing library selected",
+        "User profile schema understood",
+        "Security requirements documented"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P0-T1",
+          "service": "user-service",
+          "title": "Analyze current user profile schema",
+          "description": "Review UserProfile model to understand existing fields, validation rules, and avatar-related fields if any",
+          "files_to_modify": [
+            "src/models/UserProfile.ts"
+          ],
+          "dependencies": [],
+          "verification_steps": [
+            "Document current avatar field (if exists)",
+            "Note validation rules and constraints",
+            "Identify migration needs if schema changes required"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P0-T2",
+          "service": "storage-service",
+          "title": "Investigate cloud storage configuration",
+          "description": "Check if cloud storage (S3/Azure Blob/GCS) is already configured and identify upload patterns",
+          "files_to_modify": [
+            "src/config/storage.ts"
+          ],
+          "dependencies": [],
+          "verification_steps": [
+            "Confirm storage provider and credentials",
+            "Note existing upload patterns",
+            "Document bucket/container naming conventions"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P0-T3",
+          "service": "user-service",
+          "title": "Research image processing libraries",
+          "description": "Evaluate image processing libraries (Sharp, Jimp, ImageMagick) for resizing and format conversion",
+          "files_to_modify": [
+            "package.json"
+          ],
+          "dependencies": [
+            "P0-T1"
+          ],
+          "verification_steps": [
+            "Compare library sizes and performance",
+            "Test resize to 200x200 with sample images",
+            "Verify JPG/PNG format support"
+          ],
+          "estimated_complexity": "MEDIUM",
+          "notes": [
+            "Consider Sharp for performance (native bindings)",
+            "Jimp is pure JS (easier deployment but slower)"
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": 1,
+      "phase_name": "Backend API Implementation",
+      "purpose": "Create upload endpoint with validation, image processing, and storage integration",
+      "entry_criteria": [
+        "Phase 0 complete",
+        "Storage solution confirmed",
+        "Image library selected"
+      ],
+      "exit_criteria": [
+        "Upload endpoint functional",
+        "Images resize correctly",
+        "Files stored in cloud",
+        "Unit tests passing"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P1-T1",
+          "service": "user-service",
+          "title": "Add avatar field to UserProfile model",
+          "description": "Update UserProfile schema to include avatarUrl field with validation",
+          "files_to_modify": [
+            "src/models/UserProfile.ts",
+            "src/migrations/add-avatar-field.ts"
+          ],
+          "dependencies": [
+            "P0-T1"
+          ],
+          "verification_steps": [
+            "Run migration successfully",
+            "Verify field accepts null/URL strings",
+            "Confirm URL validation rules"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P1-T2",
+          "service": "storage-service",
+          "title": "Create image upload and resize utility",
+          "description": "Implement utility function that accepts image buffer, resizes to 200x200, and uploads to cloud storage",
+          "files_to_modify": [
+            "src/services/imageService.ts"
+          ],
+          "dependencies": [
+            "P0-T2",
+            "P0-T3"
+          ],
+          "verification_steps": [
+            "Test resize with JPG/PNG samples",
+            "Verify 200x200 output dimensions",
+            "Confirm successful upload to cloud",
+            "Check error handling for invalid formats"
+          ],
+          "estimated_complexity": "MEDIUM",
+          "notes": [
+            "Use Sharp for best performance",
+            "Implement retry logic for upload failures",
+            "Return signed URL or public URL"
+          ]
+        },
+        {
+          "subtask_id": "P1-T3",
+          "service": "user-service",
+          "title": "Create avatar upload endpoint",
+          "description": "Add POST /users/:id/avatar endpoint with multipart form handling, validation, and integration with imageService",
+          "files_to_modify": [
+            "src/controllers/userController.ts",
+            "src/routes/userRoutes.ts"
+          ],
+          "dependencies": [
+            "P1-T1",
+            "P1-T2"
+          ],
+          "verification_steps": [
+            "Test upload with valid JPG/PNG",
+            "Verify 400 error for invalid formats",
+            "Verify 413 error for oversized files",
+            "Confirm avatarUrl updated in database",
+            "Test authentication/authorization"
+          ],
+          "estimated_complexity": "MEDIUM",
+          "notes": [
+            "Use multer for multipart handling",
+            "Limit file size to 5MB",
+            "Require authentication"
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": 2,
+      "phase_name": "Frontend Integration",
+      "purpose": "Add UI for avatar upload with preview and error handling",
+      "entry_criteria": [
+        "Phase 1 complete",
+        "Backend endpoint tested and functional"
+      ],
+      "exit_criteria": [
+        "Upload UI functional",
+        "Preview displays correctly",
+        "Error states handled",
+        "E2E tests passing"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P2-T1",
+          "service": "web-client",
+          "title": "Create AvatarUpload component",
+          "description": "Build React component with file input, preview, upload button, and loading/error states",
+          "files_to_modify": [
+            "src/components/AvatarUpload.tsx",
+            "src/components/AvatarUpload.module.css"
+          ],
+          "dependencies": [
+            "P1-T3"
+          ],
+          "verification_steps": [
+            "Render file input correctly",
+            "Show preview when file selected",
+            "Display loading spinner during upload",
+            "Show error messages on failure",
+            "Update avatar on success"
+          ],
+          "estimated_complexity": "MEDIUM",
+          "notes": [
+            "Support drag-and-drop if time permits",
+            "Validate file type client-side",
+            "Show file size before upload"
+          ]
+        },
+        {
+          "subtask_id": "P2-T2",
+          "service": "web-client",
+          "title": "Integrate AvatarUpload into UserProfile page",
+          "description": "Add AvatarUpload component to profile edit page with proper state management",
+          "files_to_modify": [
+            "src/pages/UserProfile.tsx"
+          ],
+          "dependencies": [
+            "P2-T1"
+          ],
+          "verification_steps": [
+            "Component renders in profile page",
+            "Upload updates profile state",
+            "New avatar displays immediately",
+            "Error handling works correctly"
+          ],
+          "estimated_complexity": "LOW"
+        },
+        {
+          "subtask_id": "P2-T3",
+          "service": "web-client",
+          "title": "Add API client method for avatar upload",
+          "description": "Implement uploadAvatar method in API client with FormData and progress tracking",
+          "files_to_modify": [
+            "src/api/userApi.ts"
+          ],
+          "dependencies": [
+            "P1-T3"
+          ],
+          "verification_steps": [
+            "POST request sends FormData correctly",
+            "Progress callback receives upload percentage",
+            "Returns updated avatarUrl on success",
+            "Handles network errors gracefully"
+          ],
+          "estimated_complexity": "LOW"
+        }
+      ]
+    },
+    {
+      "phase_id": 3,
+      "phase_name": "Testing and Documentation",
+      "purpose": "Ensure comprehensive test coverage and update documentation",
+      "entry_criteria": [
+        "Phase 2 complete",
+        "All features functional"
+      ],
+      "exit_criteria": [
+        "All tests passing",
+        "API documentation updated",
+        "User documentation added"
+      ],
+      "subtasks": [
+        {
+          "subtask_id": "P3-T1",
+          "service": "user-service",
+          "title": "Add integration tests for avatar upload",
+          "description": "Create tests covering happy path, error cases, and edge cases for avatar upload endpoint",
+          "files_to_modify": [
+            "tests/integration/userController.test.ts"
+          ],
+          "dependencies": [
+            "P1-T3"
+          ],
+          "verification_steps": [
+            "Test successful upload",
+            "Test invalid file format",
+            "Test oversized file",
+            "Test unauthorized access",
+            "Test upload to non-existent user"
+          ],
+          "estimated_complexity": "MEDIUM"
+        },
+        {
+          "subtask_id": "P3-T2",
+          "service": "web-client",
+          "title": "Add E2E tests for avatar upload flow",
+          "description": "Create Cypress/Playwright tests for complete upload flow from UI to backend",
+          "files_to_modify": [
+            "e2e/avatar-upload.spec.ts"
+          ],
+          "dependencies": [
+            "P2-T2"
+          ],
+          "verification_steps": [
+            "Test complete upload flow",
+            "Test error display",
+            "Test preview functionality",
+            "Test avatar display after upload"
+          ],
+          "estimated_complexity": "MEDIUM"
+        },
+        {
+          "subtask_id": "P3-T3",
+          "service": "documentation",
+          "title": "Update API documentation",
+          "description": "Document avatar upload endpoint in API docs with request/response examples",
+          "files_to_modify": [
+            "docs/api/user-endpoints.md"
+          ],
+          "dependencies": [
+            "P1-T3"
+          ],
+          "verification_steps": [
+            "Endpoint documented with examples",
+            "Error codes documented",
+            "File size limits noted",
+            "Authentication requirements clear"
+          ],
+          "estimated_complexity": "LOW"
+        }
+      ]
+    }
+  ],
+  "global_considerations": {
+    "security": [
+      "Validate file types on both client and server",
+      "Implement file size limits (5MB max)",
+      "Scan uploaded files for malware if possible",
+      "Use signed URLs for cloud storage access",
+      "Require authentication for upload endpoint",
+      "Validate user can only upload to their own profile"
+    ],
+    "performance": [
+      "Use streaming for large file uploads",
+      "Implement client-side image compression before upload",
+      "Cache avatar URLs with appropriate TTL",
+      "Use CDN for serving avatar images",
+      "Consider lazy loading avatars in lists"
+    ],
+    "backwards_compatibility": [
+      "Existing profiles without avatars should display default",
+      "Old API clients should continue to work",
+      "Migration should not break existing user data"
+    ],
+    "rollback_strategy": "Remove avatarUrl field from responses via API versioning if needed; original database migration can be rolled back; uploaded images can remain in cloud storage"
+  },
+  "verification_strategy": {
+    "unit_tests": [
+      "imageService resize function",
+      "File type validation",
+      "URL generation",
+      "UserProfile model validation"
+    ],
+    "integration_tests": [
+      "Complete upload flow (POST /users/:id/avatar)",
+      "Error responses for invalid inputs",
+      "Storage service integration",
+      "Database update verification"
+    ],
+    "manual_verification": [
+      "Upload various image formats and sizes",
+      "Verify images display correctly across browsers",
+      "Test on mobile devices",
+      "Verify cloud storage console shows uploaded files",
+      "Check avatar appears in user lists and profile pages"
+    ]
+  }
+}

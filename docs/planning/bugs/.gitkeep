@@ -1,0 +1,11 @@
+# Bug Fix Planning
+
+This directory contains planning artifacts for bug fixes and investigations.
+
+Each bug fix gets its own subdirectory with:
+- `spec.md` - Bug description and reproduction steps
+- `implementation_plan.json` - Investigation + fix workflow
+- `root-cause.md` - Root cause analysis
+- `build-progress.txt` - Planning session summary
+
+Root cause documentation is especially important for preventing similar issues in the future.

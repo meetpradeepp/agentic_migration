@@ -1,0 +1,11 @@
+# Feature Planning
+
+This directory contains planning artifacts for new features.
+
+Each feature gets its own subdirectory with:
+- `spec.md` - Feature specification
+- `implementation_plan.json` - Subtask-based implementation plan
+- `build-progress.txt` - Planning session summary
+- `context.json` - Task-specific context
+
+Planning artifacts are committed alongside feature implementation to provide historical context and design documentation.

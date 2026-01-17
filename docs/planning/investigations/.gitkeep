@@ -1,0 +1,11 @@
+# Investigation Planning
+
+This directory contains planning artifacts for investigations and analysis sessions.
+
+Each investigation gets its own subdirectory with:
+- `spec.md` - Investigation scope and objectives
+- `implementation_plan.json` - Investigation workflow
+- `findings.md` - Investigation results
+- `recommendations.md` - Recommended actions
+
+Investigations that yield valuable insights should be consolidated into knowledge base articles.

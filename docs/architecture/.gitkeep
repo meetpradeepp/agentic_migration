@@ -1,0 +1,38 @@
+# Architecture Documentation
+
+This directory contains system architecture documentation.
+
+## Suggested Structure
+
+```
+architecture/
+├── overview.md              # High-level system overview
+├── components/              # Component-specific docs
+│   ├── backend.md
+│   ├── frontend.md
+│   └── data-layer.md
+├── diagrams/                # Architecture diagrams
+│   ├── system-architecture.png
+│   ├── data-flow.png
+│   └── deployment.png
+└── api/                     # API documentation
+    ├── rest-api.md
+    └── graphql-schema.md
+```
+
+## Content Guidelines
+
+- Start with high-level overview
+- Use diagrams to illustrate concepts
+- Document component interactions
+- Include deployment architecture
+- Keep synchronized with actual code
+- Reference relevant ADRs
+
+## Tools
+
+Consider using:
+- Mermaid diagrams (renders in GitHub)
+- PlantUML for complex diagrams
+- Draw.io or Excalidraw for visual diagrams
+- API documentation generators (Swagger, GraphQL introspection)
