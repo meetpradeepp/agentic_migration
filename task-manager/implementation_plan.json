@@ -177,7 +177,7 @@
             "command": "cd task-manager && grep 'export function EmptyState' src/components/EmptyState.tsx",
             "expected": "Named export function EmptyState found"
           },
-          "status": "in_progress"
+          "status": "completed"
         },
         {
           "id": "subtask-3-2",
@@ -196,7 +196,7 @@
             "command": "cd task-manager && grep 'useTheme' src/components/ThemeToggle.tsx",
             "expected": "ThemeToggle uses useTheme hook"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-3-3",
