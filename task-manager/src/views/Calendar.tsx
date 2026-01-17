@@ -57,10 +57,11 @@ export function Calendar() {
   };
 
   /**
-   * Handle day click
+   * Handle day click - toggle selection
    */
   const handleDayClick = (day: CalendarDay) => {
-    setSelectedDate(day.date);
+    // Toggle: if clicking the same date, clear it; otherwise select it
+    setSelectedDate(selectedDate && isSameDay(day.date, selectedDate) ? null : day.date);
   };
 
   const selectedDateTasks = selectedDate ? getTasksForDate(selectedDate) : [];

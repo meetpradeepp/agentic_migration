@@ -21,6 +21,9 @@
   max-height: 90vh;
   overflow-y: auto;
   padding: 0;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1001;
 }
 
 .task-form-header {
