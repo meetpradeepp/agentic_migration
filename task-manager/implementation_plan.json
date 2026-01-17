@@ -146,7 +146,7 @@
             "command": "cd task-manager && grep -E '(getMonthGrid|formatDate|isSameDay)' src/utils/dateUtils.ts | wc -l",
             "expected": "At least 3 date utility functions defined"
           },
-          "status": "in_progress"
+          "status": "completed"
         }
       ]
     },
@@ -177,7 +177,7 @@
             "command": "cd task-manager && grep 'export function EmptyState' src/components/EmptyState.tsx",
             "expected": "Named export function EmptyState found"
           },
-          "status": "pending"
+          "status": "in_progress"
         },
         {
           "id": "subtask-3-2",
