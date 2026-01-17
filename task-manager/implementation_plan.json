@@ -392,7 +392,7 @@
             "command": "cd task-manager && grep 'useTaskMetrics' src/views/Dashboard.tsx",
             "expected": "Dashboard uses useTaskMetrics hook"
           },
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "subtask-6-2",
