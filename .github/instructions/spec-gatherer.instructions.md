@@ -180,9 +180,32 @@ I'll invoke the Spec Gatherer Agent to help clarify your requirements and create
 4. Identify involved services
 5. Gather detailed requirements and acceptance criteria
 6. Create requirements.json
+7. **Immediately auto-invoke complexity-assessor** (no waiting, no confirmation)
 
 **Expected Output**:
 - requirements.json (structured requirements document)
+
+**Critical Flow After Q&A**:
+```
+User answers last question
+    ↓
+[No pause, no confirmation phase]
+    ↓
+Create requirements.json immediately
+    ↓
+Call to subagent complexity-assessor
+```
+
+**❌ DO NOT**: 
+- Ask "Should I create requirements.json?"
+- Say "Let me wait for you to confirm"
+- Summarize and stop
+- Request approval before proceeding
+
+**✅ DO**: 
+- Complete Q&A thoroughly (Phase 1-4)
+- Immediately create requirements.json (Phase 5)
+- Auto-invoke complexity-assessor without pause
 
 Let me start the requirements gathering process...
 
@@ -271,16 +294,14 @@ fi
 - Identifying edge cases and failure scenarios
 - Documenting constraints
 
-**Phase 5: Confirmation**:
-- Summarizing understanding
-- Getting user approval
-- Making adjustments if needed
+**Phase 5: Document Requirements**:
+- Create requirements.json immediately after Q&A complete
+- Validate JSON syntax
+- Verify all required fields
+- Auto-invoke complexity-assessor to continue workflow
 
-**Phase 6: Output Creation**:
-- Creating requirements.json
-- Validating JSON syntax
-- Verifying all required fields
-- Confirming file creation
+**⚠️ CRITICAL: Do NOT add a "confirmation" or "approval" phase**
+**⚠️ Proceed IMMEDIATELY from Phase 4 (Q&A) → Phase 5 (Document) → Auto-invoke**
 
 ### ❌ Red Flags (Agent Going Off Track)
 
@@ -433,24 +454,24 @@ All of these fields are MANDATORY:
 Please update requirements.json to include all required fields.
 ```
 
-### Issue 5: Agent Skips User Confirmation
+### Issue 5: Agent Creates Incomplete Requirements
 
-**Symptom**: Creates requirements.json without confirming with user
+**Symptom**: Creates requirements.json with missing or unclear information
 
-**Cause**: Agent rushes to output
+**Cause**: Agent doesn't gather enough detail during Q&A phase
 
 **Solution**:
 ```markdown
-⚠️ The Spec Gatherer Agent should ALWAYS confirm understanding with the user before creating requirements.json.
+⚠️ The Spec Gatherer Agent should ask thorough clarifying questions during Phase 1-4.
 
-Please:
-1. Summarize what you understood
-2. Show the user the requirements you plan to document
-3. Wait for user confirmation
-4. Make adjustments if needed
-5. THEN create requirements.json
+Best Practice:
+1. Ask specific questions for each requirement area
+2. Clarify ambiguous responses
+3. Validate understanding iteratively during Q&A
+4. Once Q&A is complete, immediately create requirements.json
+5. Auto-invoke complexity-assessor to continue workflow
 
-Do NOT create the file without explicit user approval.
+Do NOT stop after Q&A - proceed immediately to Phase 5 (Document Requirements).
 ```
 
 ---
@@ -537,13 +558,13 @@ Call to subagent complexity-assessor
 - Don't plan implementation
 - Don't analyze codebase
 - Don't create multiple artifacts
-- Don't skip user interaction
+- Don't skip user interaction during Q&A phase
 
 **Avoid Assumptions**:
-- Don't guess workflow type without confirmation
-- Don't assume services without verification
-- Don't proceed without user approval
-- Don't make up requirements
+- Don't guess workflow type without asking questions
+- Don't assume services without verification during Q&A
+- Don't make up requirements - ask clarifying questions
+- Don't create requirements.json until Q&A phase is complete
 
 **Avoid Poor Quality**:
 - Don't create invalid JSON
@@ -675,8 +696,8 @@ After test:
 
 ### Key Rules
 1. Requirements ONLY - no planning
-2. Interactive - must ask questions
-3. User confirmation required
+2. Interactive Q&A - must ask thorough questions (Phase 1-4)
+3. Immediate continuation - create requirements.json and auto-invoke complexity-assessor (Phase 5)
 4. JSON validation mandatory
 5. Workflow type must be valid enum
 
