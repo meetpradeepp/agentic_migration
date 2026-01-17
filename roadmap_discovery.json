@@ -1,0 +1,322 @@
+{
+  "id": "discovery-migration-factory-2026-01-17",
+  "project_name": "Joern Migration Factory",
+  "version": "1.0",
+  "generated_at": "2026-01-17T12:25:00Z",
+  "product_vision": {
+    "one_liner": "Automated legacy code analysis and migration planning platform powered by Joern",
+    "value_proposition": "Transform weeks of manual legacy code analysis into hours of automated insights, enabling faster and safer migration from C/C++/Pro*C to modern platforms",
+    "problem_statement": "Organizations struggle to migrate legacy C, C++, and Pro*C applications because understanding complex, undocumented codebases requires extensive manual analysis that is time-consuming, error-prone, and lacks scalability",
+    "success_metrics": [
+      "Reduce code analysis time from weeks to hours (90%+ time savings)",
+      "Identify 95%+ of code dependencies automatically",
+      "Generate actionable migration plans for 100% of analyzed codebases",
+      "Enable migration teams to handle 3x more projects simultaneously"
+    ]
+  },
+  "target_audience": {
+    "primary_persona": {
+      "name": "Migration Architect",
+      "description": "Senior technical lead responsible for planning and executing legacy system modernization projects",
+      "role": "Solution Architect / Technical Lead",
+      "experience_level": "Senior (8-15 years)",
+      "organization_type": "Enterprise IT, System Integrators, Consulting Firms",
+      "team_size": "3-10 engineers per migration project"
+    },
+    "pain_points": [
+      {
+        "id": "pain-1",
+        "description": "Manual code analysis takes 2-4 weeks per application, delaying migration timelines",
+        "severity": "critical",
+        "frequency": "every project",
+        "current_workaround": "Assign multiple engineers to read code manually, create spreadsheets"
+      },
+      {
+        "id": "pain-2",
+        "description": "Hidden dependencies and side effects discovered late in migration cause rework",
+        "severity": "high",
+        "frequency": "60-80% of projects",
+        "current_workaround": "Extensive testing, manual debugging, iterative fixes"
+      },
+      {
+        "id": "pain-3",
+        "description": "Pro*C embedded SQL extraction requires specialized expertise that's scarce",
+        "severity": "high",
+        "frequency": "all database-heavy applications",
+        "current_workaround": "Hire expensive contractors, use grep/regex (incomplete)"
+      },
+      {
+        "id": "pain-4",
+        "description": "Lack of consistent analysis methodology across projects leads to inconsistent quality",
+        "severity": "medium",
+        "frequency": "every project",
+        "current_workaround": "Create checklists, rely on individual expertise"
+      },
+      {
+        "id": "pain-5",
+        "description": "Documentation generation from legacy code is manual and often incomplete",
+        "severity": "medium",
+        "frequency": "90% of legacy codebases",
+        "current_workaround": "Reverse engineer docs manually, use limited auto-doc tools"
+      }
+    ],
+    "goals": [
+      "Accelerate migration project timelines by 50% or more",
+      "Reduce migration risk by identifying all dependencies upfront",
+      "Standardize analysis approach across all migration projects",
+      "Enable junior engineers to contribute effectively to migrations",
+      "Generate comprehensive, accurate documentation automatically"
+    ],
+    "jobs_to_be_done": [
+      "Understand legacy codebase structure and architecture",
+      "Identify all function calls, data flows, and dependencies",
+      "Extract database schema and SQL queries from Pro*C code",
+      "Map external library dependencies and system calls",
+      "Generate migration complexity estimates",
+      "Create detailed migration plans with risk assessment",
+      "Produce documentation for stakeholders and new team members"
+    ],
+    "secondary_personas": [
+      {
+        "name": "Migration Engineer",
+        "description": "Software engineer executing migration tasks defined by architects",
+        "role": "Software Engineer",
+        "experience_level": "Mid-level (3-7 years)"
+      },
+      {
+        "name": "Project Manager",
+        "description": "PM responsible for migration project delivery and stakeholder communication",
+        "role": "Technical Project Manager",
+        "experience_level": "Mid to Senior (5-12 years)"
+      }
+    ]
+  },
+  "current_state": {
+    "maturity_level": "idea",
+    "maturity_justification": "Conceptual migration factory project with no existing implementation. Leverages Joern as foundational technology but requires custom integration and workflow automation",
+    "existing_features": [],
+    "identified_gaps": [
+      "Joern integration and automation layer",
+      "Pro*C specific analysis capabilities",
+      "Migration planning workflow engine",
+      "Report generation and visualization",
+      "Multi-project management interface",
+      "Knowledge base for migration patterns"
+    ],
+    "technical_debt": [],
+    "technology_stack": {
+      "planned": [
+        "Joern - code analysis engine for C/C++",
+        "Python - orchestration and workflow automation",
+        "PostgreSQL - metadata and analysis results storage",
+        "React - web-based dashboard and reporting UI",
+        "Docker - containerized deployment",
+        "REST API - integration with CI/CD and external tools"
+      ]
+    },
+    "deployment_indicators": {
+      "production_ready": false,
+      "has_ci_cd": false,
+      "has_monitoring": false,
+      "has_documentation": false
+    }
+  },
+  "competitive_context": {
+    "alternatives": [
+      {
+        "name": "Manual Code Review",
+        "type": "current_approach",
+        "strengths": [
+          "Deep contextual understanding from human expertise",
+          "Flexible to project-specific requirements",
+          "No tooling costs"
+        ],
+        "weaknesses": [
+          "Extremely time-consuming (2-4 weeks per app)",
+          "Inconsistent quality across reviewers",
+          "Not scalable for large portfolios",
+          "High cost due to labor hours"
+        ]
+      },
+      {
+        "name": "SonarQube / Static Analysis Tools",
+        "type": "commercial_tool",
+        "strengths": [
+          "Well-established in market",
+          "Good for code quality metrics",
+          "IDE integrations available"
+        ],
+        "weaknesses": [
+          "Not migration-focused (code quality focus)",
+          "Limited dependency graph analysis",
+          "No Pro*C specific support",
+          "No migration planning capabilities"
+        ]
+      },
+      {
+        "name": "Understand (SciTools)",
+        "type": "commercial_tool",
+        "strengths": [
+          "Excellent visualization of code structure",
+          "Supports multiple languages including C/C++",
+          "Good for architecture understanding"
+        ],
+        "weaknesses": [
+          "Expensive licensing ($1,000+ per seat)",
+          "Limited automation capabilities",
+          "No migration workflow support",
+          "Steep learning curve"
+        ]
+      },
+      {
+        "name": "CAST Highlight",
+        "type": "commercial_tool",
+        "strengths": [
+          "Migration-focused platform",
+          "Good for portfolio analysis",
+          "Cloud migration specific features"
+        ],
+        "weaknesses": [
+          "Very expensive (enterprise pricing)",
+          "Heavyweight implementation (months)",
+          "Limited customization",
+          "Generic recommendations not project-specific"
+        ]
+      },
+      {
+        "name": "Custom Scripts (grep, awk, sed)",
+        "type": "current_approach",
+        "strengths": [
+          "Free and flexible",
+          "Quick for simple pattern matching",
+          "Automatable"
+        ],
+        "weaknesses": [
+          "Surface-level analysis only",
+          "Misses semantic relationships",
+          "Brittle and hard to maintain",
+          "No Pro*C awareness"
+        ]
+      }
+    ],
+    "differentiators": [
+      {
+        "feature": "Joern-Powered Deep Analysis",
+        "description": "Leverages Joern's code property graph for semantic understanding beyond syntax",
+        "competitive_advantage": "Identifies complex dependencies and data flows missed by traditional static analysis"
+      },
+      {
+        "feature": "Pro*C Specialized Support",
+        "description": "Built-in extractors for embedded SQL, cursor operations, and Oracle-specific constructs",
+        "competitive_advantage": "Only solution targeting Pro*C migrations specifically"
+      },
+      {
+        "feature": "Migration-First Design",
+        "description": "Every feature designed for migration planning, not just code quality",
+        "competitive_advantage": "Generates actionable migration plans vs. generic quality reports"
+      },
+      {
+        "feature": "Automated Workflow",
+        "description": "End-to-end automation from code ingestion to report generation",
+        "competitive_advantage": "Reduces 2-4 week analysis to hours without manual intervention"
+      },
+      {
+        "feature": "Open Source Foundation",
+        "description": "Built on Joern open source, extensible and transparent",
+        "competitive_advantage": "Lower cost, customizable, no vendor lock-in"
+      }
+    ],
+    "market_position": "Specialized niche tool for C/C++/Pro*C migrations, targeting mid-market and enterprise clients with legacy Oracle/Unix applications needing modernization. Focus on depth (Joern's semantic analysis) over breadth (single language stack)."
+  },
+  "constraints": {
+    "technical": [
+      {
+        "type": "dependency",
+        "description": "Joern requires JVM and Scala runtime",
+        "impact": "Deployment complexity, resource requirements",
+        "mitigation": "Docker containerization, pre-built images"
+      },
+      {
+        "type": "scalability",
+        "description": "Joern analysis can be memory-intensive for very large codebases (>1M LOC)",
+        "impact": "Performance degradation on large applications",
+        "mitigation": "Chunking strategies, incremental analysis, cloud scaling"
+      },
+      {
+        "type": "language_support",
+        "description": "Joern C/C++ parser may not support all compiler extensions",
+        "impact": "Some legacy code may require preprocessing",
+        "mitigation": "Preprocessor integration, fallback to partial analysis"
+      },
+      {
+        "type": "learning_curve",
+        "description": "Joern query language (Gremlin/CPG queries) is specialized",
+        "impact": "Custom analysis requires expertise",
+        "mitigation": "Pre-built query library, UI abstractions"
+      }
+    ],
+    "resource": [
+      {
+        "type": "expertise",
+        "description": "Requires Joern expertise, legacy C/C++/Pro*C knowledge, migration experience",
+        "impact": "Small initial team (2-3 developers)",
+        "mitigation": "Phased development, prioritize core features"
+      },
+      {
+        "type": "timeline",
+        "description": "Target MVP in 3-4 months to validate market fit",
+        "impact": "Must prioritize ruthlessly",
+        "mitigation": "Focus on core workflow, defer advanced features"
+      },
+      {
+        "type": "infrastructure",
+        "description": "Need compute resources for Joern processing",
+        "impact": "Cloud costs for analysis workloads",
+        "mitigation": "On-demand scaling, local execution option"
+      }
+    ],
+    "business": [
+      {
+        "type": "market_timing",
+        "description": "Legacy modernization budgets tied to cloud migration initiatives",
+        "impact": "Must align with cloud migration wave",
+        "mitigation": "Position as cloud migration enabler"
+      },
+      {
+        "type": "pricing",
+        "description": "Compete with expensive enterprise tools and free manual approaches",
+        "impact": "Pricing must show clear ROI",
+        "mitigation": "Time savings and risk reduction quantification"
+      },
+      {
+        "type": "compliance",
+        "description": "Enterprise clients may require on-premise deployment",
+        "impact": "Must support both cloud and on-prem",
+        "mitigation": "Docker-based deployment flexibility"
+      }
+    ],
+    "regulatory": []
+  },
+  "metadata": {
+    "discovery_method": "requirements_analysis",
+    "confidence_level": 0.95,
+    "assumptions": [
+      "Target market has significant C/C++/Pro*C legacy applications",
+      "Migration teams have budget for tooling (vs. pure manual labor)",
+      "Joern capabilities are sufficient for migration analysis needs",
+      "Pro*C migrations are moving to modern databases (PostgreSQL, cloud DBs)"
+    ],
+    "data_sources": [
+      "Problem statement provided",
+      "Joern documentation and capabilities",
+      "Migration industry best practices",
+      "Competitive tool analysis"
+    ],
+    "competitor_analysis_used": true,
+    "limitations": [
+      "No existing codebase to analyze - discovery based on conceptual requirements",
+      "Market sizing estimates would require additional research",
+      "User persona validation would benefit from customer interviews"
+    ]
+  }
+}

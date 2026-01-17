@@ -1,0 +1,662 @@
+{
+  "id": "roadmap-migration-factory-2026-01-17",
+  "project_name": "Joern Migration Factory",
+  "version": "1.0",
+  "generated_at": "2026-01-17T12:25:00Z",
+  "discovery_reference": "discovery-migration-factory-2026-01-17",
+  "product_vision": "Automated legacy code analysis and migration planning platform powered by Joern",
+  "target_audience": {
+    "primary": "Migration Architects leading legacy C/C++/Pro*C modernization projects",
+    "secondary": ["Migration Engineers", "Project Managers"]
+  },
+  "phases": [
+    {
+      "id": "phase-1-foundation",
+      "name": "Foundation - Core Analysis Engine",
+      "description": "Build the core Joern integration and basic analysis capabilities to demonstrate value with minimal viable features",
+      "goal": "Enable teams to analyze legacy C/C++ codebases and generate dependency reports",
+      "duration_estimate": "3-4 months",
+      "feature_ids": [
+        "feature-1",
+        "feature-2",
+        "feature-3",
+        "feature-4",
+        "feature-5"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-1-1",
+          "title": "Joern Integration Live",
+          "description": "Successfully parse and analyze C/C++ codebases using Joern",
+          "features": ["feature-1", "feature-2"],
+          "status": "planned",
+          "demo_criteria": "Upload sample C codebase, view code property graph"
+        },
+        {
+          "id": "milestone-1-2",
+          "title": "Dependency Analysis Operational",
+          "description": "Generate and export dependency graphs and function call trees",
+          "features": ["feature-3", "feature-4"],
+          "status": "planned",
+          "demo_criteria": "Show dependency graph visualization for real legacy app"
+        },
+        {
+          "id": "milestone-1-3",
+          "title": "First Migration Report Generated",
+          "description": "Complete end-to-end workflow from code upload to PDF/HTML report",
+          "features": ["feature-5"],
+          "status": "planned",
+          "demo_criteria": "Migration team receives actionable analysis report"
+        }
+      ]
+    },
+    {
+      "id": "phase-2-proc-enhancement",
+      "name": "Enhancement - Pro*C & Advanced Analysis",
+      "description": "Add Pro*C specialized support and advanced analysis capabilities to differentiate from generic tools",
+      "goal": "Handle database-heavy legacy applications with embedded SQL",
+      "duration_estimate": "2-3 months",
+      "feature_ids": [
+        "feature-6",
+        "feature-7",
+        "feature-8",
+        "feature-9",
+        "feature-10"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-2-1",
+          "title": "Pro*C Analysis Live",
+          "description": "Extract and analyze embedded SQL from Pro*C files",
+          "features": ["feature-6", "feature-7"],
+          "status": "planned",
+          "demo_criteria": "Upload Pro*C app, view extracted SQL and cursor operations"
+        },
+        {
+          "id": "milestone-2-2",
+          "title": "Advanced Analysis Capabilities",
+          "description": "Security, complexity, and data flow analysis operational",
+          "features": ["feature-8", "feature-9", "feature-10"],
+          "status": "planned",
+          "demo_criteria": "Generate security report with vulnerabilities and data flow diagrams"
+        }
+      ]
+    },
+    {
+      "id": "phase-3-automation",
+      "name": "Scale - Automation & Multi-Project",
+      "description": "Enable teams to manage multiple migration projects simultaneously with workflow automation",
+      "goal": "Support enterprise migration portfolios with 10+ concurrent projects",
+      "duration_estimate": "2-3 months",
+      "feature_ids": [
+        "feature-11",
+        "feature-12",
+        "feature-13",
+        "feature-14",
+        "feature-15"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-3-1",
+          "title": "Multi-Project Management",
+          "description": "Dashboard for managing multiple migration projects",
+          "features": ["feature-11", "feature-12"],
+          "status": "planned",
+          "demo_criteria": "View portfolio dashboard with 10+ projects in various stages"
+        },
+        {
+          "id": "milestone-3-2",
+          "title": "Workflow Automation",
+          "description": "Automated analysis pipelines and CI/CD integration",
+          "features": ["feature-13", "feature-14", "feature-15"],
+          "status": "planned",
+          "demo_criteria": "Git push triggers automated analysis and report generation"
+        }
+      ]
+    },
+    {
+      "id": "phase-4-intelligence",
+      "name": "Future - AI & Knowledge Base",
+      "description": "Leverage AI for pattern recognition and build knowledge base from migration history",
+      "goal": "AI-assisted migration planning based on historical patterns",
+      "duration_estimate": "3-4 months",
+      "feature_ids": [
+        "feature-16",
+        "feature-17",
+        "feature-18",
+        "feature-19",
+        "feature-20"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-4-1",
+          "title": "Knowledge Base Operational",
+          "description": "Migration patterns and learnings from previous projects",
+          "features": ["feature-16", "feature-17"],
+          "status": "planned",
+          "demo_criteria": "Search patterns, view similar migration cases"
+        },
+        {
+          "id": "milestone-4-2",
+          "title": "AI-Assisted Planning",
+          "description": "AI recommendations for migration strategy and effort estimation",
+          "features": ["feature-18", "feature-19", "feature-20"],
+          "status": "planned",
+          "demo_criteria": "AI generates migration plan with effort estimates and risks"
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feature-1",
+      "title": "Joern Code Ingestion",
+      "description": "Automated ingestion of C/C++ source code into Joern's code property graph (CPG). Supports multiple C/C++ dialects, preprocessor directives, and build system integration (Make, CMake). Handles large codebases through chunking and incremental processing.",
+      "rationale": "Foundation for all analysis capabilities. Migration teams spend 30-40% of analysis time just setting up parsing infrastructure. Automated ingestion eliminates this manual setup and ensures consistent parsing across projects.",
+      "priority": "must",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-1-foundation",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Parse C/C++ source files and generate Joern CPG",
+        "Support common compiler extensions (GCC, Clang, MSVC)",
+        "Handle preprocessor macros and include resolution",
+        "Process codebases up to 500K LOC in under 10 minutes",
+        "Report parsing errors with actionable remediation steps"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to upload legacy C codebase and have it automatically parsed so that I don't spend days configuring parsers",
+        "As a Migration Engineer, I want clear error messages when parsing fails so that I can fix issues quickly"
+      ],
+      "technical_notes": "Use Joern's C/C++ frontend (c2cpg). Implement preprocessing layer for legacy code. Consider parallel processing for large codebases.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-2",
+      "title": "Code Property Graph Exploration",
+      "description": "Interactive web-based interface to explore Joern's code property graph. Visualize nodes (functions, variables, statements) and edges (calls, data flows, control flows). Support filtering, search, and navigation through the graph structure.",
+      "rationale": "Understanding the CPG is critical for architects to trust the analysis. Current Joern CLI is too technical for non-experts. Visual exploration enables stakeholders to see what the tool found without writing Gremlin queries.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1-foundation",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Display CPG as interactive graph with zoom and pan",
+        "Search for functions, variables, and statements by name",
+        "Click node to see source code and properties",
+        "Filter graph by node type (function, call, variable, etc.)",
+        "Export graph as image or JSON for documentation"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to visually explore the code structure so that I understand application architecture without reading every file",
+        "As a Project Manager, I want to show stakeholders the code complexity visually so that they understand migration scope"
+      ],
+      "technical_notes": "Use D3.js or Cytoscape.js for graph visualization. Implement server-side graph queries to avoid loading entire CPG in browser.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-3",
+      "title": "Function Dependency Analysis",
+      "description": "Generate complete function call trees showing all dependencies from entry points (main, exported functions). Identify call chains, recursive calls, dead code, and external library dependencies. Calculate cyclomatic complexity and coupling metrics per function.",
+      "rationale": "Migration teams spend 40-50% of analysis time manually tracing function calls to understand impact. Automated dependency analysis reduces this to minutes and catches hidden dependencies humans miss (function pointers, macros).",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1-foundation",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Generate call tree from any function (forward and backward)",
+        "Identify all external library dependencies",
+        "Detect and highlight circular dependencies",
+        "Calculate complexity metrics (cyclomatic, cognitive)",
+        "Export dependency graph as CSV/JSON for further analysis"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to see all functions called by an entry point so that I can estimate migration scope",
+        "As a Migration Engineer, I want to identify dead code so that I don't waste time migrating unused functions"
+      ],
+      "technical_notes": "Use Joern's call graph capabilities. Implement BFS/DFS for call tree traversal. Cache results for large codebases.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-4",
+      "title": "Data Flow Analysis",
+      "description": "Track data flows from sources (inputs, database reads) to sinks (outputs, file writes, network). Identify taint flows for security analysis. Visualize variable lifetimes and scope. Detect global variable usage patterns.",
+      "rationale": "Understanding data flows is critical for safe migration. Hidden data dependencies cause 60% of post-migration bugs. Automated data flow analysis identifies risky patterns (global state, pointer aliasing) that manual review misses.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-1-foundation",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Trace data flow from any variable to all usage points",
+        "Identify sources (user input, file reads, network) and sinks (writes, sends)",
+        "Detect tainted data flows (untrusted input to dangerous functions)",
+        "Visualize data flow paths in graph format",
+        "Flag global variables and their usage patterns"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to see data flows from user inputs so that I understand validation requirements",
+        "As a Security Engineer, I want to identify tainted data flows so that I can prioritize security fixes during migration"
+      ],
+      "technical_notes": "Use Joern's data flow engine. Implement taint analysis with configurable sources/sinks. Consider performance optimization for large flow graphs.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-5",
+      "title": "Migration Analysis Report Generation",
+      "description": "Automated generation of comprehensive migration analysis reports in PDF, HTML, and JSON formats. Include executive summary, complexity metrics, dependency graphs, risk assessment, and effort estimation. Customizable templates for different stakeholders (technical, business, management).",
+      "rationale": "Migration teams spend 10-15 hours creating reports manually from analysis data. Automated report generation saves time and ensures consistency. Different stakeholders need different views - executives want summaries, engineers want technical details.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-1-foundation",
+      "dependencies": ["feature-3", "feature-4"],
+      "acceptance_criteria": [
+        "Generate PDF report with all analysis findings",
+        "Include executive summary with key metrics and risks",
+        "Provide detailed technical appendix with graphs and tables",
+        "Support custom report templates via configuration",
+        "Export raw data as JSON for integration with other tools"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to generate a report for stakeholders so that they understand migration scope and risks",
+        "As a Project Manager, I want an executive summary so that I can brief leadership on migration complexity"
+      ],
+      "technical_notes": "Use template engine (Jinja2) for HTML, wkhtmltopdf for PDF generation. Implement caching for large reports.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-6",
+      "title": "Pro*C Embedded SQL Extraction",
+      "description": "Parse Pro*C files to extract all embedded SQL statements (SELECT, INSERT, UPDATE, DELETE, EXEC SQL blocks). Separate SQL from C code. Identify cursor operations (DECLARE, OPEN, FETCH, CLOSE). Extract host variable bindings between C and SQL.",
+      "rationale": "Pro*C analysis requires specialized expertise that costs $200-300/hour and is scarce. Teams spend 2-3 weeks manually extracting SQL from Pro*C using grep (incomplete). Automated extraction is the #1 requested feature for database migrations.",
+      "priority": "must",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2-proc-enhancement",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Extract all EXEC SQL blocks with line numbers",
+        "Identify cursor declarations and operations",
+        "Map host variables between C code and SQL",
+        "Detect dynamic SQL (sqlca, sqlda usage)",
+        "Export SQL as separate files for schema analysis"
+      ],
+      "user_stories": [
+        "As a Database Architect, I want all embedded SQL extracted so that I can analyze database schema usage",
+        "As a Migration Engineer, I want cursor operations identified so that I can convert to modern database APIs"
+      ],
+      "technical_notes": "Extend Joern parser or use Pro*C preprocessor (proc). Parse EXEC SQL blocks as separate AST nodes. Handle Oracle-specific extensions.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-7",
+      "title": "Database Schema Inference",
+      "description": "Infer database schema from SQL statements in Pro*C code. Extract table names, column references, data types, relationships (foreign keys from JOINs). Generate ERD (entity-relationship diagram) from inferred schema. Detect schema evolution patterns across multiple SQL statements.",
+      "rationale": "Legacy databases often lack up-to-date schema documentation. Migration to modern databases requires understanding current schema. Manual schema extraction takes 1-2 weeks. Automated inference from SQL usage provides actual schema (not documented schema).",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2-proc-enhancement",
+      "dependencies": ["feature-6"],
+      "acceptance_criteria": [
+        "Extract all table names and column references from SQL",
+        "Infer column data types from usage patterns",
+        "Detect relationships from JOIN clauses",
+        "Generate ERD visualization",
+        "Export schema as SQL DDL or JSON"
+      ],
+      "user_stories": [
+        "As a Database Architect, I want to see the actual schema used by the application so that I can design target database",
+        "As a Migration Engineer, I want an ERD generated from code so that I understand data relationships"
+      ],
+      "technical_notes": "Use SQL parser (sqlparse, JSQLParser). Implement heuristic type inference. Consider probabilistic schema for incomplete information.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-8",
+      "title": "Security Vulnerability Detection",
+      "description": "Scan for common C/C++ security vulnerabilities: buffer overflows, format string bugs, SQL injection, command injection, memory leaks, use-after-free. Use Joern queries and pattern matching. Prioritize vulnerabilities by severity (CWE mapping).",
+      "rationale": "Migrating vulnerable code to modern platforms without fixing issues perpetuates risk. Security analysis typically requires separate expensive tools ($5K+). Built-in security scanning adds value and catches 80% of common issues during migration planning.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-2-proc-enhancement",
+      "dependencies": ["feature-1", "feature-4"],
+      "acceptance_criteria": [
+        "Detect buffer overflow risks (strcpy, sprintf, gets)",
+        "Identify SQL injection in dynamic SQL",
+        "Find command injection (system, exec calls with tainted input)",
+        "Flag memory management issues (missing free, double free)",
+        "Report vulnerabilities with CWE IDs and severity"
+      ],
+      "user_stories": [
+        "As a Security Engineer, I want to identify security vulnerabilities before migration so that we fix them during modernization",
+        "As a Migration Architect, I want security reports so that I can justify additional migration effort to fix issues"
+      ],
+      "technical_notes": "Use Joern security queries. Implement taint analysis for injection detection. Map findings to CWE database.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-9",
+      "title": "Complexity Metrics Dashboard",
+      "description": "Calculate and visualize code complexity metrics: cyclomatic complexity, cognitive complexity, lines of code (LOC), comment ratio, nesting depth, function length. Identify hotspots (high complexity functions). Track metrics over time for monitored codebases.",
+      "rationale": "Complexity drives migration effort estimation. Manual complexity analysis is time-consuming. Automated metrics enable data-driven prioritization (migrate simple code first, refactor complex code). Industry-standard metrics (cyclomatic) are accepted by stakeholders for effort justification.",
+      "priority": "should",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-2-proc-enhancement",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Calculate cyclomatic and cognitive complexity per function",
+        "Count LOC, SLOC, comment lines",
+        "Identify top 20 most complex functions",
+        "Visualize complexity distribution as histogram",
+        "Export metrics as CSV for portfolio analysis"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want complexity metrics so that I can estimate migration effort accurately",
+        "As a Project Manager, I want to identify high-risk functions so that I can allocate experienced engineers"
+      ],
+      "technical_notes": "Use Joern's complexity metrics or implement McCabe's algorithm. Store metrics in database for trending.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-10",
+      "title": "Custom Analysis Queries",
+      "description": "Allow users to write custom Joern queries (Gremlin/CPG DSL) through web UI. Provide query library with common patterns (find all malloc/free pairs, detect API usage, etc.). Save and share queries across team. Export query results as JSON/CSV.",
+      "rationale": "Every migration has unique patterns to detect (legacy APIs, deprecated functions, custom frameworks). Pre-built queries cover 70% of needs, but experts need customization. Query library democratizes advanced analysis without requiring Joern expertise for every user.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-2-proc-enhancement",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Execute custom Gremlin queries against CPG",
+        "Provide query editor with syntax highlighting",
+        "Include library of 20+ common query patterns",
+        "Save queries for reuse across projects",
+        "Export query results in multiple formats"
+      ],
+      "user_stories": [
+        "As a Migration Architect with Joern expertise, I want to write custom queries so that I can find project-specific patterns",
+        "As a Migration Engineer, I want to use pre-built queries so that I can analyze code without learning Gremlin"
+      ],
+      "technical_notes": "Implement safe query execution (sandboxing, timeouts). Build query template library. Consider query validation before execution.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-11",
+      "title": "Multi-Project Dashboard",
+      "description": "Centralized dashboard to manage multiple migration projects. View status, metrics, and progress for entire portfolio. Compare projects side-by-side. Track analysis history and report generations. Role-based access control for team members.",
+      "rationale": "Enterprise migration teams handle 10-20 projects simultaneously. No central view leads to lost context switching and duplicate work. Portfolio dashboard enables managers to track all projects and optimize resource allocation across teams.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-3-automation",
+      "dependencies": ["feature-5"],
+      "acceptance_criteria": [
+        "List all projects with status and key metrics",
+        "Compare complexity across projects (bubble chart, table)",
+        "Filter and sort projects by various attributes",
+        "Drill down into individual project details",
+        "Role-based permissions (view, edit, admin)"
+      ],
+      "user_stories": [
+        "As a Migration Program Manager, I want to see all migration projects in one dashboard so that I track portfolio progress",
+        "As a Migration Architect, I want to compare projects so that I can identify patterns and reuse strategies"
+      ],
+      "technical_notes": "Implement project metadata database. Use React for interactive dashboard. Integrate with identity provider for RBAC.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-12",
+      "title": "Team Collaboration Features",
+      "description": "Enable team members to collaborate on analysis. Comment on findings, tag team members, assign review tasks. Track changes and decisions. Share custom queries and report templates. Notification system for project updates.",
+      "rationale": "Migration is team sport - 3-10 people per project. Siloed analysis leads to duplicate work and missed insights. Collaboration features reduce communication overhead and ensure knowledge sharing across distributed teams.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-3-automation",
+      "dependencies": ["feature-11"],
+      "acceptance_criteria": [
+        "Add comments to analysis findings",
+        "Tag team members with @ mentions",
+        "Assign review tasks to specific engineers",
+        "Email/Slack notifications for updates",
+        "Share queries and templates across team"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to assign review tasks so that team members know what to analyze",
+        "As a Migration Engineer, I want to comment on findings so that I can ask questions or provide context"
+      ],
+      "technical_notes": "Implement commenting system with threading. Integrate notification service (email, Slack webhook). Use websockets for real-time updates.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-13",
+      "title": "Automated Analysis Pipeline",
+      "description": "Scheduled and triggered analysis runs. Monitor source code repositories (Git) for changes. Automatically re-run analysis on code updates. Parallel processing for multiple projects. Queue management and priority handling.",
+      "rationale": "Manual analysis execution doesn't scale for continuous integration. Code changes during migration require re-analysis. Automated pipelines enable 'analysis as code' - every commit triggers analysis, catching regressions early.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-3-automation",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "Schedule analysis runs (daily, weekly, on-demand)",
+        "Trigger analysis on Git repository changes (webhook)",
+        "Process multiple projects in parallel",
+        "Queue and prioritize analysis jobs",
+        "Send notifications on completion or errors"
+      ],
+      "user_stories": [
+        "As a Migration Engineer, I want automatic re-analysis when code changes so that reports stay current",
+        "As a DevOps Engineer, I want to integrate analysis into CI/CD so that we catch issues early"
+      ],
+      "technical_notes": "Use job queue (Celery, RabbitMQ). Implement Git webhook handlers. Support parallel Joern instances with resource limits.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-14",
+      "title": "CI/CD Integration",
+      "description": "Plugins for Jenkins, GitLab CI, GitHub Actions, Azure DevOps. Fail builds on critical findings (security, complexity thresholds). Post analysis results as PR comments. Generate badges and quality gates.",
+      "rationale": "Modern development is CI/CD-native. Migration teams want to enforce quality gates (no new buffer overflows, complexity limits). CI/CD integration makes analysis part of workflow, not separate manual step.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-3-automation",
+      "dependencies": ["feature-13"],
+      "acceptance_criteria": [
+        "Jenkins plugin for analysis execution",
+        "GitHub Actions workflow template",
+        "Post results as PR comments with pass/fail",
+        "Configurable quality gates (fail on critical issues)",
+        "Generate status badges for README"
+      ],
+      "user_stories": [
+        "As a DevOps Engineer, I want analysis in CI pipeline so that we enforce quality standards",
+        "As a Migration Engineer, I want PR comments with analysis results so that I see impact before merge"
+      ],
+      "technical_notes": "Build plugins for major CI/CD platforms. Implement REST API for analysis triggering. Use CI/CD platform APIs for commenting.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-15",
+      "title": "REST API for External Integration",
+      "description": "Comprehensive REST API for all platform capabilities. Upload code, trigger analysis, retrieve results programmatically. Webhook support for event notifications. API documentation with OpenAPI/Swagger. Rate limiting and authentication.",
+      "rationale": "Enterprise clients want to integrate migration factory into existing tools (JIRA, ServiceNow, custom dashboards). API-first design enables ecosystem integration and custom workflows. 40% of enterprise deals require API access.",
+      "priority": "should",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-3-automation",
+      "dependencies": ["feature-1"],
+      "acceptance_criteria": [
+        "REST API for all core operations (upload, analyze, retrieve)",
+        "API documentation with Swagger UI",
+        "JWT-based authentication",
+        "Rate limiting to prevent abuse",
+        "Webhook callbacks for async operations"
+      ],
+      "user_stories": [
+        "As an Integration Engineer, I want REST API so that I can automate migration workflows",
+        "As a Tool Vendor, I want to integrate migration factory so that my customers have code analysis capabilities"
+      ],
+      "technical_notes": "Use FastAPI or Flask-RESTful. Implement OpenAPI spec generation. Add rate limiting with Redis. Use JWT for API auth.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-16",
+      "title": "Migration Pattern Knowledge Base",
+      "description": "Searchable repository of migration patterns from completed projects. Document common code patterns (legacy APIs, deprecated functions) and their modern equivalents. Tag patterns by technology (Oracle→PostgreSQL, Win32→Qt, etc.). User-contributed pattern library.",
+      "rationale": "Migration teams reinvent solutions for common patterns across projects. Knowledge base captures institutional knowledge and accelerates future migrations. Patterns from 10 projects can reduce analysis time for next project by 30-40%.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-4-intelligence",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Store and search migration patterns",
+        "Tag patterns by source/target technology",
+        "Include code examples for each pattern",
+        "Allow user contributions with review workflow",
+        "Suggest patterns based on detected code"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to search for similar migrations so that I can reuse strategies",
+        "As a Migration Engineer, I want pattern recommendations so that I know how others solved similar problems"
+      ],
+      "technical_notes": "Implement full-text search (Elasticsearch). Use tagging system for categorization. Consider pattern matching against current code.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-17",
+      "title": "Similar Project Finder",
+      "description": "Machine learning model to find similar previously analyzed projects based on code metrics, technology stack, complexity profile. Recommend migration strategies from similar projects. Show success metrics and lessons learned from comparable migrations.",
+      "rationale": "Every migration feels unique, but patterns emerge across projects. Similar project matching helps teams learn from past successes and avoid past mistakes. Reduces risk by leveraging proven strategies.",
+      "priority": "could",
+      "complexity": "high",
+      "impact": "medium",
+      "phase_id": "phase-4-intelligence",
+      "dependencies": ["feature-11", "feature-16"],
+      "acceptance_criteria": [
+        "Calculate similarity score between projects",
+        "Recommend top 5 similar past projects",
+        "Show comparison of key metrics",
+        "Link to migration strategies used",
+        "Display lessons learned from similar projects"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want to find similar past projects so that I can leverage proven strategies",
+        "As a Project Manager, I want to see comparable migrations so that I can set realistic expectations"
+      ],
+      "technical_notes": "Use clustering algorithm (k-means) on project metrics. Implement similarity scoring (cosine similarity). Store project metadata for matching.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-18",
+      "title": "AI-Assisted Migration Strategy",
+      "description": "LLM-powered migration strategy recommendations based on code analysis. Suggest modernization approach (rehost, replatform, refactor, rebuild). Identify modules for phased migration. Recommend technology stack for target platform. Generate migration roadmap outline.",
+      "rationale": "Strategy decisions require expert judgment but can be augmented by AI analyzing patterns from hundreds of migrations. AI recommendations provide starting point, reducing strategy definition from 1-2 weeks to days. Human expertise validates and refines AI suggestions.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-4-intelligence",
+      "dependencies": ["feature-16", "feature-17"],
+      "acceptance_criteria": [
+        "Recommend migration approach with rationale",
+        "Suggest phased migration grouping",
+        "Recommend target technology stack",
+        "Generate migration roadmap outline",
+        "Explain reasoning for recommendations"
+      ],
+      "user_stories": [
+        "As a Migration Architect, I want AI strategy suggestions so that I can validate my approach or discover alternatives",
+        "As a Project Manager, I want phased migration recommendations so that I can plan incremental delivery"
+      ],
+      "technical_notes": "Use GPT-4 or similar LLM. Implement prompt engineering for migration context. Provide explanation for transparency. Mark as 'suggestions' not 'decisions'.",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-19",
+      "title": "Automated Effort Estimation",
+      "description": "ML model to estimate migration effort (person-hours, duration) based on code complexity, size, technology stack, and historical project data. Break down estimates by module and phase. Provide confidence intervals. Compare to similar projects for validation.",
+      "rationale": "Effort estimation is critical for budgeting but highly inaccurate (50% variance common). ML models trained on historical data reduce variance to 20-30%. Automated estimation saves 1-2 weeks of planning time and increases accuracy.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-4-intelligence",
+      "dependencies": ["feature-17"],
+      "acceptance_criteria": [
+        "Estimate total effort in person-hours",
+        "Break down by module or component",
+        "Provide confidence interval (min, likely, max)",
+        "Show comparison to similar projects",
+        "Allow user adjustment and refinement"
+      ],
+      "user_stories": [
+        "As a Project Manager, I want effort estimates so that I can create realistic project plan and budget",
+        "As a Migration Architect, I want module-level estimates so that I can allocate team resources"
+      ],
+      "technical_notes": "Train regression model on historical project data. Use complexity metrics as features. Implement three-point estimation (optimistic, likely, pessimistic).",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-20",
+      "title": "Code Generation for Common Patterns",
+      "description": "Generate target platform code for common migration patterns. Convert Pro*C cursor operations to JDBC/ODBC. Transform buffer management to std::vector. Generate modern equivalents for deprecated APIs. User review and approval required for all generated code.",
+      "rationale": "Boilerplate code conversion (cursors, buffer management) is repetitive but risky to automate fully. Semi-automated generation (80% complete, requires review) can accelerate migration by 30-40% for standard patterns while maintaining quality control.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "medium",
+      "phase_id": "phase-4-intelligence",
+      "dependencies": ["feature-16"],
+      "acceptance_criteria": [
+        "Generate JDBC code from Pro*C cursors",
+        "Convert C buffer management to C++ STL",
+        "Transform deprecated API calls to modern equivalents",
+        "Highlight generated code for review",
+        "Include unit tests for generated code"
+      ],
+      "user_stories": [
+        "As a Migration Engineer, I want boilerplate code generated so that I focus on complex business logic",
+        "As a Quality Engineer, I want generated code highlighted so that I review it carefully before accepting"
+      ],
+      "technical_notes": "Use code templates with pattern matching. Implement AST transformation for syntactic changes. Consider LLM for semantic transformations. Require explicit user approval.",
+      "competitor_insight_ids": []
+    }
+  ],
+  "metadata": {
+    "total_features": 20,
+    "moscow_distribution": {
+      "must": 6,
+      "should": 8,
+      "could": 4,
+      "wont": 2
+    },
+    "complexity_distribution": {
+      "low": 1,
+      "medium": 9,
+      "high": 10
+    },
+    "impact_distribution": {
+      "low": 0,
+      "medium": 10,
+      "high": 10
+    },
+    "phase_count": 4,
+    "total_estimated_duration": "10-14 months",
+    "competitor_analysis_used": false,
+    "generated_by": "roadmap_features_agent",
+    "notes": [
+      "Phase 1 (Foundation) is MVP - must complete before any production use",
+      "Phase 2 (Pro*C Enhancement) is key differentiator - prioritize if targeting database migrations",
+      "Phase 3 (Automation) enables scale - required for enterprise adoption",
+      "Phase 4 (Intelligence) is future vision - defer until market validation complete",
+      "Won't Have features (18-20) are long-term vision pending AI maturity and market demand"
+    ]
+  }
+}
