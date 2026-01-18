@@ -153,6 +153,20 @@
   border-radius: 50%;
 }
 
+.calendar-day.has-incomplete-tasks {
+  background: rgba(239, 68, 68, 0.05);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.calendar-day.has-incomplete-tasks:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.calendar-day.has-incomplete-tasks::after {
+  background: var(--color-danger);
+}
+
 .day-number {
   font-size: 0.875rem;
   font-weight: 600;
