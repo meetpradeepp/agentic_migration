@@ -1,0 +1,31 @@
+{
+  "phases": [
+    {
+      "phase_number": 1,
+      "phase_name": "Implementation",
+      "objective": "Remove Dashboard button and redesign filter UI layout",
+      "subtasks": [
+        {
+          "subtask_id": "1.1",
+          "description": "Remove 'New Task' button from Dashboard view while preserving it in All Tasks and List views. Update FilterBar component to use card-based layout with grouped sections (search, filters, sorting, toggles). Add CSS for card styling, section spacing, and responsive breakpoints.",
+          "file_path": "src/components/Dashboard.tsx, src/components/FilterBar.tsx, src/styles/FilterBar.css",
+          "validation_checks": [
+            "Visual verification: Dashboard has no 'New Task' button",
+            "Visual verification: All Tasks/List views retain 'New Task' button",
+            "Visual verification: Filter UI displays in card layout on desktop/tablet/mobile",
+            "Functional test: All filter controls work identically"
+          ],
+          "dependencies": []
+        }
+      ]
+    }
+  ],
+  "validation_strategy": {
+    "risk_level": "low",
+    "test_types": [
+      "unit"
+    ],
+    "manual_verification_required": true
+  },
+  "created_at": "2025-01-18T04:00:00Z"
+}
