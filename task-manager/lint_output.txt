@@ -1,0 +1,91 @@
+
+> task-manager@0.0.0 lint
+> eslint .
+
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/components/FilterBar.tsx
+  23:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/components/FilterBar.tsx:23:5
+  21 |   // Initialize from filter context
+  22 |   useEffect(() => {
+> 23 |     setSearchQuery(filter.searchQuery || '');
+     |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |     setHideCompleted(filter.hideCompleted || false);
+  25 |     setSortBy(filter.sortBy || '');
+  26 |     setSortDirection(filter.sortDirection || 'asc');  react-hooks/set-state-in-effect
+  41:6   warning  React Hook useEffect has missing dependencies: 'filter' and 'setFilter'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+  84:28  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/components/TaskForm.tsx
+  38:39  error  Error: Cannot access variable before it is declared
+
+`formatDateForInput` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/components/TaskForm.tsx:38:39
+  36 |       setPriority(taskToEdit.priority);
+  37 |       setTags(taskToEdit.tags.join(', '));
+> 38 |       setDueDate(taskToEdit.dueDate ? formatDateForInput(taskToEdit.dueDate) : '');
+     |                                       ^^^^^^^^^^^^^^^^^^ `formatDateForInput` accessed before it is declared
+  39 |       setListId(taskToEdit.listId || '');
+  40 |     }
+  41 |   }, [taskToEdit]);
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/components/TaskForm.tsx:46:3
+  44 |    * Format date for input field (YYYY-MM-DD)
+  45 |    */
+> 46 |   const formatDateForInput = (date: Date): string => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 47 |     const d = new Date(date);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 48 |     const year = d.getFullYear();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 49 |     const month = String(d.getMonth() + 1).padStart(2, '0');
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 50 |     const day = String(d.getDate()).padStart(2, '0');
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 51 |     return `${year}-${month}-${day}`;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 52 |   };
+     | ^^^^^ `formatDateForInput` is declared here
+  53 |
+  54 |   /**
+  55 |    * Parse tags from comma-separated string  react-hooks/immutability
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/contexts/TaskContext.tsx
+   32:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/contexts/TaskContext.tsx:32:5
+  30 |   // Load initial data
+  31 |   useEffect(() => {
+> 32 |     setTasks(TaskStorage.getTasks());
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |     setLists(ListStorage.getLists());
+  34 |   }, []);
+  35 |  react-hooks/set-state-in-effect
+  239:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-refresh/only-export-components
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/contexts/ThemeContext.tsx
+  34:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/utils/storage.ts
+  23:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  96:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/runner/work/agentic_migration/agentic_migration/task-manager/src/views/UserListView.tsx
+  32:6  warning  React Hook useEffect has missing dependencies: 'filter' and 'setFilter'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 10 problems (8 errors, 2 warnings)
+
