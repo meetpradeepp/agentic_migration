@@ -87,6 +87,18 @@
   background: rgba(16, 185, 129, 0.1);
 }
 
+.metric-icon.overdue {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.metric-card.overdue {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.metric-card.overdue:hover {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
 .metric-content {
   flex: 1;
 }

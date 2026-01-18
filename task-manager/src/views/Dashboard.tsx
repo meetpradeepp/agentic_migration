@@ -33,6 +33,10 @@ export function Dashboard() {
     .sort((a, b) => new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime())
     .slice(0, 5);
 
+  const overdueCount = tasks.filter(
+    t => t.dueDate && new Date(t.dueDate) < now && t.status !== 'completed'
+  ).length;
+
   return (
     <div className="dashboard">
       <div className="dashboard-header">
@@ -70,6 +74,14 @@ export function Dashboard() {
           <div className="metric-content">
             <div className="metric-value">{metrics.completed}</div>
             <div className="metric-label">Completed</div>
+          </div>
+        </div>
+
+        <div className="metric-card overdue">
+          <div className="metric-icon overdue">⚠️</div>
+          <div className="metric-content">
+            <div className="metric-value">{overdueCount}</div>
+            <div className="metric-label">Overdue</div>
           </div>
         </div>
       </div>

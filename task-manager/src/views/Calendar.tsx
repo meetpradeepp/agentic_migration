@@ -10,6 +10,7 @@ import {
 import type { CalendarDay } from '../utils/dateUtils';
 import type { Task } from '../types';
 import { TaskItem } from '../components/TaskItem';
+import { TaskForm } from '../components/TaskForm';
 import './Calendar.css';
 
 /**
@@ -20,6 +21,8 @@ export function Calendar() {
   const { tasks } = useTasks();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showTaskForm, setShowTaskForm] = useState(false);
+  const [taskFormDate, setTaskFormDate] = useState<Date | null>(null);
 
   const monthGrid = getMonthGrid(currentMonth);
   const monthLabel = getMonthYearLabel(currentMonth);
@@ -30,6 +33,16 @@ export function Calendar() {
   const getTasksForDate = (date: Date): Task[] => {
     return tasks.filter(task => {
       if (!task.dueDate) return false;
+      return isSameDay(new Date(task.dueDate), date);
+    });
+  };
+
+  /**
+   * Check if a date has incomplete tasks
+   */
+  const hasIncompleteTasks = (date: Date): boolean => {
+    return tasks.some(task => {
+      if (!task.dueDate || task.status === 'completed') return false;
       return isSameDay(new Date(task.dueDate), date);
     });
   };
@@ -62,6 +75,22 @@ export function Calendar() {
   const handleDayClick = (day: CalendarDay) => {
     // Toggle: if clicking the same date, clear it; otherwise select it
     setSelectedDate(selectedDate && isSameDay(day.date, selectedDate) ? null : day.date);
+  };
+
+  /**
+   * Handle day double-click - create task with the selected date
+   */
+  const handleDayDoubleClick = (day: CalendarDay) => {
+    setTaskFormDate(day.date);
+    setShowTaskForm(true);
+  };
+
+  /**
+   * Handle creating task - close form
+   */
+  const handleCloseTaskForm = () => {
+    setShowTaskForm(false);
+    setTaskFormDate(null);
   };
 
   const selectedDateTasks = selectedDate ? getTasksForDate(selectedDate) : [];
@@ -114,6 +143,7 @@ export function Calendar() {
                 week.map((day, dayIdx) => {
                   const dayTasks = getTasksForDate(day.date);
                   const isSelected = selectedDate && isSameDay(day.date, selectedDate);
+                  const hasIncomplete = hasIncompleteTasks(day.date);
                   
                   return (
                     <button
@@ -124,8 +154,11 @@ export function Calendar() {
                         ${day.isToday ? 'today' : ''}
                         ${isSelected ? 'selected' : ''}
                         ${dayTasks.length > 0 ? 'has-tasks' : ''}
+                        ${hasIncomplete ? 'has-incomplete-tasks' : ''}
                       `}
                       onClick={() => handleDayClick(day)}
+                      onDoubleClick={() => handleDayDoubleClick(day)}
+                      title={hasIncomplete ? 'Has incomplete tasks - double-click to create task' : 'Double-click to create task'}
                     >
                       <span className="day-number">{day.dayOfMonth}</span>
                       {dayTasks.length > 0 && (
@@ -159,6 +192,14 @@ export function Calendar() {
           </div>
         )}
       </div>
+
+      {/* Task Form Modal */}
+      {showTaskForm && taskFormDate && (
+        <TaskForm 
+          onClose={handleCloseTaskForm}
+          defaultDueDate={taskFormDate}
+        />
+      )}
     </div>
   );
 }
