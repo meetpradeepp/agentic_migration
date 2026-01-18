@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { useTasks } from '../contexts/TaskContext';
 import { useTaskMetrics } from '../hooks/useTaskMetrics';
 import { TaskItem } from '../components/TaskItem';
-import { TaskForm } from '../components/TaskForm';
 import { EmptyState } from '../components/EmptyState';
 import './Dashboard.css';
 
@@ -13,7 +11,6 @@ import './Dashboard.css';
 export function Dashboard() {
   const { tasks } = useTasks();
   const metrics = useTaskMetrics(tasks);
-  const [showTaskForm, setShowTaskForm] = useState(false);
 
   // Get high-priority incomplete tasks
   const highPriorityTasks = tasks
@@ -40,12 +37,6 @@ export function Dashboard() {
     <div className="dashboard">
       <div className="dashboard-header">
         <h1>Dashboard</h1>
-        <button 
-          className="add-task-button"
-          onClick={() => setShowTaskForm(true)}
-        >
-          + New Task
-        </button>
       </div>
 
       {/* Metrics Cards */}
@@ -150,11 +141,6 @@ export function Dashboard() {
           </div>
         )}
       </div>
-
-      {/* Task Form Modal */}
-      {showTaskForm && (
-        <TaskForm onClose={() => setShowTaskForm(false)} />
-      )}
     </div>
   );
 }
