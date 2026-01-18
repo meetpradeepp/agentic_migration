@@ -7,6 +7,7 @@ import './TaskForm.css';
 interface TaskFormProps {
   taskToEdit?: Task;
   onClose: () => void;
+  defaultListId?: string;
 }
 
 /**
@@ -14,8 +15,9 @@ interface TaskFormProps {
  * 
  * @param taskToEdit - Optional task to edit. If provided, form is in edit mode
  * @param onClose - Callback when form is closed
+ * @param defaultListId - Optional default list ID to pre-select in the dropdown
  */
-export function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
+export function TaskForm({ taskToEdit, onClose, defaultListId }: TaskFormProps) {
   const { addTask, updateTask, lists } = useTasks();
   
   // Form state
@@ -37,8 +39,11 @@ export function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
       setTags(taskToEdit.tags.join(', '));
       setDueDate(taskToEdit.dueDate ? formatDateForInput(taskToEdit.dueDate) : '');
       setListId(taskToEdit.listId || '');
+    } else if (defaultListId) {
+      // Set default list ID when creating a new task
+      setListId(defaultListId);
     }
-  }, [taskToEdit]);
+  }, [taskToEdit, defaultListId]);
 
   /**
    * Format date for input field (YYYY-MM-DD)

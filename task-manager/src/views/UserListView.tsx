@@ -81,7 +81,10 @@ export function UserListView() {
       </div>
 
       {showTaskForm && (
-        <TaskForm onClose={() => setShowTaskForm(false)} />
+        <TaskForm 
+          onClose={() => setShowTaskForm(false)} 
+          defaultListId={listId}
+        />
       )}
     </div>
   );
