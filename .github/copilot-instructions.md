@@ -5,7 +5,7 @@
 **For ANY request that is NOT trivial, your FIRST action MUST be:**
 
 ```
-#runSubAgent orchestrator
+#runSubAgent Call SubAgent orchestrator
 ```
 
 **DO NOT**:
