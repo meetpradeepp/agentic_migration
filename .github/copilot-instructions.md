@@ -1,31 +1,11 @@
 # Copilot Instructions for agentic_migration
 
-## 🚨 MANDATORY PRE-FLIGHT CHECK 🚨
-
-**BEFORE responding to ANY user request, evaluate this decision tree:**
-
-```
-User makes a request
-    ↓
-Is it a trivial change? (typo, docs, formatting)
-    ↓ YES → Implement directly
-    ↓ NO
-    ↓
-STOP IMMEDIATELY
-    ↓
-Invoke orchestrator FIRST
-    ↓
-[Orchestrator determines workflow]
-    ↓
-[Agents execute automatically]
-```
-
-### ⚡ DEFAULT BEHAVIOR: AUTO-INVOKE ORCHESTRATOR
+## ⚡ DEFAULT BEHAVIOR: AUTO-INVOKE ORCHESTRATOR
 
 **For ANY request that is NOT trivial, your FIRST action MUST be:**
 
 ```
-Call to subagent orchestrator
+#runSubAgent orchestrator
 ```
 
 **DO NOT**:
