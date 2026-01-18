@@ -6,6 +6,7 @@ import {
   getNextMonth, 
   getPrevMonth,
   isSameDay,
+  isPastDate,
 } from '../utils/dateUtils';
 import type { CalendarDay } from '../utils/dateUtils';
 import type { Task } from '../types';
@@ -38,9 +39,10 @@ export function Calendar() {
   };
 
   /**
-   * Check if a date has incomplete tasks
+   * Check if a date has overdue tasks (past date with incomplete tasks)
    */
-  const hasIncompleteTasks = (date: Date): boolean => {
+  const hasOverdueTasks = (date: Date): boolean => {
+    if (!isPastDate(date)) return false;
     return tasks.some(task => {
       if (!task.dueDate || task.status === 'completed') return false;
       return isSameDay(new Date(task.dueDate), date);
@@ -143,7 +145,7 @@ export function Calendar() {
                 week.map((day, dayIdx) => {
                   const dayTasks = getTasksForDate(day.date);
                   const isSelected = selectedDate && isSameDay(day.date, selectedDate);
-                  const hasIncomplete = hasIncompleteTasks(day.date);
+                  const isOverdue = hasOverdueTasks(day.date);
                   
                   return (
                     <button
@@ -154,11 +156,11 @@ export function Calendar() {
                         ${day.isToday ? 'today' : ''}
                         ${isSelected ? 'selected' : ''}
                         ${dayTasks.length > 0 ? 'has-tasks' : ''}
-                        ${hasIncomplete ? 'has-incomplete-tasks' : ''}
+                        ${isOverdue ? 'has-overdue-tasks' : ''}
                       `}
                       onClick={() => handleDayClick(day)}
                       onDoubleClick={() => handleDayDoubleClick(day)}
-                      title={hasIncomplete ? 'Has incomplete tasks - double-click to create task' : 'Double-click to create task'}
+                      title={isOverdue ? 'Has overdue tasks - double-click to create task' : 'Double-click to create task'}
                     >
                       <span className="day-number">{day.dayOfMonth}</span>
                       {dayTasks.length > 0 && (
