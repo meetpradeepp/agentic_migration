@@ -1,0 +1,10 @@
+# Ignore actual embedding model data files
+# These should be downloaded externally via setup_local_models.py
+# and stored in AMF_LOCAL_MODEL_PATH location
+
+# Model data folder (contains tokenizers, ONNX, OpenVINO files)
+data/
+
+# Keep only Python code
+!__init__.py
+!embeddings.py
