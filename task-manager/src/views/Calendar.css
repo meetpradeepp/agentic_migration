@@ -153,17 +153,17 @@
   border-radius: 50%;
 }
 
-.calendar-day.has-incomplete-tasks {
+.calendar-day.has-overdue-tasks {
   background: rgba(239, 68, 68, 0.05);
   border-color: rgba(239, 68, 68, 0.3);
 }
 
-.calendar-day.has-incomplete-tasks:hover {
+.calendar-day.has-overdue-tasks:hover {
   background: rgba(239, 68, 68, 0.1);
   border-color: rgba(239, 68, 68, 0.5);
 }
 
-.calendar-day.has-incomplete-tasks::after {
+.calendar-day.has-overdue-tasks::after {
   background: var(--color-danger);
 }
 
